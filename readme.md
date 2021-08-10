@@ -48,3 +48,76 @@
     * 内置模块
     * 自定义模块
     * 第三方模块
+
+
+## day1-2
+
+### 复习
+* http服务器
+    * 请求request
+        > 客户端发信息给服务器
+    * 响应response
+        > 服务器发送信息给客户端
+* 服务端server与客户端client（浏览器）
+* 静态资源服务器
+    * 依赖模块
+        * http
+        * fs
+        * path
+        * url
+    * mime类型：Content-Type
+        > 服务器告诉浏览器发送信息的类型
+
+* git
+    * 2105三阶段课件仓库地址
+        * https://github.com/gzh52105/outline.git
+        * git@github.com:gzh52105/outline.git（推荐）
+            * 生成公钥：`ssh-keygen`
+            * 配置公钥: github -> 账户 -> settings -> SSH and GPG keys
+            * 测试配置是否成功:`ssh -T git@github.com`
+
+## 知识点
+* 模块化
+    * 为什么需要模块化？
+        * 复用
+        * 维护
+        * 分工
+    * 规范
+        * commonJS      NodeJS
+        * ESModule      ES6
+        * AMD           require.js
+        * CMD           sea.js
+    * 分类
+        * 内置模块
+            > 直接导入：`require('fs')`
+        * 自定义模块
+            > 必须使用相对路径: `require('./mime.js')`
+        * 第三方模块
+            > 需要安装，然后引入：`require('express')`
+    * 使用
+        > 每个模块的作用域是独立作用，相互之间不能直接调用，如需使用其他模块的数据，必须导出与导入
+        * 导出
+            * commonJS： 
+                * `module.exports`
+                * `exports`
+        * 导入
+            * `commonJS: require()`
+
+
+    ```js
+    //   未使用模块化
+        let username = 'laoxie'
+
+        // 此处省略1000行代码
+
+        console.log(username)
+
+        // 使用模块
+        // moduleA
+        let username = 'laoxie'
+        // 导出username
+
+        // moduleB
+        // 导入模块A中的username
+        console.log(username)
+    ```
