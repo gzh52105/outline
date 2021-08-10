@@ -57,7 +57,7 @@
     * 请求request
         > 客户端发信息给服务器
     * 响应response
-        > 服务器发送信息给客户端
+        > 服务器发送信息给客户端，前后端数据传递只能是string或二进制类型
 * 服务端server与客户端client（浏览器）
 * 静态资源服务器
     * 依赖模块
@@ -121,3 +121,53 @@
         // 导入模块A中的username
         console.log(username)
     ```
+* express / koa
+    * 安装：
+        ```js
+            npm install express
+        ```
+    * 使用
+        ```js
+            const express = require('express')
+            const app = express()
+        ```
+
+    * 中间件:middleware
+        > 中间件是一个封装了某些处理数据功能的函数 -> 中间件是一个函数
+        * 使用: `app.use([path],...middleware)`
+            ```js
+                // app.use(middleware1,middleware2,....)
+                // app.use(middleware1)
+                // app.use(middleware2)
+            ```
+        * 分类
+            * 内置中间件
+                * express.static()  静态资源服务器
+                * express.urlencoded()  处理请求体数据中间件
+            * 自定义中间件
+            * 第三方中间件
+        * 请求传参
+            * url参数：`?id=123`
+                > 接收：request.query
+            * 请求体：请求体传参有多种数据格式，要根据实际的情况使用相应的中间件
+                > 接收：request.body
+            * 请求头
+                > 接收：request.get()
+            * 动态路由
+                > 接收方式：request.params
+        * 编写数据接口
+            > 编写符合**RESTful**规范的接口: 
+            > 1. 根据不同的请求类型实现相应的接口功能 
+            > 2. 根据不同的请求路径实现不同的接口功能
+            * 请求类型
+                * get       查
+                * post      增
+                * put       改（表示该接口拥有修改所有属性的能力）
+                * patch     改（表示该接口拥有修改部分属性的能力）
+                * delete    删
+            * 测试请求工具：postman
+* 练习
+    * 编写一个符合RESTful规范的数据接口，实现CRUD
+        * 商品
+        * 用户
+    * 把二阶段项目使用nodeJS实现接口
