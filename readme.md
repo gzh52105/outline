@@ -171,3 +171,69 @@
         * 商品
         * 用户
     * 把二阶段项目使用nodeJS实现接口
+
+## day1-3
+
+### 复习
+* 模块化
+    > 在nodejs中，把一个文件当作一个模块，每个模块是独立作用域
+    * 规范
+        * commonJS      nodejs
+        * ESModule      ES6
+        * AMD           require.js
+        * CMD           sea.js
+    * 分类
+        * 内置模块
+        * 自定义模块
+        * 第三方模块
+    * 使用
+        * 导出（暴露）
+            * module.exports
+            * exports
+        * 导入（引入）
+            * require()
+* express
+    * 中间件
+        * 分类
+            * 内置中间
+                * express.static(root)
+                * express.urlencoded()      body-parser
+                * express.json()            body-parser
+                * express.raw()             body-parser
+                * express.text()            body-parser
+        * 使用：
+            ```js
+                app.use([path],...middleware)
+
+                app.use([path],middleware)
+                app.use([path],middleware)
+                //...
+            ```
+    * 编写接口
+        > RESTful：根据不同的请求类型和不同的请求路径显示不同的接口
+
+        * 请求类型
+            * get
+            * post
+            * put
+            * patch
+            * delete
+        * 传递参数
+            * url传参：request.query
+            * 动态路由: request.params
+            * 请求体传参: rquest.body
+                > 需要中间件处理不同类型的数据
+            * 请求头: request.get(name)
+
+### 知识点
+* 编写数据接口
+    * 商品
+        * 商品列表      get     /goodslist
+        * 商品详情      get     /goods/:id
+        * 添加商品      post    /goods
+        * 删除商品      delete  /goods/:id
+        * 修改商品      put     /goods/:id
+        * 上下架商品    patch   /goods/:id
+    * 用户
+
+* 利用`express.Router()`中间件实现模块化路由
