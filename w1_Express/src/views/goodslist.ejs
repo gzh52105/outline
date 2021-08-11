@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品列表</title>
+</head>
+<body>
+    <div>
+        <h1>商品列表</h1>
+        <div id="goodslist">
+            <div class="row">
+                <!-- ejs模板语法 -->
+                <% goodslist.forEach((item)=>{ %>
+                    <div class="col">
+                        <img src="/assets/<%= item.imgurl %>" />
+                        <h4><%= item.name %></h4>
+                        <p class="price">价格：<%= item.price %></p>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

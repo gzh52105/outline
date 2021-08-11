@@ -174,6 +174,30 @@
 
 ## day1-3
 
+### 面试题
+* 链式调用的原理
+    > 每个函数最后返回一个实例
+* event中target和currentTarget区别
+    * target 指向触发事件的元素
+    * currentTarget 指向绑定事件的元素
+
+    ```js
+        <header id="header">
+            <div>
+                <button id="btn">点我</button>
+            </div>
+        </header>
+
+        btn.onclick = function(e){
+            // e.target: button#btn
+            // e.currentTarget:button#btn
+        }
+        header.onclick = function(e){
+            // e.target: button#btn
+            // e.currentTarget: header#header
+        }
+    ```
+
 ### 复习
 * 模块化
     > 在nodejs中，把一个文件当作一个模块，每个模块是独立作用域
@@ -237,3 +261,33 @@
     * 用户
 
 * 利用`express.Router()`中间件实现模块化路由
+    > 让代码实现可维护性
+
+* 页面渲染方式
+    * 客户端渲染BSR（Browser Side Rendering）
+        > html结构在客户端生成
+        * 渲染步骤
+            1. 发起页面请求，加载一个空的html结构
+            2. 利用ajax请求获取接口数据
+            3. 在客户端生成html结构
+            4. 并渲染到页面
+        * 优点
+            * 用户体验好
+            * 局部刷新
+        * 缺点
+            * 多次请求，速度较慢
+            * 不利于SEO（搜索引擎优化）
+    * 服务器渲染SSR（Server Side Rendering）
+        > html结构在服务器生成
+        * 渲染步骤
+            1. 发起页面请求，在服务端生成html结构并返回
+            2. 渲染到页面
+        * 优点
+            * 请求少，速度快
+            * SEO友好
+        * 缺点
+            * 无交互，用户体验较差
+            * 不能实现局部刷新
+
+* 练习
+    * 利用ssr实现注册登录页面

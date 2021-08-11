@@ -2,7 +2,6 @@ const express = require('express')
 
 // 创建一个路由中间件（是一个功能类似与app的中间）
 const router = express.Router()
-console.log('router',router)
 
 module.exports = router;
 

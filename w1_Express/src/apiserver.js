@@ -1,13 +1,42 @@
 /**
  * 数据接口
  */
-
+const path = require('path')
 const express = require('express')
 const router = require('./router')
+const ssrRouter = require('./router/ssr')
 
 const app = express();
 
+// 添加静态资源服务器
+// 指定静态资源服务器的根目录（网站根目录：页面中所有的资源连接不能超过该目录）
+app.use(express.static('./public'))
+
 app.use('/api',router);
+
+// app.use('/ssr',function(req,res){
+//     // 在服务器生成html结构
+//     const content = `
+//     <html>
+//         <heade>
+//             <title>SSR</title>
+//         </heade>
+//         <body>
+//             <h1>SSR</h1>
+//         </body>
+//     </html>
+//     `
+//     res.send(content)
+// })
+
+// SSR
+// 设置模板引擎
+app.set('views', path.join(__dirname,'./views'));
+app.set('view engine', 'ejs');
+// app.set('view engine', 'jade');
+app.use('/views',ssrRouter)
+
+
 
 // // 添加请求体格式化中间件，让后面所有接口都实现参数格式化
 // app.use(express.urlencoded({extended:true}),express.json())

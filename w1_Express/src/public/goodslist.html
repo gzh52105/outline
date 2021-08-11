@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品列表</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <style>
+        #goodslist img{width:280px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>商品列表</h1>
+        <div id="goodslist" class="row">
+                <!-- <div class="col">
+                  Column
+                </div> -->
+        </div>
+
+    </div>
+
+    <script>
+        (()=>{
+            const goodslist = document.querySelector('#goodslist')
+            // 发起ajax请求
+
+            let xhr = new XMLHttpRequest()
+
+            xhr.onload = ()=>{
+                const data = JSON.parse(xhr.responseText)
+                console.log('data=',data)
+
+                // 生成html结构，并渲染到页面
+                render(data);
+            }
+
+            xhr.open('get','http://localhost:2105/api/goods/list',true);
+
+            xhr.send();
+
+            function render(data){
+                goodslist.innerHTML = data.map(item=>{
+                    return `<div class="col">
+                        <img src="assets/${item.imgurl}" data-id="${item.id}" />
+                        <h4>${item.name}</h4>
+                        <p class="price">价格：${item.price}</p>
+                    </div>`
+                }).join('')
+            }
+
+            // 点击跳转到详情页
+            goodslist.onclick = function(e){
+                if(e.target.tagName === 'IMG'){
+                    console.log(e.target.dataset)
+                    const {id} = e.target.dataset
+                    location.href = 'goods.html?id='+id
+                }
+            }
+        })()
+    </script>
+</body>
+</html>
