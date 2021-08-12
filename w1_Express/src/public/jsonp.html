@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨域解决方案之JSONP</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+</head>
+<body>
+    <div class="container p-3">
+        <h1>跨域解决方案之JSONP</h1>
+
+        <!-- <script src="http://localhost:2105/api/jsonp"></script> -->
+        <button class="btn btn-outline-success" id="btn">发起jsonp请求</button>
+    </div>
+    <script>
+        (()=>{
+            /**
+                * 跨域解决方案之JSONP
+                    script中的src属性不一定是一个js文件，也可以是一个数据接口，但必须返回js代码
+
+                    换句话说：只要响应js代码，src可以为任意地址
+             */ 
+            // 定义全局函数，用与获取数据
+            let script
+            window.fetchData = function(data){
+                console.log('data=',data);
+
+                document.body.removeChild(script)
+            }
+            const btn = document.querySelector('#btn')
+            btn.onclick = ()=>{
+                // 创建Script
+                script = document.createElement('script');
+
+                // 发起请求，并传递全局函数名
+                script.src = 'http://localhost:2105/api/jsonp?cb=fetchData'
+                document.body.appendChild(script);
+            }
+
+        })()
+    </script>
+</body>
+</html>

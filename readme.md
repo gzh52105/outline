@@ -327,3 +327,54 @@
 
 ### 知识点
 * 图片上传
+    * multer中间
+    * FormData
+         > 可以传递非字符类数据（注意请求头Content-Type的类型：`multipart/form-data`）
+        * 使用：`new FormData()`
+            * set(key,value)    设置单个值
+            * get(key)          获取key对应的值
+            * append(key,value) 追加值
+            * getAll(key)       获取所有值
+* 跨域解决方案
+    * 搞懂以下问题
+        * 什么情况下会产生跨域
+            > 协议，域名(主机)，端口三者有一个不一致，就形成跨域
+            ```js
+                http://localhost:2105/views/goodslist?page=1&size=10
+
+                http://baidu.com
+            ```
+        * 为什么会存在跨域限制
+            > 因为安全因素：同源策略
+            * 限制
+                * ajax
+                * cookie
+                * webStorage
+        ```js
+            接口地址：http://localhost:2105/api/goods/list
+
+            页面地址：
+                * http://localhost:2105/goodslist.html
+                * file:///F:/mydoc/kphone/class/gz_h5_2105/w1_Express/src/public/goodslist.html（跨域）
+                * http://localhost:8080/goodslist.html（跨域）
+            
+        ```
+
+        * 解决方案
+            * JSONP
+                > 原理：利用script标签不受跨域限制的特点来请求数据
+                * 前端
+                    * 定义全局函数
+                    * 传递全局函数名
+                * 后端
+                    * 接口响应**全局函数执行**的js代码,并传递数据
+                * 缺点
+                    * 只能时get
+                    * 并不是真正的ajax
+            * CORS
+                > 跨域资源共享（Cross Origin Resource Sharing），需要服务器与浏览器的支持
+                * 服务器支持
+                    * Access-Control-Allow-Origin
+                        * 允许单个域名跨域访问
+                        * 允许所有来源访问：`*`
+            * 服务器代理

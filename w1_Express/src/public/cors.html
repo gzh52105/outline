@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨域解决方案之CORS</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+</head>
+<body>
+    <div class="container p-3">
+        <h1>跨域解决方案之CORS</h1>
+
+        <button class="btn btn-outline-success" id="btn">发起ajax请求</button>
+    </div>
+    <script>
+        (()=>{
+            /**
+                * 跨域解决方案之CORS
+                    * 浏览器支持（ok）
+                    * 服务器支持
+             */ 
+            const btn = document.querySelector('#btn')
+
+            const xhr = new XMLHttpRequest()
+            xhr.onload = function(){
+                const data = JSON.parse(xhr.responseText);
+                console.log('data=',data)
+            }
+            btn.onclick = function(){
+                xhr.open('put','http://localhost:2105/api/cors',true)
+                
+                // 设置请求头
+                // xhr.setRequestHeader('Token','asdkfjasldfkj')
+                
+                xhr.send()
+            }
+        })()
+    </script>
+</body>
+</html>
