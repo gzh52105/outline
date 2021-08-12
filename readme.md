@@ -291,3 +291,39 @@
 
 * 练习
     * 利用ssr实现注册登录页面
+
+## day1-4
+
+### 复习
+* 模块化路由
+    > 使用`express.Router()`连接所有的模块，形成一个路由树
+* 页面渲染模式
+    * 客户端渲染BSR
+        > html结构在客户端生成
+    * 服务端渲染SSR
+        > html结构在服务端生成
+        * ejs模板语法
+            * 使用步骤
+                1. 安装
+                    ```bash
+                        npm install ejs
+                    ```
+                2. 设置模板引擎
+                    ```js
+                        app.set('views', path.join(__dirname,'./views'));
+                        app.set('view engine', 'ejs');
+                    ```
+                3. 编译html并绑定数据
+                    ```js
+                        res.render('goodslist',{goodslist})
+                        // 等效于 res.send(ejs.renderFile(filename, data))
+                    ```
+            * 语法
+                ```html
+                    <% %>       不输出内容，主要用于流程控制
+                    <%= %>      输出内容，如果是html则转义
+                    <%- %>      输出不转义内容
+                ```
+
+### 知识点
+* 图片上传

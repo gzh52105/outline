@@ -19,5 +19,5 @@ for (let i = 0; i < 10; i++) {
 router.get('/goodslist', (req, res) => {
     // 渲染模板：利用模板生成html结构
     // 传递数据
-    res.render('goodslist', { goodslist})
+    res.render('goodslist', { goodslist,content:'<strong>测试</strong>内容'})
 })

@@ -1,6 +1,7 @@
 const express = require('express')
 const goodsRouter = require('./goods')
 const userRouter = require('./user')
+const uploadRouter = require('./upload')
 
 
 const router = express.Router()
@@ -11,6 +12,7 @@ module.exports = router
 router.use(
     express.urlencoded({extended:true}),
     express.json(),
+    express.text(),
 )
 
 // /api/good
@@ -20,3 +22,6 @@ router.use('/goods',goodsRouter)
 router.use('/user',userRouter)
 
 // /api/order
+
+// 上传
+router.use('/upload',uploadRouter)

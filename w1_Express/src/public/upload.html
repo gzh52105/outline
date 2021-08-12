@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片上传</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+</head>
+<body>
+    <div class="container p-3">
+        <h1>图片上传</h1>
+        
+        <div class="input-group">
+            <label>头像上传</label>
+            <input type="file" class="form-control file" />
+            <button class="btn btn-success btnUpload">上传</button>
+        </div>
+        <div class="input-group mt-3">
+            <label>商品上传</label>
+            <input type="file" class="form-control goods" multiple />
+            <button class="btn btn-success btnUpdloadGoods">上传</button>
+        </div>
+    </div>
+    <script>
+        // (()=>{
+            /**
+             * FormData
+                > 可以传递非字符类数据
+                使用：new FormData
+                    * set(key,value)    设置单个值
+                    * get(key)          获取key对应的值
+                    * append(key,value) 追加值
+                    * getAll(key)       获取所有值
+             */
+            const btnUpload = document.querySelector('.btnUpload')
+            const file = document.querySelector('.file')
+            const btnUpdloadGoods = document.querySelector('.btnUpdloadGoods')
+            const goods = document.querySelector('.goods')
+
+
+            const xhr = new XMLHttpRequest()
+
+            xhr.onload = ()=>{
+                console.log('success')
+            }
+
+            btnUpload.onclick = ()=>{
+                // 获取上传文件，并发送给后端
+                const fData = new FormData()
+                // 添加数据
+                fData.set('username','hello')
+                fData.set('avatar',file.files[0])
+
+                xhr.open('post','http://localhost:2105/api/upload/avatar')
+                xhr.send(fData)
+            }
+            btnUpdloadGoods.onclick = ()=>{
+                // 获取上传文件，并发送给后端
+                const fData = new FormData()
+                fData.set('username','laoxie')
+                
+                // 添加数据(多张图片)
+                for(let file of goods.files){
+                    // console.log('file',file)
+                    fData.append('goods',file);
+                }
+
+                xhr.open('post','http://localhost:2105/api/upload/goods')
+                xhr.send(fData)
+            }
+        // })()
+
+
+        // 测试代码
+        // const fData = new FormData()
+        // 添加数据
+        // fData.set('username','laoxie')
+        // fData.set('username','tiantian')
+        // fData.append('username','laoxie')
+        // fData.append('username','tiantian')
+    </script>
+</body>
+</html>
