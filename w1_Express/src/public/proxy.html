@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨域解决方案之服务器代理</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+</head>
+<body>
+    <div class="container p-3">
+        <h1>跨域解决方案之服务器代理</h1>
+
+        <button class="btn btn-outline-success" id="btn">发起ajax请求</button>
+    </div>
+    <script>
+        (()=>{
+            /**
+                * 跨域解决方案之服务器代理
+                    * https://offer.qfh5.cn/api/iq
+                    * https://offer.qfh5.cn/api/answer?size=5&total=false
+             */ 
+            
+             // 直接请求受跨域影响（无法请求到数据）
+            //  const xhr = new XMLHttpRequest()
+            //  xhr.open('get','https://offer.qfh5.cn/api/iq',true)
+            //  xhr.send();
+
+            // 服务器代理
+            const xhr = new XMLHttpRequest()
+            // xhr.open('get','http://localhost:2105/api/proxy/iq',true)
+            xhr.open('get','http://localhost:2105/api/proxy/answer?size=5&total=false',true)
+            xhr.send();
+
+        })()
+    </script>
+</body>
+</html>

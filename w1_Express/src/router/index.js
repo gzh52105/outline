@@ -2,6 +2,7 @@ const express = require('express')
 const goodsRouter = require('./goods')
 const userRouter = require('./user')
 const uploadRouter = require('./upload')
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 
 const router = express.Router()
@@ -28,6 +29,8 @@ router.use(function(req, res, next) {
 
     // 跨域请求CORS中的预请求
     if(req.method=="OPTIONS") {
+        // res.header("Access-Control-Allow-Methods","PUT")
+        // res.header("Access-Control-Allow-Headers", "Token");
         res.sendStatus(200);/*让options请求快速返回*/
     } else{
         next();
@@ -61,8 +64,7 @@ router.get('/jsonp', (req, res) => {
 })
 
 // 2. CORS
-
-router.put('/cors', (req, res) => {
+router.post('/cors', (req, res) => {
     // 运行http://localhost:8080跨域访问该接口(只能写一个地址)
     // res.header('Access-Control-Allow-Origin','http://localhost:8080')
 
@@ -78,3 +80,23 @@ router.put('/cors', (req, res) => {
     
     res.send(data)
 })
+
+// 3. proxy服务器代理
+// 1)请求：http://localhost:2105/api/proxy/iq
+// 2)修改目标服务器：https://offer.qfh5.cn/api/proxy/iq
+// 3)路径重写：https://offer.qfh5.cn/api/iq
+const offerMiddleware = createProxyMiddleware({ 
+    // 目标服务器
+    target: 'https://offer.qfh5.cn', 
+
+    // 修改请求源
+    changeOrigin: true,
+
+    // 路径重写
+    pathRewrite:{
+        '^/api/proxy':'/api',
+        '^/api/proxy/api':'/api'
+    }
+})
+// /api/proxy
+router.use('/proxy',offerMiddleware)

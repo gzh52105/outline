@@ -28,10 +28,10 @@
                 console.log('data=',data)
             }
             btn.onclick = function(){
-                xhr.open('put','http://localhost:2105/api/cors',true)
+                xhr.open('post','http://localhost:2105/api/cors',true)
                 
                 // 设置请求头
-                // xhr.setRequestHeader('Token','asdkfjasldfkj')
+                xhr.setRequestHeader('Token','abc')
                 
                 xhr.send()
             }

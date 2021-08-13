@@ -378,3 +378,39 @@
                         * 允许单个域名跨域访问
                         * 允许所有来源访问：`*`
             * 服务器代理
+
+## day1-5
+
+### 复习
+* 图片上传
+    * FormData
+    * multer
+* 跨域解决方案
+    * jsonp
+        > 原理
+    * CORS
+        * 类型
+            * 简单跨域
+            * 复杂跨域
+                > 浏览器不明确是否允许这种请求，所以会自动发起一个预检请求（OPTIONS），服务必须响应该请求
+                * 非GET、HEAD、POST请求
+                * POST请求的`Content-Type`不是`application/x-www-form-urlencoded`, `multipart/form-data`, 或`text/plain`。
+                * 添加了自定义header，例如Token。
+        * 前后端支持
+            * 前端：浏览器需要支持CORS
+            * 后端：
+                * Access-Control-Allow-Origin
+                    * 单域名
+                    * `*`
+                    * 多域名：不支持多域名，但可以通过条件判断实现
+                        > 设置白名单，通过`req.get('Origin')`获取请求源并判断是否存在白名单中
+                * Access-Control-Allow-Mehods
+                * Access-Control-Allow-Headers
+### 知识点
+* 服务器代理
+    > 原理：利用服务器没有跨域限制的特点，从服务器发起请求并响应给前端
+    * http-proxy-middleware
+* 爬虫
+    > 目标服务器没有接口，但我想获取它的数据
+    * 需要具备的技能
+        * 分析html结构

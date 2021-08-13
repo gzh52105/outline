@@ -10,8 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^5.1.0",
+    "cheerio": "*",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "multer": "^1.4.3"
+    "http-proxy-middleware": "^2.0.1",
+    "multer": "^1.4.3",
+    "request": "^2.88.2"
   }
 }
