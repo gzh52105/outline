@@ -381,6 +381,51 @@
 
 ## day1-5
 
+### 面试题
+1. 实现深拷贝的方式有哪些
+    ```js
+        obj = {a:10,b:20,c:{d:10,e:20}}
+        // obj2 = obj
+
+        // 浅拷贝
+        let obj2 = {}
+        for(let k in obj){
+            obj2[k] = obj[k]
+        }
+        // Object.assign({},obj1,obj2,obj3....)
+        Object.assign({},obj)
+        jQuery.clone({},obj)
+
+        // 深拷贝
+        // 1. 递归遍历
+        function copy(obj){
+            let result = {}
+            for(let k in obj){
+                if(typeof obj[k] === 'object'){
+                    result[k] = copy(obj[k])
+                }
+                result[k] = obj[k]
+            }
+            return result;
+        }
+        const obj2 = copy(obj)
+        // 2.JSON
+        const obj3 = JSON.parse(JSON.stringify(obj))
+        // 3.jQuery
+        jQuery.clone(true,{},obj)
+    ```
+2. 如何取消ajax请求
+    * 设置超时时间timeout
+    * 调用abort()方法
+    ```js
+        let xhr = new XMLHttpRequest()
+        xhr.open()
+        xhr.send()
+
+        // 取消ajax
+        xhr.abort();
+    ```
+
 ### 复习
 * 图片上传
     * FormData
@@ -414,3 +459,35 @@
     > 目标服务器没有接口，但我想获取它的数据
     * 需要具备的技能
         * 分析html结构
+    * 爬虫与防爬
+
+* Stream流
+    > 文件流：文件的液体状态，一般用于对大文件的处理操作
+    * 读取流：读取大文件时分多次读取
+        > fs.createReadStream(filePath)
+    * 写入流：写入大文件时分多次写入
+    * 传输: 管道流pipe
+
+* 数据库
+    * 关系型数据库
+        * mySQL/MariaDB
+            > sql语句
+    * 驱动
+        * 在PHP中使用mySQL: mysqli
+        * 在NodeJS中使用mySQL: mysql
+            * 连接对象
+            * 连接池
+    * 使用
+        * 拼接sql语句
+        * 统一前后端数据格式
+            > 任何接口都返回json格式数据
+            ```js
+                {
+                    code, // 200成功，400失败
+                    msg,  // success成功，fail失败
+                    data //  必须为数组
+                }
+            ```
+* 周末练习
+    1. 用NodeJS实现二阶段项目接口（后期上线）
+    2. 选一个网站，并爬取数据到本地，并存入数据库
