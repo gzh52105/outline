@@ -491,3 +491,59 @@
 * 周末练习
     1. 用NodeJS实现二阶段项目接口（后期上线）
     2. 选一个网站，并爬取数据到本地，并存入数据库
+
+## day2-1
+
+### 复习
+* 爬虫
+* Stream
+    > 解决大文件的读取、写入、传输
+* mySQL
+    > 在NodeJS中使用MySQL
+    * 数据库mysql
+    * 驱动mysql
+* 前后端数据格式统一
+
+### 知识点
+* MongoDB
+    * 分类
+        * 关系型数据库
+            * mySQL
+            * SQLServer
+            ....
+        * 非关系型数据库
+            > 类似json
+    * 对比
+        ```
+                        数据库      表/集合          数据
+            mySQL       database    table           row
+            MongoDB     database    collection      document
+        ```
+* 操作Mongodb
+    * 命令行工具
+        * 数据库操作
+        * 集合操作
+        * 文档操作：CRUD
+            * 增
+                > 插入一个文档对象
+                * insertOne(document)
+                * insertMany([document,document])
+            * 删
+                * deleteOne(query)
+                * deleteMany(query)
+            * 改
+                * updateOne(query,data)
+                * updateMany(query,data)
+            * 查
+                * find(query)
+                * findOne(query)
+    * 可视化工具
+        * robo3T
+
+* 在NodeJS中使用MongoDB
+    * 驱动
+        * mongodb
+        * mongoose
+    * 封装CRUD
+    * 过滤字段
+        > projection
