@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册</title>
+    <link rel="stylesheet" href="./assets/bootstrap.css">
+</head>
+<body>
+    <div class="container">
+        <h1>用户注册</h1>
+        <form class="row g-3 needs-validation" id="myform" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">用户名</label>
+                <input type="text" class="form-control" id="username" required>
+                <div class="invalid-feedback">
+                    请填写用户名
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">密码</label>
+                <input type="password" class="form-control" id="password" required>
+                <div class="invalid-feedback">
+                    请填写密码
+                </div>
+            </div>
+            <button class="btn btn-success">免费注册</button>
+        </form>
+    </div>
+
+    <script>
+        const myform = document.querySelector('#myform')
+        const username = document.querySelector('#username')
+        const password = document.querySelector('#password')
+        const btnLogin = document.querySelector('.btnLogin')
+
+        const xhr = new XMLHttpRequest()
+        xhr.onload = function(){
+            const res = xhr.response
+            if(res.code === 200){
+                location.href = 'login.html?username=' + username.value
+            }
+
+        }
+
+
+        myform.onsubmit = function(e){
+            e.preventDefault();
+            const valid = myform.checkValidity();
+
+            if(!valid){
+                // myform.className = 'was-validated'
+                myform.classList.add('was-validated')
+                return;
+            }
+
+            const _username = username.value;
+            const _password = password.value;
+
+            // 发起ajax请求
+            xhr.open('post','http://localhost:2105/api/reg',true)
+
+            // 设置响应数据类型
+            xhr.responseType = 'json';
+
+            // 设置请求头
+            xhr.setRequestHeader('content-type','application/x-www-form-urlencoded')
+            xhr.send(`username=${_username}&password=${_password}`)
+            // xhr.setRequestHeader('content-type','application/json')
+            // xhr.send(`{"username":"${_username}","password":"${_password}"}`)
+        }
+
+        // 检测用户名是否存在
+        const xhr_check = new XMLHttpRequest()
+        xhr_check.onload = function(){
+            const res = xhr_check.response;console.log('res=',res)
+            if(res.code === 400){
+                username.classList.add('is-invalid')
+                username.classList.remove('is-valid')
+                username.nextElementSibling.innerText = '用户名已存在'
+            }else{
+                username.classList.remove('is-invalid')
+                username.classList.add('is-valid')
+                username.nextElementSibling.innerText = '请填写用户名'
+            }
+        }
+        username.onchange = function(){
+            const _username = username.value;
+
+            xhr_check.open('get','http://localhost:2105/api/reg/check?username='+_username,true);
+            xhr_check.responseType = 'json'
+            xhr_check.send()
+        }
+    </script>
+</body>
+</html>

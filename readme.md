@@ -547,3 +547,42 @@
     * 封装CRUD
     * 过滤字段
         > projection
+
+
+## day2-2
+
+### 面试题
+* 防抖与节流
+    > 都是为了性能优化，只是采用的手段不一样
+    * 防抖
+        > 当同一时间段内有多次重复操作，只生效最后一次，忽略前面所有操作
+        * 搜索建议
+    * 节流
+        > 当同一时间段内有多次重复操作，只生效第一次，忽略第一次后的操作
+        * 滚动加载
+
+### 复习
+* mongodb
+    * 命令行
+    * 可视化工具：robo3T
+    * nodeJS中操作
+        > 需要安装驱动：mongodb
+        * 封装CRUD
+
+    * 数据的CRUD
+        * 增
+            * insertOne(data)
+            * insertMany([])
+        * 删
+            * deleteOne(query)
+            * deleteMany(query)
+        * 改
+            * updateOne(query,data)
+            * updateMany(query,data)
+            * save(doc)
+        * 查
+            * find(query)
+            * findOne(query)
+        * 聚合
+            * aggregate()
+### 知识点
