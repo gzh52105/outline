@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 
 function formatData({code=200,msg='success',data=[]}={}){
     // let {code=200,msg='success',data=[]} = obj;
@@ -11,6 +12,20 @@ function formatData({code=200,msg='success',data=[]}={}){
     }
 }
 
+// 加密
+function encrypt(data,{algo='sha256',output='hex'}={}){
+    const hash = crypto.createHash(algo);
+    hash.update(data);
+    return hash.digest(output)
+}
+
+// 解密
+function decrypt(){
+
+}
+
 module.exports = {
-    formatData
+    formatData,
+    encrypt,
+    decrypt
 }
