@@ -613,3 +613,96 @@
         * mysql
     4. 上传代码到服务器
     5. 启动服务器
+
+* 数据库
+    * 导入导出
+        * mongoimport
+        * mongoexport 
+    * 备份与恢复
+        * mongodump
+        * mongorestore
+
+## day2-3
+
+### 知识点
+* 前端框架历史
+    * 第一阶段：javascript原生（1995）
+        > 操作比较繁琐
+    * 第二阶段：jQuery工具库（2006）-> jQuery.Mobile
+        > 简化操作
+    * 第三阶段：框架
+        * AngularJS（2009） -> Angular 
+            > MVC分层，数据双向绑定(后台管理系统中的表单)
+        * React（2013）
+            > 虚拟DOM（virtual DOM）
+        * Vue（2014，2020）
+            > MVVM,数据双向绑定,Virtual DOM
+* Vue的学习目标
+    > 不仅仅是会用
+    * 会用 -> 原理 -> 读源码 -> 会写
+        
+* Vue版本
+    * 按环境分
+        * 开发版本  development (vue.js)
+            > 未压缩，有提示
+        * 生产版本  production  (Vue.min.js)
+            > 压缩，去除一些提示功能
+    * 按构建版本分
+        * 完整版    (vue.js)
+            > 运行时 + 编译器
+        * 运行时版 runtime  (vue.runtime.js)
+            > 只包含运行Vue所必须的代码
+    * 按模块规范分
+        * commonJS: (vue.common.js)
+        * ESModule: (vue.esm.js)
+        * UMD通用模块化规范
+            > 支持commonJS/AMD/CMD/全局引入
+
+* Vue的使用
+    * 实例化
+        * 关联视图层
+        * 关联数据层
+    * 数据绑定
+        * 单向数据绑定
+            > 数据层的改变 导致 视图层的变化
+            * {{}}      把数据绑定到标签内容
+            * v-bind    把数据绑定到属性
+        * 双向数据绑定
+            > 原理：单向+事件
+            * v-model = v-bind:value + v-on:input
+
+
+* 指令
+    > 自定义html属性
+    * v-bind 绑定数据到属性
+        > 格式：v-bind:属性="数据"
+    * v-on  绑定事件
+        > 格式：v-on:事件类型="事件处理函数"
+    * v-model 双向数据绑定
+
+* 思维转变
+    > **节点操作思维** 转变到 **数据驱动思维**
+
+* 架构分层
+    * MVC
+        * M: Model      数据模型
+        * V: View       视图层
+        * C: Controller 控制层
+    * MVP
+        * M: Model      数据模型
+        * V: View       视图层
+        * P: Presenter  控制层
+    * MVVM
+        * M: Model      数据模型
+        * V: View       视图层
+        * VM: ViewModel 控制层
+
+* 响应式属性
+    > 特点：当数据发生变化时，自动更新视图
+    * 实现原理：监听数据变化(getter&setter)，当数据变化时更新视图
+    * 如何设置响应式属性
+        * 把数据写入model
+        * Vue.set(target,key,value)
+            * target: 给目标对象添加响应式属性
+            * key: 属性名
+            * value: 属性值

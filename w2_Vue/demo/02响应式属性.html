@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02响应式属性</title>
+</head>
+<body>
+    <h1>02响应式属性</h1>
+    <!-- 视图层: 只有vm实例能访问到的属性才能在视图层中使用 -->
+    <div id="app">
+        <!-- {{hello}} -->
+        <h4>用户名：{{username}}</h4>
+        <p>成绩：{{score}}</p>
+    </div>
+    <div id="myapp">
+        
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        /**
+         *  02响应式属性
+                * 单向数据绑定
+                * 利用原生js实现数据变化时更新视图
+         */
+
+         // 数据层
+         // 定义时为值属性，实例化Vue时，Vue会遍历model层中所有属性，并把它们变成getter&setter存储器属性，然后写入vm实例的属性，这样就能监听到数据变化，进而更新视图
+         const model = {
+             username:'tiantian',
+             age:28,
+             score:{
+                 en:100
+             }
+         }
+
+         
+
+         // 控制层
+         const vm = new Vue({
+            el:'#app',
+            data:model
+         })
+        //  vm.username
+        // vm.hello = 'hello'
+        // Vue.set(vm,'hello','hi')
+
+         // 利用原生js实现数据变化时更新视图
+         const myData = {
+             username:'laoxie',
+             // 内部属性（私有属性）
+             _age:18,
+
+             // 值属性：拥有值的属性
+            //  age:18
+
+            // 存储器属性：没有自己的值，一般用户监听属性的读取与修改
+            // getter：当读取age属性时自动执行getter
+            get age(){
+                console.log('age.getter');
+                return this._age
+            },
+
+            // setter: 当修改age属性时自动执行setter
+            set age(newValue){
+                // 监听数据变化
+                console.log('age.setter',newValue)
+                this._age = newValue;
+
+                // getter&setter都是一个函数，意味着在这里可以为所欲为
+                render();
+            }
+         }
+
+         render();
+
+         function render(){
+             document.querySelector('#myapp').innerHTML = `用户名：${myData.username}，年龄：${myData.age}`
+
+         }
+
+         
+        
+    </script>
+</body>
+</html>

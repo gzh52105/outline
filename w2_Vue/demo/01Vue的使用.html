@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01Vue的使用</title>
+</head>
+<body>
+    <h1>01Vue的使用</h1>
+    <!-- 视图层 -->
+    <div id="app">
+        <h4 v-bind:hello="title">{{className}}</h4>
+        <p>
+            单向+事件：<input type="text" v-bind:value="className" v-on:input="changeClassName" />
+        </p>
+        <p>
+            v-model：<input type="text" v-model="className" />
+        </p>
+        
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        /**
+         *  01Vue的使用
+                * 实例化一个Vue: new Vue(options)
+            
+                * MVC
+                    * M: Model      数据模型（数据）
+                    * V: View       视图（页面结构）
+                    * C: Controller 控制器（控制数据与视图的处理）
+                * MVVM
+                    * M: Model
+                    * V: View
+                    * VM: ViewModel
+         */
+
+        //  数据层
+         const model = {
+             className:'GZ-H5-2105',
+             title:'hello 2105'
+         }
+
+         const vm = new Vue({
+             // 关联视图层
+             el:'#app',//document.querySelector('#app')
+
+             // 关联数据层
+             data:model,
+
+             // 定义方法
+             methods:{
+                changeClassName(e){
+                    model.className = e.target.value;
+                }
+             }
+         })
+    </script>
+</body>
+</html>
