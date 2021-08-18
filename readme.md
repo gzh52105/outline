@@ -624,6 +624,19 @@
 
 ## day2-3
 
+### 面试题
+* js中的数据类型
+    * String
+    * Number
+    * Boolean
+    * Null
+    * Undefined
+    * Symbol    每次调用得到唯一值（ES6）
+    * BigInt    （ES10）
+        * Number -> BigInt: BigInt(num)
+        * BigInt -> Number: toString()
+    * Object
+
 ### 知识点
 * 前端框架历史
     * 第一阶段：javascript原生（1995）
@@ -670,15 +683,23 @@
         * 双向数据绑定
             > 原理：单向+事件
             * v-model = v-bind:value + v-on:input
-
+    * 列表循环
+        * v-for
+    * 条件绑定
+        * v-show
 
 * 指令
     > 自定义html属性
     * v-bind 绑定数据到属性
-        > 格式：v-bind:属性="数据"
+        > 格式：v-bind:属性="数据"，可以绑定所有属性，并对class与style进行了增强
     * v-on  绑定事件
         > 格式：v-on:事件类型="事件处理函数"
     * v-model 双向数据绑定
+    * v-for
+        > 格式：v-for="x in xxx" , v-for="x of xxx"
+        * 支持：数组、对象、数字、字符串等
+    * v-show 是否显示
+        > 利用css的display属性实现显示或隐藏
 
 * 思维转变
     > **节点操作思维** 转变到 **数据驱动思维**
@@ -701,7 +722,7 @@
     > 特点：当数据发生变化时，自动更新视图
     * 实现原理：监听数据变化(getter&setter)，当数据变化时更新视图
     * 如何设置响应式属性
-        * 把数据写入model
+        * 把数据写入data
         * Vue.set(target,key,value)
             * target: 给目标对象添加响应式属性
             * key: 属性名

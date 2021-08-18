@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03tab标签切换</title>
+    <link rel="stylesheet" href="./assets/bootstrap.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>03tab标签切换</h1>
+        <ul class="nav nav-tabs">
+            <li class="nav-item" v-for="(item,idx) in tabs">
+              <!-- <a v-bind:class="'nav-link' + (idx===current ? ' active':'') " href="#">{{item}}</a> -->
+              <!-- <a v-bind:class="['nav-link',idx===current ? 'active':'']" href="#">{{item}}</a> -->
+              <!-- <a v-bind:class="{'nav-link':true,active:idx===current}" href="#">{{item}}</a> -->
+              <a class="nav-link" v-bind:class="{active:idx===current}" href="#" v-on:click="changeTab(idx)">{{item.username}}</a>
+            </li>
+          </ul>
+          <div v-for="(item,idx) of tabs" class="py-5 px-3" v-show="idx===current">
+              {{item.username}} {{item.hobby}}
+          </div>
+          <!-- item in 5
+          <div v-for="(item,idx) in 5">{{idx}}-{{item}}</div>
+
+          item in 'hello'
+          <div v-for="(item,idx,a) in 'hello'">{{idx}}-{{item}}</div>
+          item in {username:'laoxie',age:18,isDanshen:false}
+          <div v-for="(item,key,idx) in {username:'laoxie',age:18,isDanshen:false}">{{idx}}-{{key}}:{{item}}</div> -->
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                current:0,
+                // tabs:['吴亦凡','霍尊','张哲瀚','田田']
+                tabs:[
+                    {
+                        username:'吴亦凡',
+                        hobby:'会玩'
+                    },
+                    {
+                        username:'霍尊',
+                        hobby:'很会玩'
+                    },
+                    {
+                        username:'张哲瀚',
+                        hobby:'超会玩'
+                    },
+                    {
+                        username:'田田',
+                        hobby:'不会玩'
+                    }
+                ]
+            },
+            methods:{
+                changeTab(idx){
+                    // console.log('change')
+                    this.current = idx
+                }
+            }
+        })
+    </script>
+</body>
+</html>
