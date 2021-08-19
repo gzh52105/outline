@@ -738,6 +738,7 @@
     * 需要频繁切换显示隐藏状态的操作使用v-show
     * 一开始就确定一个元素是否显示或隐藏，后期不需要频繁切换的操作使用
     * v-if一般不与v-for配合使用，因为v-for的优先级比v-if要高
+* computed与methods的区别
     
 
 ### 复习
@@ -775,7 +776,7 @@
     > 原理：getter&setter
     * 如何设置响应式属性
         * 初始化时设置data属性
-            > Vue实例化时会遍历data下所有属性，并通过`Object.defineProperty(target,key,descriptor)`把它们变成getter&setter
+            > Vue实例化时会遍历data下所有属性，并通过`Object.defineProperty(target,key,descriptor)`把它们变成getter&setter,并写入实例中
             * target: 目标对象
         * Vue.set(target,key,val)
 
@@ -807,7 +808,64 @@
     * 修饰符
 
 * 配置参数
+    > Vue实例化时，会遍历data、methods、computed等下所有的属性，并写入实例属性
     * el
     * data
     * methods
-    * computed
+    * computed 计算属性
+        > 初始化与依赖数据发生变化时，自动执行computed中的getter，否则从**缓存**中读取值，一般用于一些比较耗时的操作
+    * watch
+        > 监听实例属性的变化，当监听的属性发生改变时，自动执行监听函数
+
+* 实例
+    * 属性
+        * 内置属性
+            > $开头
+            * $el       视图层对应节点
+            * $refs     保存节点/组件的引用
+            * $data     数据层
+        * 私有属性
+            > _开头
+        * 自定义属性
+            > Vue实例化时自动写入实例
+    * 方法
+       * $set(target,key,val) ： Vue.set()的别名 
+       * $delete(): Vue.delete的别名
+       * $watch()
+* 类
+    * 静态属性（全局属性）
+    * 静态方法（全局方法）
+
+```js
+    const vm = new Vue({
+        // 配置参数
+        watch:{
+            a:funtion(val,oldVal){}
+        }
+    });
+
+    vm.$watch('a',function(val,oldVal){
+
+    })
+
+    // function hello(){}
+    // const hi = hello
+```
+
+* 组件Component
+    > 定义一个组件就相当于创建了一个标签，一个组件就是一个Vue的实例
+    * 定义
+        * 全局组件：Vue.component(name,options)
+        * 局部组件: components
+    * 使用
+        > 组件大小写问题
+
+* 模块化开发
+    > 把一个大的东西拆分成多个小模块，然后在组装起来形成一个整体，优势如下
+    * 复用
+    * 分工
+    * 维护
+
+### 练习
+* 组件化开发todolist
+    > 划分组件

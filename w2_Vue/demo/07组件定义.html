@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07组件定义</title>
+</head>
+<body>
+    <h1>07组件定义</h1>
+    <div id="app">
+        <!-- 使用组件 -->
+        <my-list>
+            <!-- <myhead></myhead> -->
+        </my-list>
+    </div>
+    <template id="myList">
+        <div>
+            <h4>name:{{name}}</h4>
+            hello list
+
+            <myhead></myhead>
+            <mybody></mybody>
+        </div>
+    </template>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 定义全局组件
+        Vue.component('myList',{
+            // el: 组件中不指定el,
+            data:function(){
+                return {
+                    name:'list component'
+                }
+            },
+            // template:`<div>
+            //     <h4>{{name}}</h4>
+            //     hello list
+            // </div>`
+            template:'#myList',
+
+            // 局部组件：只能在定义组件的组件中使用
+            components:{
+                myhead:{
+                    template:'<header>myhead</header>'
+                },
+                mybody:{
+                    template:'<header>mybody</header>'
+                }
+            }
+        })
+        const vm = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            components:{
+
+            }
+        })
+    </script>
+</body>
+</html>

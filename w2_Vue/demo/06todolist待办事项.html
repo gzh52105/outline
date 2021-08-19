@@ -19,7 +19,7 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col"><input type="checkbox"></th>
+                <th scope="col"><input type="checkbox" v-model="checkAll"></th>
                 <th scope="col">#</th>
                 <th scope="col">待办事项</th>
                 <th scope="col">添加时间</th>
@@ -28,21 +28,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,idx) in list">
+              <tr v-for="(item,idx) in list" @click="selectItem(item.id)">
                 <th><input type="checkbox" v-model="item.checked"></th>
                 <th>{{idx+1}}</th>
                 <td>{{item.todo}}</td>
-                <td>{{item.addtime}}</td>
+                <td>{{formatDate(item.addtime)}}</td>
                 <td>{{item.complete ? '是' : '否'}}</td>
                 <td>
-                    <button class="btn btn-outline-primary btn-sm" @click="completeItem(item.id)">完成</button>
-                    <button class="btn btn-outline-danger btn-sm" v-on:click="removeItem(item.id)">删除</button>
+                    <button class="btn btn-outline-primary btn-sm" @click.stop="completeItem(item.id)">完成</button>
+                    <button class="btn btn-outline-danger btn-sm" v-on:click.stop="removeItem(item.id)">删除</button>
                 </td>
               </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         总数：{{list.length}}，完成：{{completeList.length}}，未完成：{{unCompleteList.length}}
                     </td>
                 </tr>
@@ -54,8 +54,16 @@
         const vm = new Vue({
             el:'#app',
             data:{
-                qty:1,
+                // 测试数据
+                // qty:1,
+                // score:{
+                //     math:120,
+                //     chinese:90,
+                //     english:1
+                // },
+                // checkAll:false,
                 todo:'',
+            
                 list:[{
                     id: 1,
                     todo: '赚他一个亿津巴布韦币',
@@ -96,6 +104,36 @@
                 //     set(newVal){
 
                 //     }
+                // },
+                checkAll:{
+                    // getter：被动勾选，依赖每一项数据是否被勾选
+                    get(){
+                        return this.list.every(item=>item.checked)
+                    },
+                    // setter：主动勾选，让每一项数据根据checkAll的值变化而变化
+                    set(newVal){
+                        this.list.forEach(item=>item.checked=newVal)
+                    }
+                }
+            },
+
+            // 监听属性：可以监听实例下所有属性，包括子属性
+            watch:{
+                // checkAll:function(val,oldVal){
+                //     // 当checkAll发生改变时，自动执行这里的代码
+                //     console.log('checkAll change',val,oldVal)
+                //     this.list.forEach(item=>{
+                //         item.checked = val;
+                //     })
+                // },
+                // todo(val,oldVal){
+                //     console.log('todo change',val,oldVal)
+                // },
+                // 'score.chinese':(val,oldVal)=>{
+                //     console.log('score',val,oldVal)
+                // },
+                // 'list.1.checked':function(val,oldVal){
+                //     console.log('list.0.checked',val,oldVal)
                 // }
             },
             methods:{
@@ -109,6 +147,7 @@
                         id: parseInt(Math.random()*100000),
                         todo:this.todo,
                         complete: false,
+                        checked:false,
                         addtime: Date.now()
                     }
                     this.list.unshift(newItem)
@@ -130,6 +169,17 @@
                             item.complete = !item.complete;
                         }
                     })
+                },
+                selectItem(id){
+                    this.list.forEach(item=>{
+                        if(item.id === id){
+                            item.checked = !item.checked
+                        }
+                    })
+                },
+                formatDate(date){
+                    console.log('formatDate')
+                    return new Date(date).toLocaleDateString()
                 }
             }
         })
