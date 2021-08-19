@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06todolist待办事项</title>
+    <link rel="stylesheet" href="./assets/bootstrap.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <h1 class="my-3">06todolist待办事项</h1>
+        <div class="input-group mb-3">
+            <!-- {{qty}}
+            <input v-model.number.lazy="qty" /> -->
+            <input type="text" class="form-control" ref="input" v-model="todo" v-on:keyup.enter="addItem">
+            <button class="btn btn-success" v-on:click="addItem">添加</button>
+          </div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"><input type="checkbox"></th>
+                <th scope="col">#</th>
+                <th scope="col">待办事项</th>
+                <th scope="col">添加时间</th>
+                <th scope="col">是否完成</th>
+                <th scope="col">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item,idx) in list">
+                <th><input type="checkbox" v-model="item.checked"></th>
+                <th>{{idx+1}}</th>
+                <td>{{item.todo}}</td>
+                <td>{{item.addtime}}</td>
+                <td>{{item.complete ? '是' : '否'}}</td>
+                <td>
+                    <button class="btn btn-outline-primary btn-sm" @click="completeItem(item.id)">完成</button>
+                    <button class="btn btn-outline-danger btn-sm" v-on:click="removeItem(item.id)">删除</button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        总数：{{list.length}}，完成：{{completeList.length}}，未完成：{{unCompleteList.length}}
+                    </td>
+                </tr>
+            </tfoot>
+          </table>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                qty:1,
+                todo:'',
+                list:[{
+                    id: 1,
+                    todo: '赚他一个亿津巴布韦币',
+                    complete: true,
+                    checked:false,
+                    addtime: Date.now() + 3600*1000
+                }, {
+                    id: 2,
+                    todo: '迎娶白富美，达到人生巅峰',
+                    complete: false,
+                    checked:false,
+                    addtime: Date.now() + 3600 * 1000 * 5
+                },{
+                    id: 3,
+                    todo: '出任CEO，达到疯癫状态',
+                    complete: false,
+                    checked:true,
+                    addtime: Date.now() + 3600 * 1000 * 10
+                }]
+            },
+            // 计算属性：设置的属性为getter&setter
+            computed:{
+                // getter
+                completeList(){console.log('completeList')
+                    // 当读取completeList属性且依赖数据有修改时执行这里的代码
+                    // 这里的代码只有在初始化和依赖数据发生变化时执行（返回值才会重新计算）
+                    // 如依赖数据没有改变，从缓存中读取
+                    return this.list.filter(item=>item.complete)
+                },
+                unCompleteList(){
+                    return this.list.filter(item=>!item.complete)
+                },
+                // testTodo:{
+                //     get(){
+                //         console.log('testTodo')
+                //         return this.todo.toUpperCase();
+                //     },
+                //     set(newVal){
+
+                //     }
+                // }
+            },
+            methods:{
+                // enter(e){
+                //     if(e.ctrlKey && e.keyCode === 13){
+                //         this.addItem();
+                //     }
+                // },
+                addItem(){
+                    const newItem = {
+                        id: parseInt(Math.random()*100000),
+                        todo:this.todo,
+                        complete: false,
+                        addtime: Date.now()
+                    }
+                    this.list.unshift(newItem)
+                    // this.list.push(newItem)
+                    // this.list[this.list.length] = newItem
+
+                    // 清空
+                    this.todo = ''
+
+                    // 自动获得焦点
+                    this.$refs.input.focus()
+                },
+                removeItem(id){
+                    this.list = this.list.filter(item=>item.id!==id)
+                },
+                completeItem(id){
+                    this.list.forEach(item=>{
+                        if(item.id === id){
+                            item.complete = !item.complete;
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

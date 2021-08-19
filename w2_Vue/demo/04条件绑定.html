@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04v-if的使用</title>
+</head>
+<body>
+    <h1>04v-if的使用</h1>
+    <!-- 视图层: 只有vm实例能访问到的属性才能在视图层中使用 -->
+    <div id="app">
+        <p>
+            <input type="range" step="1" max="5" min="0" v-model="access" />{{access}}权限控制
+        </p>
+       <button v-if="access==1">普通会员</button>
+       <button v-else-if="access==2">VIP会员</button>
+       <button v-else-if="access==3">SVIP会员</button>
+       <button v-else-if="access==4">SBVIP会员</button>
+       <div v-else>你没有权限</div>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        
+         const vm = new Vue({
+            el:'#app',
+            data:{
+                access:1
+            }
+         })
+        
+         
+        
+    </script>
+</body>
+</html>

@@ -694,6 +694,7 @@
         > 格式：v-bind:属性="数据"，可以绑定所有属性，并对class与style进行了增强
     * v-on  绑定事件
         > 格式：v-on:事件类型="事件处理函数"
+        * 传参
     * v-model 双向数据绑定
     * v-for
         > 格式：v-for="x in xxx" , v-for="x of xxx"
@@ -727,3 +728,86 @@
             * target: 给目标对象添加响应式属性
             * key: 属性名
             * value: 属性值
+
+
+## day2-4
+
+### 面试题
+* v-show与v-if的区别，什么时候使用v-show，什么时候使用v-if
+    * 都能实现显示隐藏，但v-show通过css的display属性实现显示隐藏，v-if通过节点创建与销毁实现显示隐藏
+    * 需要频繁切换显示隐藏状态的操作使用v-show
+    * 一开始就确定一个元素是否显示或隐藏，后期不需要频繁切换的操作使用
+    * v-if一般不与v-for配合使用，因为v-for的优先级比v-if要高
+    
+
+### 复习
+* 指令
+    * v-bind
+    * v-on
+    * v-for
+    * v-model
+    * v-show
+
+* 数据绑定
+    * 单向
+        * {{}}
+        * v-bind
+            > 对class与style属性增强
+        * v-text
+        * v-html
+        * v-once
+    * 双向
+        * 单向+事件
+        * v-model
+            > 原理（替代方案）：v-bind:value + v-on:input
+* 条件绑定
+    * v-show
+    * v-if
+    * v-else
+    * v-else-if
+* 列表循环
+
+* 架构分层
+    * MVC
+    * MVP
+    * MVVM
+* 响应式属性
+    > 原理：getter&setter
+    * 如何设置响应式属性
+        * 初始化时设置data属性
+            > Vue实例化时会遍历data下所有属性，并通过`Object.defineProperty(target,key,descriptor)`把它们变成getter&setter
+            * target: 目标对象
+        * Vue.set(target,key,val)
+
+    ```js
+        new Vue({
+            data:{
+                a:10
+            }
+        })
+    ```
+### 知识点
+* 响应式属性
+    > 原理：getter&setter，只能在对象中实现
+    * 如何设置响应式属性
+        * 初始化时设置data属性
+        * Vue.set(target,key,val)
+        * 数组
+            > 在Vue实例化是，会修改数组原型对象，并在原型对象中添加以下方法实现响应式
+            * push()
+            * unshift()
+            * shift()
+            * pop()
+            * splice()
+            * sort()
+            * reverse()
+* 事件绑定：v-on （简写：@）
+    * 传参
+    * event
+    * 修饰符
+
+* 配置参数
+    * el
+    * data
+    * methods
+    * computed

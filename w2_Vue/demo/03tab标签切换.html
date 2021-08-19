@@ -21,6 +21,14 @@
           <div v-for="(item,idx) of tabs" class="py-5 px-3" v-show="idx===current">
               {{item.username}} {{item.hobby}}
           </div>
+
+          <!-- v-for一般不跟v-if配合使用 -->
+          <!-- <div v-for="(item,idx) of tabs" class="py-5 px-3" v-if="idx===current">
+              {{item.username}} {{item.hobby}}
+          </div> -->
+          <!-- <div v-for="(item,idx) of showTabs">
+              {{item.username}} {{item.hobby}}
+          </div> -->
           <!-- item in 5
           <div v-for="(item,idx) in 5">{{idx}}-{{item}}</div>
 
@@ -54,6 +62,15 @@
                         hobby:'不会玩'
                     }
                 ]
+            },
+            // 计算属性：一般用于对data属性的映射处理，当依赖的属性发生改变时会重新计算
+            // computed属性就是getter&setter
+            computed:{
+                // getter
+                showTabs(){
+                    console.log('computed')
+                    return this.tabs.filter((item,idx)=>idx===this.current)
+                }
             },
             methods:{
                 changeTab(idx){

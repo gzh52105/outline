@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05数据绑定</title>
+</head>
+<body>
+    <h1>05数据绑定</h1>
+    <div id="app">
+        <!-- {{}}与v-text会转义html -->
+        <!-- <strong>-> &lt;strong&gt; -->
+        <p><span v-pre>{{msg}}</span>：{{msg}}</p>
+        <p>v-text: <span v-text="msg"></span></p>
+        <p>v-html: <span v-html="msg"></span></p>
+        <p v-bind:title="msg">v-bind: </p>
+        <p v-once>v-once: <span v-html="msg"></span></p>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        
+         const vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'Hello <strong>Vue</strong>'
+            }
+         })
+        
+         
+        
+    </script>
+</body>
+</html>
