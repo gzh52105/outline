@@ -876,7 +876,22 @@
 
 ## day2-5
 
-### 复习
+### 面试题
+* 本地存储
+    > 存储在客户端的数据
+    * Cookie
+        * 大小：4Kb左右，一般用于存放简单的数据
+        * cookie会随着请求自动发送给同域服务器
+        * 有效期
+    * WebStorage
+        > 大小：5M左右
+        * sessionStorage
+        * localStorage
+    * 如果本地存储都满了，如何存入更多的数据
+        * 使用子域名实现更多存储，然后实现多个域名之间的通讯
+        * indexedDB或webSQL
+
+### 知识点
 * 组件
     * 全局组件: Vue.component()
     * 局部组件: components
@@ -895,6 +910,17 @@
             > 子组件不能修改父组件传入的数据
 * vue特殊属性
     * is
+* 实例
+    * 属性
+        * $refs
+        * $data
+        * $root
+        * $parent
+        * $children
+    * 方法
+        * $on()
+        * $off()
+        * $emit()
 * 组件通讯
     * 父->子：props
         1. 父组件操作：给子组件定义属性，并传递父组件的数据
@@ -903,3 +929,46 @@
         * 方式一：自定义事件
             1. 父组件操作：给子组件自定义事件（如:v-on:show），并使用父组件的方法做为事件处理函数（handle）
             2. 子组件操作：通过`$emit()`触发自定义事件并传递数据
+        * 方式二: 父组件方法传递到子组件执行，并回传数据
+
+    * 兄弟组件通讯
+        * 把数据提升到他们共同的父级（推荐）
+        * A->父组件->B
+    * 深层级组件通讯
+        * 逐层传递（不推荐）
+        * 事件总线
+            > 利用一个Vue实例作为事件载体实现传参
+
+* VueCLI Vue的命令行工具（脚手架）
+    * 安装
+        ```js
+            npm i -g @vue/cli
+        ```
+    * 创建项目
+        ```js
+            vue create myapp
+        ```
+    * npm script
+        * 调用：`npm run <name>`
+
+* 模块化
+    * commonJS
+        * 导入：require()
+        * 导出：module.exports
+    * ESModule
+        > 必须在服务器环境中使用
+        * 导入：import
+            > 格式：`import xx from url`
+            * url必须为相对路径或绝对路径
+            * 导入的必须为js文件，不能省略后缀名
+        * 导出：export
+            > export后只能跟`function`、`class`、`var`、`let`、`const`、default、{}
+        * 在webpack中使用
+        * 在html文件中使用
+
+* 单文件组件
+    > 后缀：`.vue`，把视图、js、css组合在一个文件中形成一个组件
+
+### 练习
+* 模块化todolist
+* 把todolist案例移植到vue-cli创建的项目中

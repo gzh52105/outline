@@ -17,7 +17,7 @@
     <template id="todolist">
         <div class="container">
             <todo-head @add="addItem"></todo-head>
-            <todo-body v-bind:datalist="list"></todo-body>
+            <todo-body v-bind:datalist="list" :complete="completeItem"></todo-body>
         </div>
     </template>
     <template id="todoHead">
@@ -40,7 +40,7 @@
             </thead>
             <tbody>
                 <!-- <todo-item></todo-item> -->
-                <tr is="todo-item" v-for="(item,idx) in datalist" :item="item" :idx="idx"></tr>
+                <tr is="todo-item" v-for="(item,idx) in datalist" :item="item" :idx="idx" :complete="complete"></tr>
             </tbody>
             <!-- <todo-foot></todo-foot> -->
             <tfoot is="todo-foot" :datalist="datalist"></tfoot>
@@ -63,6 +63,9 @@
             <td>{{item.addtime}}</td>
             <td>{{item.complete ? '是' : '否'}}</td>
             <td>
+                <!-- 逐层传递complete方法到todoItem中执行 -->
+                <!-- <button class="btn btn-outline-primary btn-sm" @click.stop="complete(item.id)">完成</button> -->
+                <!-- Bus事件总线实现 -->
                 <button class="btn btn-outline-primary btn-sm" @click.stop="completeItem(item.id)">完成</button>
                 <button class="btn btn-outline-danger btn-sm" v-on:click.stop="removeItem(item.id)">删除</button>
             </td>
@@ -70,6 +73,11 @@
     </template>
     <script src="../node_modules/vue/dist/vue.js"></script>
     <script>
+        // 事件总线：利用一个Vue实例作为事件载体实现传参
+        // const Bus = new Vue()
+
+        // Bus.$on('remove',removeItem)
+
         const todoHead = {
             data() {
                 // this.$on('add',handle); this.$off('add');this.$emit('add')
@@ -84,6 +92,9 @@
                     console.log('todoHead.addItem')
                     // 触发自定义事件
                     this.$emit('add',this.todo)
+
+                    this.todo = '';
+                    this.$refs.input.focus();
                 }
             }
         }
@@ -106,16 +117,28 @@
             template: '#todoFoot'
         }
         const todoItem = {
-            props:['item','idx'],
+            props:['item','idx','complete'],
             data() {
                 return {
 
                 }
             },
-            template: '#todoItem'
+            template: '#todoItem',
+            methods:{
+                removeItem(id){
+                    // Bus.$emit('remove',id)
+                    // vm.$emit('remove',id)
+                    this.$root.$emit('remove',id)
+                },
+                completeItem(id){
+                    // Bus.$emit('complete',id)
+                    // vm.$emit('complete',id)
+                    this.$root.$emit('complete',id)
+                }
+            }
         }
         const todoBody = {
-            props:['datalist'],
+            props:['datalist','complete'],
             data() {
                 return {
 
@@ -129,7 +152,16 @@
         }
         
         Vue.component('todolist', {
-            data() {
+            data() {console.log('$root',this.$root)
+                // 给Bus添加事件，并把父组件方法作为事件处理函数
+                // Bus.$on('remove',this.removeItem)
+                // Bus.$on('complete',this.completeItem)
+                // vm.$on('remove',this.removeItem)
+                // vm.$on('complete',this.completeItem)
+
+                this.$root.$on('remove',this.removeItem)
+                this.$root.$on('complete',this.completeItem)
+                
                 return {
                     list:[{
                         id: 1,
@@ -170,14 +202,22 @@
                     }
                     this.list.unshift(newItem)
                 },
-                removeItem(){
-
+                removeItem(id){
+                    this.list = this.list.filter(item=>item.id!==id)
                 },
-                completeItem(){
-
+                completeItem(id){
+                    this.list.forEach(item=>{
+                        if(item.id === id){
+                            item.complete = !item.complete;
+                        }
+                    })
                 },
-                selectItem(){
-
+                selectItem(id){
+                    this.list.forEach(item=>{
+                        if(item.id === id){
+                            item.checked = !item.checked
+                        }
+                    })
                 }
             }
         })
@@ -185,7 +225,7 @@
         const vm = new Vue({
             // el:'#app',
             data: {
-
+                test:'root'
             },
             // components:{
             //     todolist
