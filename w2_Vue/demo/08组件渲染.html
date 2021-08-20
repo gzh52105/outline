@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08组件渲染</title>
+</head>
+<body>
+    <h1>08组件渲染</h1>
+    <div id="app">
+        <h4>组件测试</h4>
+        <list></list>
+    </div>
+    <div id="mylist"></div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        /**
+            * 08 组件渲染 
+                * 优先级：render > template > el
+                * 渲染流程：
+                    1. 查找是否配置render，有则直接渲染render，否则下一步
+                    2. 查找是否配置template，有则把template中的代码编译到render，否则下一步
+                    3. 查找是否有配置el，有则把el的outerHTML作为template
+         */
+        Vue.component('list',{
+            // 一个组件就是一个Vue实例，它用于与Vue实例化时几乎相同的配置参数
+            // 组件配置
+            // el:'#mylist',
+            template:'<div class="box" v-bind:class="{title:true}" index="1" v-on:click="handle">datalist</div>',
+            render:function(createElement){
+                // createElement(tag,props,children): 一个用于创建虚拟节点VNode的方法
+                console.log('this',this)
+                return createElement('h4',{
+                    // v-bind:class
+                    class:{
+                        title:true,
+                        mytitle:false
+                    },
+                    // v-bind:style
+                    style:{
+                        color:'#f00'
+                    },
+                    // 普通属性
+                    attrs:{
+                        index:1
+                    },
+                    // 绑定事件:等效于v-on
+                    on:{
+                        click:this.handle
+                    }
+                },'render渲染函数的使用')
+            },
+            methods:{
+                handle(){
+                    console.log('hello')
+                }
+            }
+        });
+
+        const vm = new Vue({
+            // el:'#app',
+            data:{
+
+            },
+            // template:`<div>template</div>`,
+            // render(createElement){
+            //     return createElement(
+            //         'div',
+            //         {
+            //             attrs:{
+            //                 id:'#app'
+            //             }
+            //         },
+            //         [
+            //             createElement('h4',null,'组件测试'),
+            //             createElement('div',null,'div'),
+            //         ]
+            //     )
+            // }
+        })
+
+        vm.$mount('#app')
+    </script>
+</body>
+</html>
