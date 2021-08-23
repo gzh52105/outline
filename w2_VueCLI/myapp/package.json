@@ -10,6 +10,8 @@
   "dependencies": {
     "bootstrap": "^5.1.0",
     "core-js": "^3.6.5",
+    "sass": "^1.38.0",
+    "sass-loader": "^12.1.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
