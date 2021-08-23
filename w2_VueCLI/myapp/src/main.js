@@ -23,7 +23,7 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-
+console.log('App=',App)
 
 new Vue({
   render: h => h(App),

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01v-model的原理和替代方案</title>
+</head>
+<body>
+    <h1>01v-model的原理和替代方案</h1>
+    <div id="app">
+        username:{{username}}
+        <p>
+            v-model:<input v-model="username" />
+        </p>
+        <p>
+            v-bind+v-on:<input v-bind:value="username" v-on:input="changeUser" />
+        </p>
+        <myform v-model="username" v-bind:user.sync="username"></myform>
+        <!-- <myform v-bind:value="username" v-on:input=""></myform> -->
+        <!-- <myform v-bind:user="username" v-on:update:user=""></myform> -->
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        Vue.component('myform',{
+            props:['value','user'],
+            template:`<div>
+                myform
+                <p>{{value}}</p>
+                <input v-bind:value="value" v-on:input="change" />
+
+                <button @click="changeUser">修改user</button>
+            </div>`,
+            methods:{
+                change(e){
+                    // e.target.value
+                    console.log('e.target.value',e.target.value)
+
+                    this.$emit('input',e.target.value)
+                },
+                changeUser(){
+                    this.$emit('update:user',300)
+                }
+            }
+
+        })
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                username:'tiantian'
+            },
+            methods:{
+                changeUser(e){
+                    this.username = e.target.value;
+                }
+            }
+        })
+
+
+    </script>
+</body>
+</html>

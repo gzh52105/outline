@@ -3,10 +3,11 @@
     <Todolist/>
   </div>
 </template>
-
+<link 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 import Todolist from './components/Todolist.vue'
+console.log('Todolist',Todolist)
 export default {
   // 组件配置
   name: 'App',

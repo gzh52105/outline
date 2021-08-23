@@ -905,7 +905,7 @@
     2. 组件与结构
     3. 定义数据（遵循以下原则）
         * 数据定义在使用的组件内
-        * 如多个组件公用一个数据，则把数据定义在他们共同的父级组件中
+        * 如多个组件共用一个数据，则把数据定义在他们共同的父级组件中
         * 谁的数据谁修改
             > 子组件不能修改父组件传入的数据
 * vue特殊属性
@@ -930,7 +930,8 @@
             1. 父组件操作：给子组件自定义事件（如:v-on:show），并使用父组件的方法做为事件处理函数（handle）
             2. 子组件操作：通过`$emit()`触发自定义事件并传递数据
         * 方式二: 父组件方法传递到子组件执行，并回传数据
-
+        * 方式三：sync修饰符
+            > 添加sync修饰符后，自动给组件添加`update:xxx`事件
     * 兄弟组件通讯
         * 把数据提升到他们共同的父级（推荐）
         * A->父组件->B
@@ -962,7 +963,7 @@
             * url必须为相对路径或绝对路径
             * 导入的必须为js文件，不能省略后缀名
         * 导出：export
-            > export后只能跟`function`、`class`、`var`、`let`、`const`、default、{}
+            > export后只能跟`function`、`class`、`var`、`let`、`const`、`default`、`{}`
         * 在webpack中使用
         * 在html文件中使用
 
@@ -972,3 +973,26 @@
 ### 练习
 * 模块化todolist
 * 把todolist案例移植到vue-cli创建的项目中
+
+## 3-1
+
+### 面试题
+* v-model的替代方案
+    ```js
+        <input v-model="username" />
+
+        <input v-bind:value="username" v-on:input="username=123" />
+    ```
+* 如何让v-model在组件上生效
+    > 原理（替代方案）：v-bind:value + v-on:input
+* 在子组件修改父组件的数据
+    > 正常情况下由于单向数据流限制，无法在子组件修改父组件数据
+    ```js
+        <myform v-bind:user.sync="username"></myform>
+
+        // 添加sync修饰符后，在子组件内通过$emit('update:user',xxx)修改
+        this.$emit('update:user',xxx)
+    ```
+
+### 知识点
+* 单向数据流

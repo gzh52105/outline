@@ -1,24 +1,29 @@
 <template>
     <div class="container">
-        <TodoHead @add="addItem" />
         <!-- <todo-head @add="addItem"></todo-head> -->
         <!-- <todo-body v-bind:datalist="list" :complete="completeItem"></todo-body> -->
+        <TodoHead @add="addItem" />
+        <TodoBody :datalist="list" />
     </div>
 </template>
 <script>
+import Bus from '../Bus';
 import TodoHead from './TodoHead.vue'
+import TodoBody from './TodoBody.vue'
 import 'bootstrap/dist/css/bootstrap.css'
+
 export default {
   data() {
-    console.log("$root", this.$root);
     // 给Bus添加事件，并把父组件方法作为事件处理函数
-    // Bus.$on('remove',this.removeItem)
-    // Bus.$on('complete',this.completeItem)
+    Bus.$on('remove',this.removeItem)
+    Bus.$on('complete',this.completeItem)
+    Bus.$on('select',this.selectItem)
+    Bus.$on('selectall',this.selectAll)
     // vm.$on('remove',this.removeItem)
     // vm.$on('complete',this.completeItem)
 
-    this.$root.$on("remove", this.removeItem);
-    this.$root.$on("complete", this.completeItem);
+    // this.$root.$on("remove", this.removeItem);
+    // this.$root.$on("complete", this.completeItem);
 
     return {
       list: [
@@ -50,7 +55,7 @@ export default {
   // 局部组件
   components: {
     TodoHead,
-    // todoBody
+    TodoBody
   },
   methods: {
     addItem(todo) {
@@ -74,11 +79,17 @@ export default {
         }
       });
     },
-    selectItem(id) {
+    selectItem(id,checked) {
       this.list.forEach(item => {
         if (item.id === id) {
-          item.checked = !item.checked;
+          item.checked = checked!==undefined ? checked : !item.checked;
         }
+      });
+    },
+    selectAll(checked){
+         this.list.forEach(item => {
+        
+          item.checked = checked;
       });
     }
   }
