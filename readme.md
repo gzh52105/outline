@@ -998,6 +998,7 @@
     * 插槽：在父组件生成html结构后传入子组件
 ### 知识点
 * 单向数据流
+    > 父组件数据修改会自动响应到子组件，反之不成立
 * 插槽slot
     > 实现组件的可定制化
     * 内置组件：`<slot/>`
@@ -1005,13 +1006,49 @@
         > 只能用在template标签中
     * 插槽类型
         * 默认插槽: 没有名字的slot
-        * 命名插槽: 给slot添加name属性
+            > 组件标签内的结构会自动写入组件的默认插槽（template除外）
+        * 命名插槽: 
+            1. 组件内操作：给slot添加name属性
+            2. 父组件操作：在template标签中使用`v-slot:name`
     * 插槽默认值
-        > 使用slot时指定默认结构
+        > 在`<slot></slot>`组件内指定默认内容，当不使用插槽时默认显示这里的内容
 * 作用域插槽
     > 需求：需要组件内的数据完成html结构的生成
+    ```js
+        // 组件<mycomponent>内部代码
+        <slot></slot>
+        
+        // 使用组件的代码
+        <mycomponent :data="goodslist">
+            <template v-slot="scope">
+                // 在这定义代码，并可使用组件内传入的数据
+            </template>
+        </mycomponent>
+    ```
      
 * 组件封装
     * 组件通讯
-        > 数据类型校验
+        > props数据类型校验
+        ```js
+            {
+                props:['data','index','list'],
+                computed:{
+                    completelist(){
+                        this.list.filter()
+                    }
+                }
+            }
+        ```
     * 插槽
+
+## day3-2
+
+### 知识点
+* vue组件内部样式
+    > 所写的样式只在当前组件中生效
+    * 原理：属性选择器
+        > 给style添加scoped属性后，webpack在编译时会自动给当前组件所有的标签添加`data-v-[hash]`，然后通过属性选择器进行匹配
+* css预处理器
+    * sass
+    * less
+    * stylus

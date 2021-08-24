@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <Todolist/> -->
-    <Todo />
+    <!-- <Todo /> -->
 
     <!-- 自定义组件 -->
     <Button type="primary" size="large">完成</Button>
@@ -10,14 +10,18 @@
     <Button type="primary" size="small">添加</Button>
     <!-- <Button index="10" size="20">TEST</Button> -->
     <button @click="handle">button</button>
+
+    <Totop/>
+    <Totop position="lb">返回顶部</Totop>
   </div>
 </template>
 <link 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import Todolist from './components/Todolist.vue'
-import Todo from './components/todolist/Todolist.vue'
+// import Todolist from './components/Todolist.vue'
+// import Todo from './components/todolist/Todolist.vue'
 import Button from './components/Button.vue'
+import Totop from './components/Totop.vue'
 
 export default {
   // 组件配置
@@ -35,9 +39,10 @@ export default {
 
   components: {
     // HelloWorld,
-    Todolist,
-    Todo,
-    Button
+    // Todolist,
+    // Todo,
+    Button,
+    Totop
   }
 }
 </script>
@@ -50,5 +55,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  padding-bottom:2000px;
 }
 </style>
