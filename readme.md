@@ -1043,6 +1043,13 @@
 
 ## day3-2
 
+### 面试题
+* 项目中的git分支及作用
+    * master -> main
+    * develop
+    * hotfix
+    * release
+
 ### 知识点
 * vue组件内部样式
     > 所写的样式只在当前组件中生效
@@ -1052,3 +1059,35 @@
     * sass
     * less
     * stylus
+
+* 组件生命周期
+    > 组件从创建到销毁的过程
+
+    * 阶段
+        * 创建阶段
+            * beforeCreate
+            * created
+        * 挂载阶段
+            * beforeMount
+            * mounted
+        * 更新阶段
+            > VirtualDOM虚拟DOM
+            * beforeUpate
+            * updated
+        * 销毁阶段 
+            > 触发销毁条件：v-if,$destroy()
+            * beforeDestroy
+            * destroyed
+    * 搞懂以下问题
+        1. 生命周期的执行过程
+        2. 在每个钩子函数中适合做哪些操作
+* 虚拟DOM: VirtualDOM
+    > 一个结构类似与真实DOM节点的js对象
+    * diff算法：对比虚拟节点前后状态，找出差异项
+    * key作用
+
+* 页面刷新流程
+    * 原生：修改数据 -> 修改真实DOM节点 -> 页面刷新
+    * Vue: 修改数据 -> 修改虚拟节点 - 对比虚拟节点前后状态(找出差异项) -> 修改真实DOM节点（修改差异项） -> 页面刷新
+        * 规避一些没必要的更新，减少节点操作
+

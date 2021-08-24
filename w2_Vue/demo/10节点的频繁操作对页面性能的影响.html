@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10节点的频繁操作对页面性能的影响</title>
+</head>
+<body>
+    <h1>10节点的频繁操作对页面性能的影响</h1>
+    <div id="qty">
+        0
+    </div>
+    <script>
+        console.time('qty')
+        // 次数     : 时间
+        // 60000    : 1100ms
+        // 40001    : 1000ms
+        // 20002    : 50ms
+        // 3        : 2
+        let qty = document.querySelector('#qty')
+        let num = qty.innerText
+        for(let i=0;i<20000;i++){
+            num++;
+        }
+        qty.innerText = num;
+        console.timeEnd('qty')
+    </script>
+</body>
+</html>
