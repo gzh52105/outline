@@ -1065,17 +1065,19 @@
 
     * 阶段
         * 创建阶段
+            > 注入与响应式处理
             * beforeCreate
             * created
         * 挂载阶段
+            > 把数据挂载到视图（调用render渲染函数）
             * beforeMount
             * mounted
         * 更新阶段
-            > VirtualDOM虚拟DOM
+            > 触发条件：数据被修改（VirtualDOM虚拟DOM）
             * beforeUpate
             * updated
         * 销毁阶段 
-            > 触发销毁条件：v-if,$destroy()
+            > 触发销毁条件：`v-if`,`$destroy()`
             * beforeDestroy
             * destroyed
     * 搞懂以下问题
@@ -1087,7 +1089,53 @@
     * key作用
 
 * 页面刷新流程
+    > 要让页面刷新，节点操作不可避免
     * 原生：修改数据 -> 修改真实DOM节点 -> 页面刷新
     * Vue: 修改数据 -> 修改虚拟节点 - 对比虚拟节点前后状态(找出差异项) -> 修改真实DOM节点（修改差异项） -> 页面刷新
         * 规避一些没必要的更新，减少节点操作
 
+
+## day3-3
+
+### 知识点
+* 应用类型
+    * 单页面应用：SPA（Single Page Application）
+        > 整个应用只有一个页面（index.html），通过hash值进行跳转，跳转时页面不会刷新
+    * 多页面应用: MPA（Multiple Page Application）
+        > 整个应用存在多个页面，跳到新页面会刷新
+* 路由
+    * 使用步骤  
+        1. 安装引入
+            ```
+                import VueRouter from 'vue-router'
+            ```
+        2. 安装插件
+            ```js
+                Vue.use(VueRouter)
+            ```
+        3. 实例化并配置路由信息
+            ```js
+                const router = new VueRouter({
+                    routes:[]
+                })
+            ```
+        4. 注入根实例
+            ```js
+                new Vue({
+                    //...
+                    router:router
+                })
+            ```
+        5. 在组件中使用
+            * 显示路由组件内容： `<router-view/>`
+
+* 路由跳转
+    * 声明式导航：`<router-link/>`
+    * 编程式导航: 利用js进行跳转
+        * $route: 当前路由信息对象
+        * $router: 路由实例
+            * back()
+            * forward()
+            * go()
+            * push()
+            * replace()
