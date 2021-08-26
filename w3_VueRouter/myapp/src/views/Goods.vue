@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <NavbarPage title="商品详情" @share="shareGoods">
         <van-image
             :src="'http://120.76.247.5:2003'+goods.img_url"
         />
@@ -31,9 +31,10 @@
             <van-goods-action-button type="warning" text="加入购物车" />
             <van-goods-action-button type="danger" text="立即购买" />
         </van-goods-action>
-    </div>
+    </NavbarPage>
 </template>
 <script>
+import NavbarPage from '@/layout/NavbarPage.vue'
 import axios from 'axios'
 export default {
     name:'Goods',
@@ -42,6 +43,9 @@ export default {
             goods:{},
             goodslist:[], // 相关商品
         }
+    },
+    components:{
+        NavbarPage,
     },
     // 监听动态路由id变化
     // watch:{
@@ -65,6 +69,9 @@ export default {
             const {data} = await axios.get("http://120.76.247.5:2003/api/goods/"+id);
             console.log("data=", data);
             this.goods = data.data;
+        },
+        shareGoods(){
+            console.log('分享商品')
         }
     },
     async created(){

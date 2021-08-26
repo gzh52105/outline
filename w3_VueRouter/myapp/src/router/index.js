@@ -35,7 +35,12 @@ const router = new VueRouter({
     {
       name:'Mine',
       path:'/mine',
-      component:Mine
+      component:Mine,
+      // 路由独享守卫
+      beforeEnter(to,from,next){
+        console.log('Mine.beforeEnter')
+        next();
+      }
     },
     {
       path:'/login',
@@ -56,6 +61,21 @@ const router = new VueRouter({
       component:Goods
     },
   ]
+})
+
+
+// 全局路由守卫(所有的导航都会进入全局守卫)
+router.beforeEach(function(to,from,next){
+  console.log('beforeEach');
+  next();
+})
+router.beforeResolve(function(to,from,next){
+  console.log('beforeResolve');
+  next();
+})
+
+router.afterEach(function(to,from){
+  console.log('afterEach',to.path,from.path);
 })
 
 export default router

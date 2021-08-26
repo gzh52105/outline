@@ -29,6 +29,21 @@ export default {
         goto(path){
             this.$router.push(path)
         }
+    },
+    // 路由组件守卫
+    beforeRouteEnter(to,from,next){
+
+        console.log('Mine.beforeRouteEnter')
+        next();
+
+    },
+    beforeRouteUpdate(to,from,next){
+        console.log('Mine.beforeRouteUpdate')
+        next();
+    },
+    beforeRouteLeave(to,from,next){
+        console.log('Mine.beforeRouteLeave')
+        next();
     }
 }
 </script>

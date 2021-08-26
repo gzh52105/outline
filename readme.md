@@ -1150,6 +1150,23 @@
 
 ## day3-4
 
+### 面试题
+* 点语法与setAttribute()设置属性的区别(jquery中的prop()与attr())
+    * 节点属性
+    * html标签属性
+        * 公共属性: id,class,title
+        * 私有属性
+            * img: src,alt
+            * input: type,value
+            * label: for
+    * 点语法设置的是节点属性, setAttribute()设置的是html属性
+    ```js
+        div.title = 'hello'
+        div.setAttribute('title','hello')
+        $(div).prop('title','hello')
+        $(div).attr('title','hello')
+    ```
+
 ### 知识点
 * 路由模式
     * 类型
@@ -1182,11 +1199,60 @@
 
 * 路由守卫: 路由切换过程中自动执行的钩子函数
     * 全局路由守卫
+        > 是路由实例的方法, 一般写在路由配置文件中
+        * router.beforeEach(fn)
+            * to
+            * from
+            * next()  
+        * router.afterEach(fn)
+            * to
+            * from
+        * router.beforeResolve(fn)
+            * to
+            * from
+            * next() 
     * 路由独享守卫
+        > 写在路由配置中
+        * beforeEnter(fn)
+            * to
+            * from
+            * next() 
     * 路由组件内守卫
+        > 写在路由组件中
         * beforeRouteEnter()
         * beforeRouteUpdate()
         * beforeRouteLeave()
 
 * 路由守卫的应用
     * 页面权限控制
+
+* 路由导航过程
+    > /category -> /mine:   1,2,3,5,6,7,8,9,10,11
+    > /goods/1 -> /goods/2: 1,3,4,8,9,10,11
+    1. 导航被触发
+    2. 在**失活的组件**里调用`beforeRouteLeave`离开守卫
+    3. 调用全局的 beforeEach 守卫。
+    4. 在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
+    5. 在路由配置里调用 beforeEnter。
+    6. 解析异步路由组件。
+    7. 在被激活的组件里调用 beforeRouteEnter。
+    8. 调用全局的 beforeResolve 守卫 (2.5+)。
+    9. 导航被确认。
+    10. 调用全局的 afterEach 钩子。
+    11. 触发 DOM 更新。
+
+* 二次封装
+    > 在已有组件的基础上再次封装组件,达到简化使用或优化用户体验目的的操作
+
+* Session会话
+    1. 第一次请求:在服务器生成验证码(如:cjg9),保存到session,并返回给前端
+    2. 第二次请求:注册并发送参数(username,password,vcode)
+
+    * 如何知道两次请求为同一人所为: 使用sessionid
+        1. 第一次请求服务器生成一个sessionid并保存到客户端cookie
+            > Set-Cookie响应头
+        2. cookie会自动发给同域服务器
+* 解决跨域cookie
+    * 每个请求添加`withCredentials`
+    * 服务器必须响应头`Access-Controll-Allow-Credentials=true`
+    * 浏览器设置

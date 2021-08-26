@@ -10,6 +10,12 @@ export default {
         return {
             
         }
+    },
+
+    // 组件内守卫
+    beforeRouteLeave(to,from,next){
+        console.log('Category.beforeRouteLeave')
+        next();
     }
 }
 </script>
