@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02hash路由的原理</title>
+</head>
+
+<body>
+    <h1>02hash路由的原理</h1>
+    <div id="view">
+
+    </div>
+    <script>
+        /**
+            * 02hash路由的原理 
+                > window下的hashchange事件
+         */
+
+        const routes = [
+            {
+                path: '/home',
+                component: '<div>Home</div>'
+            },
+            {
+                path: '/login',
+                component: '<div>Login</div>'
+            },
+            {
+                path: '/mine',
+                component: '<div>Mine</div>'
+            }
+        ]
+
+
+        const route = matchRoute();
+        // 渲染组件到页面
+        render(route);
+
+        // hash路由的原理：监听hashchange事件，当hash发生改变时渲染匹配的内容到页面
+        window.onhashchange = function () {
+            console.log('hash change')
+            const route = matchRoute();
+
+            // 渲染组件到页面
+            render(route);
+        }
+
+        function matchRoute(){
+            // 获取hash
+            const hash = window.location.hash.slice(1);
+
+            // 匹配路由
+            //  const route = routes.filter(item=>item.path === hash)[0]
+            const route = routes.find(item => item.path === hash)
+
+            return route;
+        }
+
+        function render(route){
+            document.querySelector('#view').innerHTML = route.component;
+        }
+    </script>
+</body>
+
+</html>

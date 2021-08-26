@@ -1146,3 +1146,47 @@
     * iView         腾讯
     * vantUI        有赞
     * ...
+
+
+## day3-4
+
+### 知识点
+* 路由模式
+    * 类型
+        * hash      哈希路由（路径带#）
+        * history   HTML5新特性
+    ```js
+        mode:'hash',// history
+    ```
+    * hash路由的原理
+        > 监听hashchange事件，当hash发生改变时渲染匹配的内容到页面
+* 路由跳转
+    * 路径跳转
+        ```js
+            <router-link to="/home" />
+            <router-link :to="{path:'/home'}" />
+            this.$router.push('/home')
+            this.$router.push({path:'/home'})
+        ```
+    * 路径名称跳转
+        > 给路由命名
+* 路由传参
+    * query： `?xx=xxx`
+        > 数据持久化
+    * params
+        > 只在name方式跳转时生效,缺点是页面刷新时数据丢失(动态路由例外)
+        * 动态路由
+            * 监听动态路由变化
+                * watch
+                * 路由守卫beforeRouteUpdate()
+
+* 路由守卫: 路由切换过程中自动执行的钩子函数
+    * 全局路由守卫
+    * 路由独享守卫
+    * 路由组件内守卫
+        * beforeRouteEnter()
+        * beforeRouteUpdate()
+        * beforeRouteLeave()
+
+* 路由守卫的应用
+    * 页面权限控制

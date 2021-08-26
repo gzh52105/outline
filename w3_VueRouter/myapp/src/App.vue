@@ -87,4 +87,7 @@ export default {
 .price del::before,.price span::before{
   content:'￥'
 }
+.van-tabbar.hide{
+  display: none
+}
 </style>
