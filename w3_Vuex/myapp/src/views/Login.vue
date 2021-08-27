@@ -78,7 +78,7 @@ export default {
 
             if(data.code === 200){
                 // 保存用户信息
-                localStorage.setItem('userInfo',JSON.stringify(data.data))
+                this.$store.commit('login',data.data);
                 let {targetUrl='/mine'} = this.$route.query
                 this.$router.push(targetUrl)
             }else if(data.code === 401){
@@ -96,7 +96,7 @@ export default {
       }
   },
   created(){
-      console.log('Login.created',this);
+      console.log('Login.created',this.$store)
       this.getVcode();
   }
 };

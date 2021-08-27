@@ -5,6 +5,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 
 import router from './router'
+import store from './store'
 import request,{baseUrl} from '@/utils/request'
 
 // 设置Vue原型
@@ -19,5 +20,6 @@ Vue.config.productionTip = false
 new Vue({
   // 4. 把router实例注入到vue实例中
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

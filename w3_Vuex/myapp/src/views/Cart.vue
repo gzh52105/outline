@@ -110,6 +110,9 @@ export default {
 
               console.log('checked',checked,this.selectIds)
           }
+      },
+      userInfo(){
+          return this.$store.state.userInfo
       }
   },
   components:{
@@ -129,12 +132,11 @@ export default {
       },
       // 获取购物车商品列表
       async getData(){
-          const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {}
           const data = await this.$request.get('/cart',{
-              userid:userInfo._id
+              userid:this.userInfo._id
           },{
               headers:{
-                  Authorization:userInfo.authorization
+                  Authorization:this.userInfo.authorization
               }
           })
 
@@ -144,15 +146,14 @@ export default {
 
       //修改商品数量
       async changeQty(qty,{name:id}){
-           const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {}
 
           const data = await this.$request.patch('/cart',{
-              userid:userInfo._id,
+              userid:this.userInfo._id,
               id,
               qty
           },{
               headers:{
-                  Authorization:userInfo.authorization
+                  Authorization:this.userInfo.authorization
               }
           })
       },
@@ -164,17 +165,17 @@ export default {
                   title: '确认操作',
                   message: '是否确认删除',
               });
-            const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {}
+            
 
             const data = await this.$request.delete('/cart',null,{
                 // 请求头
                 headers:{
-                    Authorization:userInfo.authorization
+                    Authorization:this.userInfo.authorization
                 },
 
                 // 请求体
                 data:{
-                    userid:userInfo._id,
+                    userid:this.userInfo._id,
                     ids:[id],
                 }
             })

@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h1>用户登录</h1>
+    <h1>用户注册</h1>
     <van-form @submit="onSubmit">
         <van-field
             v-model="username"
@@ -25,7 +25,7 @@
             </template>
         </van-field>
         <div style="margin: 16px;">
-            <van-button block type="info" native-type="submit">免费登录</van-button>
+            <van-button block type="info" native-type="submit">注册</van-button>
         </div>
     </van-form>
 
@@ -34,12 +34,26 @@
 <script>
 import {Toast} from 'vant'
 // import axios from 'axios'
-// import request from '@/utils/request'
-
 export default {
-  name: "Login",
+  name: "Reg",
   data() {
-      
+      const checkUsername = (val)=>{
+          return new Promise(async (resolve) => {
+            Toast.loading('验证中...');
+
+                // ajax
+                // const {data} = await axios.get("http://120.76.247.5:2003/api/user/check",{
+                //     params:{
+                //         username:val
+                //     }
+                // });
+                const data = await this.$request.get('/user/check',{username:val})
+                Toast.clear();
+
+                resolve(data.code === 200)
+
+        });
+      }
     return {
         username:'',
         password:'',
@@ -49,6 +63,7 @@ export default {
             username:[
                 { required: true, message: '请填写用户名' },
                 // 校验用户名是否存在
+                {validator:checkUsername,message:'用户名已存在'}
             ],
             password:[
                 { required: true, message: '请填写密码' }
@@ -61,47 +76,43 @@ export default {
   },
   methods:{
       async onSubmit(){
-          console.log('onSubmit')
-        //     const {data} = await axios.post("http://120.76.247.5:2003/api/login",{
+        //     const {data} = await axios.post("http://120.76.247.5:2003/api/reg",{
         //         username:this.username,
         //         password:this.password,
         //         vcode:this.vcode,
         //     },{
         //       withCredentials:true
         //   });
-
-            const data = await this.$request.post('/login',{
+            const data = await this.$request.post("/reg",{
                 username:this.username,
                 password:this.password,
                 vcode:this.vcode,
-            })
+            });
+        
 
             if(data.code === 200){
-                // 保存用户信息
-                localStorage.setItem('userInfo',JSON.stringify(data.data))
-                let {targetUrl='/mine'} = this.$route.query
-                this.$router.push(targetUrl)
+                this.$router.push('/login')
             }else if(data.code === 401){
                 Toast.fail('验证码错误')
             }else{
-                Toast.fail('用户名或验证码错误')
+                Toast.fail('注册失败')
             }
       },
       async getVcode(){
         //   const {data} = await axios.get("http://120.76.247.5:2003/api/vcode/picture",{
         //       withCredentials:true
         //   });
-        const data = await this.$request.get('/vcode/picture')
+          const data = await this.$request.get("/vcode/picture");
+
           this.vcodeHtml = data.data;
       }
   },
   created(){
-      console.log('Login.created',this);
       this.getVcode();
   }
 };
 </script>
 <style scoped>
-
+    .vcode{}
 </style>
 

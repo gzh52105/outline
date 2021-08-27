@@ -1277,8 +1277,45 @@
     > 优点: 
     * 简化用户操作: 用户不需要每次输入用户名和密码
     * 减轻服务器压力: 不需要进行数据库的I/O操作
-    
+
     1. 生成:加密
         > 在服务器生成(加密算法,有效期,密钥)
     2. 校验: 解密
         > 在服务器解密,如token被篡改或已过期,则校验不通过
+
+
+* Vuex 使用步骤
+    1. 安装与引用
+        ```js
+            // npm install vuex
+
+            import Vuex from 'vuex'
+        ```
+    2. 安装插件
+        ```js
+            Vue.use(Vuex)
+        ```
+    3. 实例化store
+        ```js
+            const store = new Vuex.Store({
+                // 核心配置
+            })
+        ```
+    4. 将store实例注入到Vue根实例
+        ```js
+            new Vue{
+                // ...
+                store:store,
+            }
+        ```
+    5. 在组件中使用
+        > this.$store
+
+* Vuex核心配置
+    * state 状态(全局共享的数据,类似与组件中的data)
+        > 通过`this.$store.state.xxx`获取
+    * getters 
+        > 通过 `this.$store.getters.xxx`获取
+    * mutations 修改state的唯一方式,类似于组件中的methods
+        > 通过`this.$store.commit(mutation)`调用
+        
