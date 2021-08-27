@@ -1245,14 +1245,40 @@
     > 在已有组件的基础上再次封装组件,达到简化使用或优化用户体验目的的操作
 
 * Session会话
-    1. 第一次请求:在服务器生成验证码(如:cjg9),保存到session,并返回给前端
-    2. 第二次请求:注册并发送参数(username,password,vcode)
-
-    * 如何知道两次请求为同一人所为: 使用sessionid
-        1. 第一次请求服务器生成一个sessionid并保存到客户端cookie
-            > Set-Cookie响应头
+    1. 第一次请求(获取验证码):在服务器生成验证码(如:cjg9),保存到session,并返回给前端
+    2. 第二次请求(校验验证码):注册并发送参数(username,password,vcode)
+* http请求是无状态请求
+    > 使用sessionid识别用户身份
+    * 为什么要通过cookie来识保存sessionid
+        1. 可以通过服务器设置cookie（Set-Cookie响应头）
         2. cookie会自动发给同域服务器
 * 解决跨域cookie
-    * 每个请求添加`withCredentials`
-    * 服务器必须响应头`Access-Controll-Allow-Credentials=true`
+    > 以下三个条件必须同时满足才能实现cookie跨域通讯
+    * 服务器必须设置响应`Access-Controll-Allow-Credentials=true`
+    * 每个请求添加`withCredentials=true`
     * 浏览器设置
+        V91: 在快捷方式后添加` --flag-switches-begin --disable-features=SameSiteByDefaultCookies,CookiesWithoutSameSiteMustBeSecure --flag-switches-end`
+
+
+## day3-5
+
+### 知识点
+* axios二次封装
+* 页面访问权限控制
+    1. 设置哪些页面需要登录才能访问
+        > requiresAuth
+    2. 在beforeEach全局路由守卫中判断登录状态并控制页面访问
+        * 必须解决以下问题
+            1. 用户信息是否被篡改
+            2. 用户登录是否过期
+            > 解决方案: token令牌(一个加密后的字符串)
+
+* token令牌
+    > 优点: 
+    * 简化用户操作: 用户不需要每次输入用户名和密码
+    * 减轻服务器压力: 不需要进行数据库的I/O操作
+    
+    1. 生成:加密
+        > 在服务器生成(加密算法,有效期,密钥)
+    2. 校验: 解密
+        > 在服务器解密,如token被篡改或已过期,则校验不通过

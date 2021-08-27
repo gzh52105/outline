@@ -5,6 +5,10 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 
 import router from './router'
+import request from '@/utils/request'
+
+// 设置Vue原型
+Vue.prototype.$request = request;
 
 
 // 安装插件：在内部注册60+全局组件

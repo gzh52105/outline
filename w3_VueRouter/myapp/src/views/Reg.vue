@@ -33,23 +33,23 @@
 </template>
 <script>
 import {Toast} from 'vant'
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   name: "Reg",
   data() {
-      const checkUsername = function(val){
+      const checkUsername = (val)=>{
           return new Promise(async (resolve) => {
             Toast.loading('验证中...');
 
                 // ajax
-                const {data} = await axios.get("http://120.76.247.5:2003/api/user/check",{
-                    params:{
-                        username:val
-                    }
-                });
+                // const {data} = await axios.get("http://120.76.247.5:2003/api/user/check",{
+                //     params:{
+                //         username:val
+                //     }
+                // });
+                const data = await this.$request.get('/user/check',{username:val})
                 Toast.clear();
 
-                console.log('data',data)
                 resolve(data.code === 200)
 
         });
@@ -76,14 +76,19 @@ export default {
   },
   methods:{
       async onSubmit(){
-          console.log('onSubmit')
-            const {data} = await axios.post("http://120.76.247.5:2003/api/reg",{
+        //     const {data} = await axios.post("http://120.76.247.5:2003/api/reg",{
+        //         username:this.username,
+        //         password:this.password,
+        //         vcode:this.vcode,
+        //     },{
+        //       withCredentials:true
+        //   });
+            const data = await this.$request.post("/reg",{
                 username:this.username,
                 password:this.password,
                 vcode:this.vcode,
-            },{
-              withCredentials:true
-          });
+            });
+        
 
             if(data.code === 200){
                 this.$router.push('/login')
@@ -94,10 +99,11 @@ export default {
             }
       },
       async getVcode(){
-          const {data} = await axios.get("http://120.76.247.5:2003/api/vcode/picture",{
-              withCredentials:true
-          });
-          console.log('data=',data)
+        //   const {data} = await axios.get("http://120.76.247.5:2003/api/vcode/picture",{
+        //       withCredentials:true
+        //   });
+          const data = await this.$request.get("/vcode/picture");
+
           this.vcodeHtml = data.data;
       }
   },
