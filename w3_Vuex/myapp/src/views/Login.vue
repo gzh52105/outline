@@ -78,7 +78,7 @@ export default {
 
             if(data.code === 200){
                 // 保存用户信息
-                this.$store.commit('login',data.data);
+                this.$store.commit('user/login',data.data);
                 let {targetUrl='/mine'} = this.$route.query
                 this.$router.push(targetUrl)
             }else if(data.code === 401){

@@ -36,6 +36,7 @@
                 <van-icon name="delete" color="#666" size="16" @click="removeItem(item._id)" />
             </van-col>
         </van-row>
+
         <van-submit-bar
             :price="totalPrice*100"
             button-text="提交订单"
@@ -51,6 +52,11 @@
 <script>
 import NavbarPage from '@/layout/NavbarPage.vue';
 import { Toast,Dialog } from 'vant';
+import {mapState,mapActions} from 'vuex'
+
+// const res = mapState(['a'])
+// console.log('res=',res);
+
 export default {
   name: "Cart",
   data() {
@@ -92,9 +98,27 @@ export default {
     };
   },
   computed:{
-      goodslist(){
-          return this.$store.state.goodslist;
-      },
+    //   goodslist(){
+    //       return this.$store.state.cart.goodslist;
+    //   },
+    // userInfo(){
+    //       return this.$store.state.user.userInfo
+    // },
+
+    // 映射全局状态:数组形式
+    // ...mapState(['a','msg']),
+    // ...mapState({a:'a',msg:'msg',list:'goodslist'})
+    
+    // 映射模块状态:对象形式+函数
+    ...mapState({
+        goodslist:state=>state.cart.goodslist,
+        // userInfo:state=>state.user.userInfo,
+    }),
+    // 映射带命名空间模块
+    // ...mapState('cart',['goodslist']),
+    // ...mapState('cart',{goodslist:state=>state.goodslist}),
+    ...mapState('user',['userInfo']),
+    
       totalPrice(){
           return this.goodslist.filter(item=>this.selectIds.includes(item._id)).reduce((prev,item)=>prev+item.sales_price*item.qty,0)
       },
@@ -114,9 +138,7 @@ export default {
               console.log('checked',checked,this.selectIds)
           }
       },
-      userInfo(){
-          return this.$store.state.userInfo
-      }
+      
   },
   components:{
       NavbarPage
@@ -133,7 +155,7 @@ export default {
               this.selectIds.push(id);
           }
       },
-      // 获取购物车商品列表
+      /*// 获取购物车商品列表
       async getData(){
           const data = await this.$request.get('/cart',{
               userid:this.userInfo._id
@@ -192,10 +214,23 @@ export default {
           }catch(err){
               console.log('cancel')
           }
-      }
+      }*/
+    
+      ...mapActions(['initCart']),
+      ...mapActions({
+          removeItem(dispatch,id){
+              dispatch('removeCart',[id])
+          },
+          changeQty:function(dispatch,qty,{name:id}){
+              // 当actions中所需参数格式与实际不符时,使用对象实行
+              dispatch('changeQty',{_id:id,qty})
+          }
+      }),
+
   },
   created(){
     //   this.getData();
+    console.log('Cart',this);
   }
 };
 </script>

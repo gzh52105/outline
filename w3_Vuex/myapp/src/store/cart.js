@@ -1,5 +1,7 @@
 import request from '@/utils/request'
+import {Dialog,Toast} from 'vant'
 export default {
+    // namespaced:true,
     state:{
         goodslist:[],
     },
@@ -13,8 +15,8 @@ export default {
         add2cart(state,payload){
             state.goodslist.unshift(payload)
         },
-        removeCart(state,id){
-            state.goodslist = state.goodslist.filter(item=>item._id !==id)
+        removeCart(state,payload){
+            state.goodslist = state.goodslist.filter(item=>!payload.includes(item._id))
         },
         changeQty(state,payload){
             state.goodslist.forEach((item)=>{
@@ -75,6 +77,41 @@ export default {
             }).then(res=>{
                 context.commit('initCart',res.data.goodslist);
             })
+        },
+        async removeCart(context,payload){
+            // payload 为数组,支持批量商品删除
+            const {_id:userid,authorization} = context.rootState.user.userInfo
+            try{
+                await Dialog.confirm({
+                    title: '确认操作',
+                    message: '是否确认删除',
+                });
+              
+  
+              request.delete('/cart',null,{
+                  // 请求头
+                  headers:{
+                      Authorization:authorization
+                  },
+  
+                  // 请求体
+                  data:{
+                      userid,
+                      ids:payload,
+                  }
+              }).then(data=>{
+
+                  if(data.code === 200){
+                      context.commit('removeCart',payload)
+                  }else{
+                      Toast.fail('删除失败')
+                  }
+              })
+  
+  
+            }catch(err){
+                console.log('cancel')
+            }
         }
     }
 }

@@ -1345,6 +1345,47 @@
 
 ## day4-1
 
+### 面试题
+* 如何在父组件显示子组件的数据
+    * 组件层级
+    * ref
+    ```js
+        // 父组件
+        <div>
+            <son ref="son"/>
+        </div>
+        {
+            mounted(){
+                console.log(this.$children[0].num)
+                console.log(this.$refs.son.num)
+            }
+        }
+
+        // 子组件 son
+        <div class="son">
+            
+        </div>
+        {
+            data(){
+                return {
+                    num:10
+                }
+            }
+            mounted(){
+                console.log(this.num)
+            }
+        }
+    ```
+* 父子组件生命周期函数的执行顺序
+    1. 父beforeCreate
+    2. 父created
+    3. 父beforeMount
+    4. 子beforeCreate
+    5. 子created
+    6. 子beforeMount
+    7. 子mounted
+    8. 父mounted
+
 ### 知识点
 * Vuex核心配置
     * state
@@ -1378,3 +1419,17 @@
         * getters获取: `this.$store.getters['user/isLogin']`
         * mutations触发: `this.$store.commit('user/login')`
         * actions触发: `this.$store.dispatch('user/login')`
+* Vuex映射
+    > 利用vuex提供的方法简化操作
+    * mapState()
+        > 把state数据映射到组件computed
+    * mapGetters()
+        > 把getters数据映射到组件computed
+    * mapMutations()
+    * mapActions()
+
+    > PS: mapMutations,MapActions都支持数组与对象,当实际参数与mutations,actions中的参数不符时,只能采用对象形式
+
+* 团队项目开发准备工作
+    * 组队,选出一个负责人
+    * 选项目

@@ -116,7 +116,8 @@ const store = new Vuex.Store({
 
     // 全局状态
     state:{
-        a:10
+        a:10,
+        msg:'hello',
     },
     getters:{
         qty(state){

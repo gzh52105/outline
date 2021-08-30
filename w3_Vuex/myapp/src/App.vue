@@ -24,11 +24,12 @@
 </template>
 
 <script>
+import {mapState,mapGetters} from 'vuex'
 export default {
   name: "App",
   data() {
     return {
-      currentTab:0,
+      currentTab: 0,
       menu: [
         {
           path: "/home",
@@ -53,21 +54,26 @@ export default {
       ]
     };
   },
-  computed:{
-    cartCount(){
-      // return this.$store.state.goodslist.length;
+  computed: {
+    // cartCount() {
+    //   // return this.$store.state.goodslist.length;
 
-      // 模块化cart后影响state的获取
-      return this.$store.state.cart.goodslist.length
-    },
-    isLogin(){
-      return this.$store.getters.isLogin
-    },
-    userInfo(){
-      // return this.$store.state.userInfo;
-      // 模块化user后
-      return this.$store.state.user.userInfo;
-    }
+    //   // 模块化cart后影响state的获取
+    //   return this.$store.state.cart.goodslist.length;
+    // },
+    // userInfo() {
+    //   // return this.$store.state.userInfo;
+    //   // 模块化user后
+    //   return this.$store.state.user.userInfo;
+    // },
+    // isLogin() {
+    //   return this.$store.getters.isLogin;
+    // },
+    ...mapState({
+      cartCount:state=>state.cart.goodslist.length
+    }),
+    ...mapState('user',['userInfo']),
+    ...mapGetters('user',['isLogin'])
   },
   components: {},
   created() {
@@ -79,14 +85,14 @@ export default {
       // this.$router.push('/home') ; // 会生成浏览记录
       this.$router.replace("/home"); // 不会形成浏览记录
     },
-    changeTabbar(active){
-      console.log('active',active)
-      const {path} = this.menu[active]
-      this.$router.push(path)
+    changeTabbar(active) {
+      console.log("active", active);
+      const { path } = this.menu[active];
+      this.$router.push(path);
     },
-    goto(path){
-      console.log(666,path)
-      this.$router.push(path)
+    goto(path) {
+      console.log(666, path);
+      this.$router.push(path);
     }
   }
 };
@@ -94,18 +100,24 @@ export default {
 
 <style>
 #app {
-  padding:0.5em;
+  padding: 0.5em;
 }
 .router-link-active,
 .current {
   color: rgb(233, 118, 118);
 }
-.price del{color:#666;margin-right:5px;}
-.price span{color:#f00}
-.price del::before,.price span::before{
-  content:'￥'
+.price del {
+  color: #666;
+  margin-right: 5px;
 }
-.van-tabbar.hide{
-  display: none
+.price span {
+  color: #f00;
+}
+.price del::before,
+.price span::before {
+  content: "￥";
+}
+.van-tabbar.hide {
+  display: none;
 }
 </style>
