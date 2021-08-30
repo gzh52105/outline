@@ -1,40 +1,13 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-// import request from '@/utils/request'
-import cart from './cart'
-import user from './user'
-
-// 2. 安装插件
-Vue.use(Vuex);
-
-// 数据持久化(刷新时从本地存储获取数据)
-// let userInfo = localStorage.getItem('userInfo');
-// try{
-//     userInfo = JSON.parse(userInfo) || {}
-// }catch(err){
-//     userInfo = {}
-// }
-
-// 3. 创建仓库: 实例化store
-const store = new Vuex.Store({
-    /*// 配置参数
-    // 状态
+import request from '@/utils/request'
+export default {
     state:{
         goodslist:[],
-        userInfo,
     },
-    // 类似于组件中的computed,一般用于根据state映射出其他的数据
-    // getters只能获取,不能修改
     getters:{
         totalPrice(state){
             return state.goodslist.reduce((prev,item)=>prev+item.sales_price*item.qty,0)
         },
-        isLogin(state){
-            return Boolean(state.userInfo.authorization)
-        }
     },
-
-    // 修改state的唯一方式
     mutations:{
         // this.$store.commit('add2cart',goods)
         add2cart(state,payload){
@@ -54,22 +27,12 @@ const store = new Vuex.Store({
         initCart(state,payload){
             state.goodslist = payload
         },
-
-        // 登录
-        login(state,payload){
-            state.userInfo = payload;
-            localStorage.setItem('userInfo',JSON.stringify(payload))
-        },
-        logout(state){
-            state.userInfo = {};
-            localStorage.removeItem('userInfo')
-        }
     },
-
-    // actions:类似与mutation,一般用于异步操作
     actions:{
         add2cart(context,goods){
-            const {_id:userid,authorization} = context.state.userInfo
+            // const {_id:userid,authorization} = context.state.userInfo
+            // 在当前模块获取其他模块数据
+            const {_id:userid,authorization} = context.rootState.user.userInfo
             request.post('/cart',{
                 goods,
                 userid
@@ -85,7 +48,7 @@ const store = new Vuex.Store({
             })
         },
         changeQty(context,{_id,qty}){
-            const {_id:userid,authorization} = context.state.userInfo
+            const {_id:userid,authorization} = context.rootState.user.userInfo
             request.patch('/cart',{
                 userid,
                 id:_id,
@@ -101,7 +64,8 @@ const store = new Vuex.Store({
             })
         },
         initCart(context){
-            const {_id:userid,authorization} = context.state.userInfo
+            console.log('context',context);
+            const {_id:userid,authorization} = context.rootState.user.userInfo
             request.get('/cart',{
                 userid
             },{
@@ -112,48 +76,5 @@ const store = new Vuex.Store({
                 context.commit('initCart',res.data.goodslist);
             })
         }
-    },*/
-
-    // 全局状态
-    state:{
-        a:10
-    },
-    getters:{
-        qty(state){
-            return state.a*2;
-        }
-    },
-    mutations:{
-        add(state){
-            console.log('global.add')
-            state.a++;
-        }
-    },
-    actions:{
-        addAsync(context){
-            setTimeout(()=>{
-                context.commit('add')
-            },2000)
-        }
-    },
-
-    // Store模块化: 局部状态
-    modules:{
-      cart,
-      user  
     }
-})
-
-// 测试数据
-console.log('store',store);
-// 触发全局mutaiton
-store.commit('add');
-// 触发局部mutation(设置了命名空间的模块)
-store.commit('user/add')
-
-// 初始化购物车
-store.dispatch('initCart');
-
-
-// 4. 注入Vue根实例
-export default store
+}

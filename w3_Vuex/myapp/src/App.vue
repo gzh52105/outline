@@ -16,8 +16,8 @@
     active-color="#58bc58" 
     route
     >
-      <van-tabbar-item :icon="item.icon" v-for="item in menu" :key="item.path" :to="item.path" :badge="item.path==='/cart'?5:null">
-      {{$store.getters.isLogin&&item.path==='/mine' ? $store.state.userInfo.username : item.text}}
+      <van-tabbar-item :icon="item.icon" v-for="item in menu" :key="item.path" :to="item.path" :badge="item.path==='/cart'?cartCount:null">
+      {{isLogin&&item.path==='/mine' ? userInfo.username : item.text}}
       </van-tabbar-item>
     </van-tabbar>
   </div>
@@ -52,6 +52,22 @@ export default {
         }
       ]
     };
+  },
+  computed:{
+    cartCount(){
+      // return this.$store.state.goodslist.length;
+
+      // 模块化cart后影响state的获取
+      return this.$store.state.cart.goodslist.length
+    },
+    isLogin(){
+      return this.$store.getters.isLogin
+    },
+    userInfo(){
+      // return this.$store.state.userInfo;
+      // 模块化user后
+      return this.$store.state.user.userInfo;
+    }
   },
   components: {},
   created() {

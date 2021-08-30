@@ -1284,6 +1284,8 @@
         > 在服务器解密,如token被篡改或已过期,则校验不通过
 
 
+* Vuex
+    > 专门针对Vue的全局状态管理工具,能实现据据共享与监听
 * Vuex 使用步骤
     1. 安装与引用
         ```js
@@ -1315,7 +1317,64 @@
     * state 状态(全局共享的数据,类似与组件中的data)
         > 通过`this.$store.state.xxx`获取
     * getters 
-        > 通过 `this.$store.getters.xxx`获取
+        > 通过 `this.$store.getters.xxx`获取,参数state
+        ```js
+            {
+                //...
+                getters:{
+                    // getter
+                    totalPrice(state){
+                        return state.goodslist.reduce()
+                    }
+                }
+            }
+        ```
     * mutations 修改state的唯一方式,类似于组件中的methods
-        > 通过`this.$store.commit(mutation)`调用
-        
+        > 通过`this.$store.commit(mutation,payload)`调用,必须为同步修改,不能包含异步操作
+        ```js
+            {
+                //...
+                mutations:{
+                    // this.$store.commit('add2cart',{goods})
+                    add2cart(state,payload){
+                        state.goodslist.unshift(payload.goods)
+                    }
+                }
+            }
+        ```
+
+## day4-1
+
+### 知识点
+* Vuex核心配置
+    * state
+    * getters
+    * mutations
+        > 唯一修改state的方式(必须为同步修改,不能包含是异步操作),调用方式:`this.$store.commit(mutation,xxx)`
+        * 参数
+            * state
+            * payload
+    * actions
+        >类似与mutation,一般用于异步操作,调用方式:`this.$store.dispatch(action,xxx)`
+        * 参数
+            * context: 与store实例具有相同属性和方法的对象
+                * context.state
+                * context.commit()
+                * context.dispatch()
+                * ...
+            * payload
+* VueX的工作流程
+    > component -> action -> ajax -> mutation -> state ->
+        ^                                               |
+        |                                               |
+        -------------------------------------------------
+    * 使用口述方式描述整个流程
+
+* Vuex模块化
+    * module
+        > 模块化后，默认只影响state的获取，getters,mutations,actions还是保存在全局状态
+    * namespace命名空间
+        > `namespaced:true`,设置命名空间后让getters,mutations,actions具有自己的命名空间
+        * getters获取: `this.$store.getters['user/isLogin']`
+        * mutations触发: `this.$store.commit('user/login')`
+        * actions触发: `this.$store.dispatch('user/login')`

@@ -26,10 +26,10 @@
 
         <van-goods-action>
             <van-goods-action-icon icon="chat-o" text="客服" color="#ee0a24" />
-            <van-goods-action-icon icon="cart-o" text="购物车" />
+            <van-goods-action-icon icon="cart-o" text="购物车" :badge="cartCount" to="/cart"  />
             <van-goods-action-icon icon="star" text="已收藏" color="#ff5000" />
-            <van-goods-action-button type="warning" text="加入购物车" />
-            <van-goods-action-button type="danger" text="立即购买" />
+            <van-goods-action-button type="warning" text="加入购物车" @click="addToCart" />
+            <van-goods-action-button type="danger" text="立即购买" @click="buyNow" />
         </van-goods-action>
     </NavbarPage>
 </template>
@@ -42,6 +42,11 @@ export default {
         return {
             goods:{},
             goodslist:[], // 相关商品
+        }
+    },
+    computed:{
+        cartCount(){
+            return this.$store.state.goodslist.length;
         }
     },
     components:{
@@ -72,6 +77,52 @@ export default {
         },
         shareGoods(){
             console.log('分享商品')
+        },
+        addToCart(){
+            const {_id} = this.goods
+            const {_id:userid,authorization} = this.$store.state.userInfo
+
+            // 判断当前商品是否已存在购物车中
+            const current = this.$store.state.goodslist.find(item=>item._id===_id)
+            if(current){
+                // 添加数量
+                this.$store.commit('changeQty',{
+                    _id,
+                    qty:current.qty+1
+                })
+
+                this.$request.patch('/cart',{
+                    id:_id,
+                    userid,
+                    qty:current.qty+1
+                },{
+                    headers:{
+                        Authorization:authorization
+                    }
+                })
+            }else{
+                const goods = {
+                    ...this.goods,
+                    qty:1
+                }
+    
+                // this.$store.commit('add2cart',goods)
+                // this.$request.post('/cart',{
+                //     goods,
+                //     userid
+                // },{
+                //     headers:{
+                //         Authorization:authorization
+                //     }
+                // })
+
+                this.$store.dispatch('add2cart',goods)
+            }
+
+        },
+        buyNow(){
+            this.addToCart();
+            this.$router.push('/cart')
         }
     },
     async created(){

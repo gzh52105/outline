@@ -57,7 +57,7 @@ export default {
     return {
         // checkAll:false,
         active:0,
-       goodslist: [
+    //    goodslist: [
     //     {
     //       _id: "6037755f08f65d3a6c243510",
     //       goods_name:
@@ -87,11 +87,14 @@ export default {
     //       views: 24,
     //       qty: 10
     //     }
-       ],
+    //    ],
       selectIds:[]
     };
   },
   computed:{
+      goodslist(){
+          return this.$store.state.goodslist;
+      },
       totalPrice(){
           return this.goodslist.filter(item=>this.selectIds.includes(item._id)).reduce((prev,item)=>prev+item.sales_price*item.qty,0)
       },
@@ -192,7 +195,7 @@ export default {
       }
   },
   created(){
-      this.getData();
+    //   this.getData();
   }
 };
 </script>
