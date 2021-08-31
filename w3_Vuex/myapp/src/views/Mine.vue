@@ -30,7 +30,7 @@ export default {
             this.$router.push(path)
         },
         logout(){
-            localStorage.removeItem('userInfo')
+            this.$store.commit('user/logout')
             this.$router.push('/login')
         }
     },
