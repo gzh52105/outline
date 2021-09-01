@@ -7,7 +7,9 @@
       <router-link tag="div" to="/reg" active-class="current" replace>注册</router-link>
     </nav> -->
     <!-- router-view用于显示路由组件 -->
-    <router-view></router-view>
+    <transition :name="transitionName">
+      <router-view></router-view>
+    </transition>
 
     <!-- <button @click="goHome">跳转到首页</button> -->
 
@@ -29,6 +31,7 @@ export default {
   name: "App",
   data() {
     return {
+      transitionName:'slide-left',
       currentTab: 0,
       menu: [
         {
@@ -53,6 +56,13 @@ export default {
         }
       ]
     };
+  },
+  watch:{
+    '$route' (to, from) {
+      const toDepth = to.path.split('/').length; // /goods -> /goods/1
+      const fromDepth = from.path.split('/').length; // /goods/1 -> /goods
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+    }
   },
   computed: {
     // cartCount() {
@@ -119,5 +129,16 @@ export default {
 }
 .van-tabbar.hide {
   display: none;
+}
+/* 页面转场动画 */
+/* 入场动画 */
+.swiper-enter{
+  transform: translate(-100%,0)
+}
+.swiper-enter-active{
+  transition: transform 1s;
+}
+.swiper-enter-to{
+  transform: translate(0,0)
 }
 </style>

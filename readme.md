@@ -1480,11 +1480,74 @@
         > 根据用户登录状态决定是否允许进入页面
         * 做法一: 先配置所有路由,然后利用路由拦截实现页面访问权限控制
         * 做法二: 先配置**基础路由**(不需要登录权限的路由),然后根据用户登录状态动态添加**权限路由**(需要登录权限才能访问)
-            * router.addRoutes()
+            * router.addRoutes() 已废弃
             * router.addRoute()
     * 功能权限(按钮级别权限控制)
         > 根据用户权限决定是否允许用户操作(禁用或隐藏)
+        * 一般使用v-if或自定义指令实现
     * 数据权限
         > 根据用户权限不同显示不同的数据
 
 * 子路由(嵌套路由): children
+    > `router-view`的嵌套
+    ```js
+        // Manage组件显示在App的router-view中
+        {
+            path:'/manage',
+            component:Manage,
+            children:[
+                // Goods与User组件显示在Manage组件中的router-view
+                // 路径匹配/manage/goods时渲染Goods组件
+                {
+                    path:'goods',
+                    component:Goods,
+                    name:'Goods'
+                },
+                {
+                    path:'user',
+                    component:User
+                }
+            ]
+        }
+    ```
+* 重定向: redirect
+    ```js
+        {path:'',redirect:{name:'Goods'}}
+    ```
+    
+
+## day4-3
+
+### 知识点
+* 使用git问题
+    * 无法`git add`
+        > 没有配置name与emain
+    * 无法`git push`
+        * 没有关联远程仓库: `git remote add origin <url>`
+            > clone下来的仓库自动关联
+        * 没有权限
+        * 没有同步
+* Vue过渡动画: 
+    > 路由转场动画
+    * 动画组件
+        * transition
+        * transition-group
+            * name 修改类名前缀
+        ```js
+            <transition>
+                <div></div>
+            </transition>
+            <transition-group>
+                <div></div>
+                <span></span>
+            </transition-group>
+        ```
+    * 触发动画场景
+        * 条件渲染 (使用 v-if)
+        * 条件展示 (使用 v-show)
+        * 动态组件
+        * 组件根节点
+
+* Vue内置组件
+    * slot
+    * transition/transition-group
