@@ -7,6 +7,7 @@ import Manage from '../views/Manage.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+    mode: process.env.NODE_ENV === 'production' ? 'history' : 'hash',
     routes:[
         // 先配置基础路由
         {

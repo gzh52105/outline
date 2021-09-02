@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "uat": "vue-cli-service serve --mode uat",
     "start": "npm run serve",
     "lint": "vue-cli-service lint"
   },

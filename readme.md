@@ -1551,3 +1551,25 @@
 * Vue内置组件
     * slot
     * transition/transition-group
+
+## day4-4
+
+### 知识点
+* 环境判断
+    > process.env.NODE_ENV
+    * 开发环境: development
+        > 10.3.136.163/localhost/127.0.0.1
+    * 测试环境
+        > 10.3.136.10
+    * UAT环境: 用户验收环境
+        > http://120.76.247.5
+    * 生产环境: production
+        > http://laoxie.com
+* 缓存组件: keep-alive
+    * 属性
+        * include
+        * exclude
+    * 钩子函数
+        * activated
+        * deactivated
+

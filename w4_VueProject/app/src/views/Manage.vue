@@ -41,7 +41,10 @@
                 </el-menu>
             </el-aside>
             <el-main>
+              <!-- <keep-alive include="User,UserEdit"> -->
+              <keep-alive :include="/List$/">
                 <router-view></router-view>
+              </keep-alive>
             </el-main>
         </el-container>
     </el-container>

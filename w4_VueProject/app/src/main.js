@@ -17,7 +17,7 @@ import request,{baseUrl} from './utils/request'
 
 // 利用工具(babel-plugin-component)实现按需引入
 // 只需要配置Babel选项(.babelrc),然后直接执行以下引入方式
-import {Message,Row,Col,Button,Form,FormItem,Input,Select,Table,TableColumn,Container,Aside,Header,Main} from 'element-ui'
+import {Message,Row,Col,Button,Form,FormItem,Input,Select,Table,TableColumn,Container,Aside,Header,Main,Pagination} from 'element-ui'
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Container)
@@ -31,6 +31,7 @@ Vue.use(Input)
 Vue.use(Select)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Pagination)
 
 
 Vue.prototype.$request = request;
