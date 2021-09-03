@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>15.自定义mixin</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h1>15.自定义mixin</h1>
+    <div id="app">
+        <my></my>
+        <list1></list1>
+        <list2></list2>
+    </div>
+
+    <script>
+        /**
+            15.自定义mixin
+                > 用于提取组件公共配置
+        */
+
+        // 全局mixin：由于影响较大，实际开发中较少使用
+        Vue.mixin({
+            data(){
+                return {
+                    msg:'hello',
+                    qty:100
+                }
+            },
+            computed:{
+                num(){
+                    return this.qty*2;
+                }
+            },
+            created(){
+                // console.log('mixin.created')
+            }
+        })
+
+        // Object.assign(mixin,component)
+
+        // 局部mixin
+        const msgMixin = {
+            // mixins:[],
+            data(){
+                return {
+                    msg:'hello boy'
+                }
+            },
+            computed:{
+                upper(){
+                    return this.msg.toUpperCase()
+                }
+            },
+            methods:{
+                toUpper(){
+
+                }
+            }
+        }
+
+        Vue.component('my',{
+            mixins:[msgMixin],
+            data(){
+                return {
+                    name:'my',
+                    qty:1
+                }
+            },
+            template:`
+                <div>
+                    {{name}} Component
+                    <p>num:{{num}}</p>
+                    
+                </div>
+            `,
+            created(){
+                console.log('my.created',this)
+            }
+        })
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                
+            },
+            components:{
+                list1:{
+                    data(){
+                        return {
+                            name:'list1',
+                            qty:1
+                        }
+                    },
+                    template:`<div>name:{{name}}<p>num:{{num}}</p></div>`,
+                    created(){
+                        console.log('list1.created',this)
+                    }
+                },
+                list2:{
+                    data(){
+                        return {
+                            name:'list2',
+                            qty:1
+                        }
+                    },
+                    render(h){
+                        return h('div',{attrs:{id:'list2'}},this.name)
+                    },
+                    created(){
+                        console.log('list2.created',this)
+                    }
+                }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

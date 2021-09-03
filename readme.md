@@ -1584,16 +1584,55 @@
 
 * Vue扩展
     * 自定义组件
-        * 全局:Vue.component()
-        * 局部:components
+        * 分类
+            * 全局:Vue.component()
+            * 局部:components
     * 自定义指令
-        * 全局: Vue.directive()
-        * 局部: directives
+        * 分类
+            * 全局: Vue.directive()
+            * 局部: directives
 
         * 应用:
             * 利用自定义指令实现按钮权限控制
+    * 自定义过滤器
+        * 分类
+            * 全局: Vue.filter()
+            * 局部: filters
+        * 使用： `|`
+            * {{data | filter}}
+            * v-bind
+    * 自定义mixin
+        混入 (mixins) 一般用于组件选项的复用（所有属性与组件选项一致）。并以一定的合并规则混入到组件中
+        * 分类
+            * 全局：Vue.mixin()
+            * 局部: mixins
+    * 插件
+        * 函数
+        * 带install方法的对象
+    * 依赖注入
+        > 增强型的props，注入的数据不是响应式数据（如传入响应式对象依然能实现响应式效果）
+
 
 * 内置指令
     * v-pre
     * v-cloak
     * v-once
+* 正则
+    * 边界匹配
+        * `^`   匹配开头
+        * `$`   匹配结尾
+        * `\b`  单词边界
+        * `\B`  单词非边界
+    * 正则匹配条件：零宽断言
+        * `(?=\d{3})`
+        * `(?!\d)`
+* 组件通讯
+    * 父子通讯：
+        * props
+        * 自定义事件（$emit）
+    * 兄弟通讯
+    * 深层及组件通讯
+        * 逐层传递
+        * 事件总线 event Bus
+    * 全局状态管理：vuex
+

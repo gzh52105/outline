@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>14.自定义过滤器</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h1>14.自定义过滤器</h1>
+    <div id="app">
+        <p>用户名:{{username}}</p>
+        <p>方法:{{upper(username)}}</p>
+        <p>原生:{{username.toUpperCase()}}</p>
+        <p>computed:{{upperUsername}}</p>
+        <p v-bind:username="username | upper">filter:{{username | upper(2)}}</p>
+        <p>date:{{date}}</p>
+        <p>YYYY-MM-DD:{{date | fomatDate}}</p>
+        <p>YYYY-MM-DD hh:mm:ss :{{date | fomatDate('YYYY-MM-DD hh:mm:ss')}}</p>
+        <p>price :{{price | formatMoney}}</p>
+        <button @click="qty++">qty:{{qty}}</button>
+    </div>
+
+    <script>
+        /**
+            14.自定义过滤器
+             * 全局: Vue.filter()
+             * 局部: filters
+        */
+
+        Vue.filter('upper', function (value, type = 1) {
+            console.log('fillter.upper', value, type)
+            value = String(value);
+            if (type === 1) {
+                return value.toUpperCase();
+            } else if (type === 2) {
+                // 'lao xie is danshen'
+                let arr = value.split(/\s+/); // [lao,xie,is,danshen]
+                arr = arr.map(item => {
+                    return item[0].toUpperCase() + item.slice(1)
+                });// [Lao,Xie,Is,Danshen]
+                return arr.join(' '); // Lao Xie Is Danshen
+            }
+        })
+
+        // 格式化时间
+        Vue.filter('fomatDate', function (value,fmt = 'YYYY-MM-DD') {
+            return value;
+        })
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                username: 'lao xie is Danshen',
+                qty: 10,
+                date: new Date(),
+                price:100000000000
+            },
+            computed: {
+                upperUsername() {
+                    console.log('computed')
+                    return this.username.toUpperCase()
+                }
+            },
+            methods: {
+                upper(value) {
+                    console.log('upper')
+                    return String(value).toUpperCase()
+                }
+            },
+            filters: {
+                formatMoney(value) {
+                    // 1,0,0,000
+                    // 1,00000
+                    value = String(value); // 100000
+                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g,',')
+                    return value;
+                }
+            }
+
+        })
+
+
+    </script>
+</body>
+
+</html>

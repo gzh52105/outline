@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>17.依赖注入</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h1>17.依赖注入</h1>
+    <div id="app">
+        App: {{username}}
+        <list :msg="msg"></list>
+    </div>
+
+    <script>
+        /**
+            17.依赖注入
+               * provide
+               * inject
+        */
+
+        const listBody = {
+            props:['msg'],
+
+            // 注入
+            // inject:['username'],
+            inject:{
+                username:'username',
+                // score:'username',
+                score:{
+                    from:'username',
+                    default:'成绩单'
+                }
+            },
+
+            template:`
+                <div>
+                    listBody
+                    <p>父组件数据：{{msg}}</p>
+                    <p>provide/inject: {{score}}</p>
+                </div>
+            `
+        }
+
+        Vue.component('list',{
+            props:['msg'],
+            template:`
+                <div class="list">
+                    <list-body :msg="msg"></list-body>
+                </div>
+            `,
+            components:{
+                listBody
+            }
+        })
+        
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg:'hello',
+                username:'jingjing',
+                score:{
+                    en:100,
+                    math:120
+                }
+            },
+            // 父组件共享数据
+            // provide:{
+            //     username:'tiantian'
+            // },
+            provide:function(){
+                console.log('this',this)
+                return {
+                    username:this.score,
+                    // score:'数学成绩'
+                }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

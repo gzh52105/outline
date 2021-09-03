@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>16.编写Vue插件</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h1>16.编写Vue插件</h1>
+    <div id="app">
+        <lx-button>编辑</lx-button>
+        <lx-button>注册</lx-button>
+    </div>
+
+    <script>
+        /**
+            16.编写Vue插件
+                > 插件为一个函数或一个带install方法的对象
+        */
+
+        // 编写插件
+        const laoxieUI = function(Vue){
+            const components = ['lxButton','lxTable','lxTableColumn','lxTabbar']
+
+            // 提取组件公共配置
+            const mixin = {}
+
+            // 编写全局组件
+            Vue.component('lxButton',{
+                template:'<button><slot/></button>'
+            })
+
+            Vue.component('lxTabbar',{
+                template:`<div>
+                    tabbar
+                </div>`
+            })
+
+            // 添加原型方法
+            Vue.prototype.$message = function(){
+
+            }
+
+            // 添加全局方法
+            Vue.ajax = function(){
+
+            }
+
+            // 定义过滤器
+
+            // 定义指令
+
+        }
+        // const laoxieUI = {
+        //     install(){
+
+        //     }
+        // }
+
+        Vue.use(laoxieUI);
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                
+            },
+            
+        })
+
+
+    </script>
+</body>
+
+</html>
