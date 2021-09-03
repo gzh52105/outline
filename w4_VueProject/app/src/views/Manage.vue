@@ -42,9 +42,9 @@
             </el-aside>
             <el-main>
               <!-- <keep-alive include="User,UserEdit"> -->
-              <keep-alive :include="/List$/">
+              <!-- <keep-alive :include="/List$/"> -->
                 <router-view></router-view>
-              </keep-alive>
+              <!-- </keep-alive> -->
             </el-main>
         </el-container>
     </el-container>

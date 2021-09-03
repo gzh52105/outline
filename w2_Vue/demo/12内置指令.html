@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>12内置指令</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <style>
+        [v-cloak]{opacity: 0.1;}
+    </style>
+</head>
+<body>
+    <h1>12内置指令</h1>
+    <div id="app">
+        <p v-pre>
+            双花括号用法: {{数据名称}}
+            <span v-text="qty"></span>
+            <button v-on:click="qty++">{{qty}}</button>
+        </p>
+        <div v-cloak>
+            currentUser: {{currentUser}}
+            <p v-once>v-once: {{qty}}</p>
+            <button v-on:click="qty++">qty:{{qty}}</button>
+        </div>
+    </div>
+   
+    <script>
+        /**
+            * v-pre     不让Vue解析v-pre指令所在的标签内容
+            * v-cloak
+            * v-once    只渲染元素和组件一次。随后的重新渲染，元素/组件及其所有的子节点将被视为静态内容并跳过。这可以用于优化更新性能
+        */
+       
+        let vm = new Vue({
+            // el:'#app',
+            // delimiters: ['#{', '}'],
+            data:{
+                qty:1,
+                currentUser:'laoxie',
+                users:['laoxie','jingjing','tiantian']
+            },
+            
+        })
+
+        setTimeout(()=>{
+
+            vm.$mount('#app')
+        },500)
+        
+    </script>
+</body>
+</html>

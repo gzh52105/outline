@@ -46,7 +46,7 @@ export default {
         return {
             datalist:[],
             total:0,
-            pageSize:10,
+            pageSize:30,
             currentPage:1
         }  
     },

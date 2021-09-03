@@ -1573,3 +1573,27 @@
         * activated
         * deactivated
 
+
+## day4-5
+
+### 知识点
+* 保持滚动条位置
+    * scrollBehavior
+        * 同步滚动
+        * 异步滚动
+
+* Vue扩展
+    * 自定义组件
+        * 全局:Vue.component()
+        * 局部:components
+    * 自定义指令
+        * 全局: Vue.directive()
+        * 局部: directives
+
+        * 应用:
+            * 利用自定义指令实现按钮权限控制
+
+* 内置指令
+    * v-pre
+    * v-cloak
+    * v-once

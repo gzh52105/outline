@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>13自定义指令</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h1>13自定义指令</h1>
+    <div id="app">
+        <input type="text" v-on:keyup.13="handler" v-focus:keyup.enter.stop="handler" />
+
+        <!-- <my v-focus></my> -->
+        <p v-test>
+            数据1    
+            <button v-auth:edit="user.accesslist">编辑</button>
+            <button v-auth:delete="user.accesslist">删除</button>
+        </p>
+        <p v-test>
+            数据1    
+            <button v-auth:edit="user.accesslist">编辑</button>
+            <button v-auth:delete="user.accesslist">删除</button>
+        </p>
+    </div>
+
+    <script>
+        /**
+            13自定义指令
+             * 全局: Vue.directive(id,definition)
+             * 局部: directives:{id:definition}
+        */
+
+        Vue.component('my',{
+            template:'<div>myComponent</div>'
+        })
+
+        // Vue.directive('focus', function () {
+
+        // })
+        Vue.directive('focus', {
+            // 初始化时执行
+            bind(el, binding, vnode, oldNode) {
+                // el: 指令所在的节点
+                // binding: 使用指令的信息
+                // console.log('bind', el, binding)
+                // el.focus()
+            },
+
+            // 指令所在元素已经插入页面后执行
+            inserted(el, binding, vnode, oldNode) {
+                // console.log('inserted', el, binding)
+                el.focus();
+            },
+            update(){
+
+            },
+            componentUpdated(){
+
+            },
+            unbind(){
+
+            }
+        })
+
+        // 自定义指令v-auth实现按钮权限控制
+        Vue.directive('auth',{
+            bind(el,binding){
+
+            },
+            inserted(el,binding){
+                console.log('auth',binding)
+                const accesslist = binding.value
+                const accessName = binding.arg
+                el.disabled = accesslist[accessName] ? false : true;
+                // if(!accesslist[accessName]){
+                //     // el.parentNode.removeChild(el)
+                //     let iNode = document.createElement('i')
+                //     iNode.className = 'i'+accessName
+                //     iNode.style.display = 'none';
+                //     el.parentNode.replaceChild(iNode,el)
+                // }
+            },
+            update(){
+                console.log('update')
+            },
+            componentUpdated(el,binding){
+                console.log('componentUpdated',el)
+                const accesslist = binding.value
+                const accessName = binding.arg
+                // if(!accesslist[accessName]){
+                //     let iNode = document.createElement('i')
+                //     iNode.className = 'i'+accessName
+                //     iNode.style.display = 'none';
+                //     el.parentNode.replaceChild(iNode,el)
+                // }else{
+                //     let iNode = document.querySelector('.i'+accessName)
+                //     iNode.parentNode.replaceChild(el,iNode)
+                // }
+                el.disabled = accesslist[accessName] ? false : true;
+            },
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                qty: 1,
+                currentUser: 'laoxie',
+                users: ['laoxie', 'jingjing', 'tiantian'],
+
+                // 用户权限列表
+                user:{
+                    username:'laoxie',
+                    role:'editer',
+                    accesslist:{
+                        edit:true,
+                        delete:false,
+                    }
+                }
+            },
+            directives:{
+                test:{
+                    inserted(el,binding){
+                        console.log('test',this)
+                    }
+                }
+            },
+            methods:{
+                handler(){
+
+                }
+            }
+
+        })
+
+
+    </script>
+</body>
+
+</html>
