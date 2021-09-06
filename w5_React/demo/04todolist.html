@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04todolist</title>
+</head>
+
+<body>
+    <h1>04todolist</h1>
+    <div id="app">
+
+    </div>
+    <!-- 引入核心库 -->
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <!-- 引入dom操作库 -->
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <!-- 引入balbel为了在浏览器中编译JSX语法 -->
+    <script src="./js/browser.js"></script>
+
+    <script type="text/babel">
+        // function TodoHead() {
+        //     return (
+        //         <div>
+        //             <input type="text" />
+        //             <button>添加</button>
+        //         </div>
+        //     )
+        // }
+        class TodoHead extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    todo:'test'
+                }
+            }
+            render(){
+                return (
+                    <div>
+                        <input type="text" id="todo" value={this.state.todo} onChange={(e)=>{
+                            console.log(e.currentTarget.value)
+                            this.setState({
+                                todo:e.currentTarget.value
+                            })
+                        }} />
+                        <button onClick={()=>{
+                            // 获取输入值
+                            // const todo = document.querySelector('#todo').value;
+                            // console.log('todo',todo);
+                            console.log('todo',this.state.todo)
+                        }}>添加</button>
+                    </div>
+                )
+            }
+        }
+        function TodoItem({item,idx}) {
+            console.log('TodoItem.props',item,idx)
+            return (
+                <tr>
+                    <td>{idx+1}</td>
+                    <td>{item.todo}</td>
+                    <td>{item.addtime}</td>
+                    <td>{item.complete ? '是' : '否'}</td>
+                    <td>
+                        <button>完成</button>    
+                        <button>删除</button>    
+                    </td>
+                </tr>
+            )
+        }
+
+        // 定义函数组件：TodoBody
+        function TodoBody({list}) {
+            console.log('TodoBody.props',list);
+            return (
+                <tbody>
+                    {
+                        // props.list.map(item=>{
+                        //     return <TodoItem key={item.id}/>
+                        // })
+                        list.map((item,idx)=>(
+                            <TodoItem key={item.id} item={item} idx={idx}></TodoItem>
+                        ))
+                    }
+                    
+                </tbody>
+            )
+        }
+        function TodoFoot() {
+            return (
+                <tfoot>
+                    <tr>
+                        <td colSpan="5">TodoFoot</td>
+                    </tr>
+                </tfoot>
+            )
+        }
+
+
+        // 定义Todolist组件
+        class TodoList extends React.Component {
+            constructor(){
+                // 在类继承中，如果定义了constructor，内部必须手动调用super父类
+                super();
+
+                // 定义组件状态：state
+                this.state = {
+                    msg:'hello',
+                    users:['laoxie','tiantian','jingjing','ouyang'],
+                    list:[{
+                        id: 1,
+                        todo: '赚他一个亿津巴布韦币',
+                        complete: true,
+                        checked:false,
+                        addtime: Date.now() + 3600*1000
+                    }, {
+                        id: 2,
+                        todo: '迎娶白富美，达到人生巅峰',
+                        complete: false,
+                        checked:false,
+                        addtime: Date.now() + 3600 * 1000 * 5
+                    },{
+                        id: 3,
+                        todo: '出任CEO，达到疯癫状态',
+                        complete: false,
+                        checked:true,
+                        addtime: Date.now() + 3600 * 1000 * 10
+                    }]
+                }
+            }
+            render() {
+                return (
+                    <div>
+                    <TodoHead />
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>待办事项</th>
+                                <th>添加事件</th>
+                                <th>是否完成</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        {
+                            //JSON.stringify(this.state.list)
+                        }
+                        {
+                            // this.state.list.map(item=>{
+                            //     return <li key={item.id}>{item.todo}</li>
+                            // })
+                            // ['赚他一个亿津巴布韦币','迎娶白富美，达到人生巅峰','出任CEO，达到疯癫状态']
+
+                            // [<li>赚他一个亿津巴布韦币</li>,<li>迎娶白富美，达到人生巅峰</li>,<li>出任CEO，达到疯癫状态</li>]
+                        }
+                        
+                        <TodoBody list={this.state.list} a="10" b={20} />
+                        <TodoFoot />
+                    </table>
+                    </div>
+                )
+            }
+        }
+
+
+
+
+        ReactDOM.render(
+            <div>
+                <TodoList />
+            </div>
+            ,
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+
+</html>

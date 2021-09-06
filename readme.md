@@ -1656,6 +1656,107 @@
 
 * JSX
     > 浏览器不能识别JSX，需要通过babel工具进行编译（`JSX -> babel -> React.createElement()`）
-    * browser.js    babel的浏览器版本
+    * 编译：`browser.js`    babel的浏览器版本
+    * 规则
+        * 不能直接使用JS关键字
+        * 属性必须使用驼峰
+        * 必须结束标签
+        * 在JSX中使用变量必须放在花括号中`{}`
+            > 花括号中不允许出现声明式语句：let var const
+        * style只能使用对象形式
+            ```js
+                const mystyle = {color:'#58bc58'}
+                <div style={mystyle}></div>
+                <div style={{color:'#58bc58'}}></div>
+            ```
+        * 使用 js 语法注释
 
-    * 在JSX中使用变量必须放在花括号中
+* React组件
+    * 为什么使用组件
+        * 复用
+        * 分工
+        * 维护
+    * 分类
+        * 类组件
+            > 必须包含render函数
+            ```js
+                class List extends React.Component{
+                    render(){
+                        return <div></div>
+                    }
+                }
+            ```
+        * 函数组件
+            ```js
+                function List(){
+                    return <div></div>
+                }
+            ```
+    * 定义组件要求
+        * 组件名首字母必须大写
+        * 每个组件只能包含一个根元素
+    * 使用
+        > 定义一个组件相当于创建了一个标签
+        ```js
+            <List/>
+            <Datalist/>
+        ```
+* 函数组件与类组件的区别
+    1. 定义方式不一样
+    2. 功能不一样
+        * 函数组件，也称`UI组件`，一般用于实现界面效果，没有自己的状态，所以也称为**无状态组件**，只有在父组件传入的数据发生改变时刷新
+        * 类组件，也称**状态组件**，拥有自己的状态，在状态发生改变时会自动刷新，类组件拥有以下函数组件所没有的功能
+            * 状态: state
+            * 生命周期
+            * this
+    3. 在实际开发中推荐优先使用函数组件进行开发
+
+* 使用React实现todolist待办事项
+    * 使用知识点
+        * state
+            * 定义
+                ```js
+                    constructor(){
+                        super()
+                        this.state = {
+                            msg:'hello',
+                            qty:10
+                        }
+                    }
+                ```
+            * 使用
+                ```js
+                    this.state.msg
+                ```
+            * 修改state
+                ```js
+                    // 以下代码只会修改msg，不影响其他的state
+                    this.setState({
+                        msg: 'hello man'
+                    })
+                ```
+            * 受控组件与非受控组件
+                * 受控组件：利用组件的状态state控制表单的值的做法
+                    > 把state与表单进行绑定时，必须提供相应修改状态的方法
+                    ```js
+                        <input value={this.state.todo} onChange={change} />
+                    ```
+                * 非受控组件：利用节点操作的方式获取输入框的值
+                    ```js
+                        <input id="box" />
+                    ```
+        * 父子通讯：props
+            1. 父组件操作：给子组件定义属性并传递数据
+            2. 子组件操作
+                * 函数组件：函数的第一个参数为props
+        * 列表循环
+            * map()
+            * filter
+            * ...
+        * 条件渲染：三元运算
+            ```js
+                { 条件 ? 真 : 假}
+            ```
+        * 事件绑定
+            * 使用驼峰
+            * event：事件处理函数的最后一个参数

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03组件定义</title>
+</head>
+<body>
+    <h1>03组件定义</h1>
+    <div id="app">
+
+    </div>
+    <!-- 引入核心库 -->
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <!-- 引入dom操作库 -->
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <!-- 引入balbel为了在浏览器中编译JSX语法 -->
+    <script src="./js/browser.js"></script>
+
+    <script type="text/babel">
+        // 定义类组件
+        class List extends React.Component{
+            // 类组件必须包含一个render函数，render函数中必须有返回值
+            render(){
+                return <div>
+                    List组件
+                </div>
+            }
+        }
+
+        function Datalist(){
+            return (
+                <div>
+                    Datalist
+                </div>
+            )
+        }
+
+        // 渲染虚拟节点
+        ReactDOM.render(
+            <div>
+                <h2>React组件定义</h2>
+                <List></List>
+                <Datalist/>
+            </div>
+            ,
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+</html>
