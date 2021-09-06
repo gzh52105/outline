@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02JSX的使用</title>
+</head>
+<body>
+    <h1>02JSX的使用</h1>
+    <div id="app">
+
+    </div>
+    <!-- 引入核心库 -->
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <!-- 引入dom操作库 -->
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+
+    <script src="./js/browser.js"></script>
+
+    <!-- 浏览器对于不识别的script直接忽略 -->
+    <script type="text/babel">
+        // browser.js会编译 type="text/babel" 中的代码，解析JSX语法，并转成浏览器可识别的代码并执行
+
+        // React.createElement('button',null,'点我') => {type,props,key...}
+        
+        console.log('btn',btn)
+        
+        const username = 'tiantian';
+        console.log('username',username);
+        
+        const btn = <button>{username} 点我 </button>;
+
+        const handle = function(){
+            console.log(123)
+        }
+
+        ReactDOM.render(
+            // React.createElement('div',null,'Hello JSX')
+            // <div>Hello JSX</div>
+            <div>
+                <h4 style={{color:'#58bc58'}}>Hello JSX  {username}</h4>
+                <ul className="list">
+                    <li className="current">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </ul>
+                {
+                    // 在JSX中使用变量，必须使用花括号
+                    btn
+                }
+                <label htmlFor="username">用户名</label>
+                <input type="text" id="username" onKeyUp={handle} />
+            </div>
+            ,
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+</html>

@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Manage from '../views/Manage.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter); // <router-view/>
 
 const router = new VueRouter({
     mode: process.env.NODE_ENV === 'production' ? 'history' : 'hash',

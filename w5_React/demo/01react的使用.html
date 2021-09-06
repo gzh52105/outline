@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01react的使用</title>
+</head>
+<body>
+    <h1>01react的使用</h1>
+    <div id="app">
+
+    </div>
+    <!-- 引入核心库 -->
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <!-- 引入dom操作库 -->
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+
+    <script>
+        // new Vue({
+        //     el:'#app',
+        //     render(createElement){
+        //         return createElement('div',null,'Vue')
+        //     }
+        // })
+
+        // 简单用法
+        // ReactDOM.render(
+        //     // 第一个参数：虚拟节点,
+        //     React.createElement('div',{id:'box'},'React'),
+
+        //     // 第二个参数：渲染目标节点（真实节点）
+        //     document.getElementById('app')
+        // )
+
+        ReactDOM.render(
+            //<div id="box">React</div>
+            // React.createElement('div',{id:'box'},'React')
+
+            // <div id="box"><h4>React 创建虚拟节点</h4></div>
+            // React.createElement(
+            //     'div',
+            //     {id:'box'},
+            //     React.createElement('h4',null,'React 创建虚拟节点')
+            // )
+
+            
+            // <div id="box"><h4>React 创建虚拟节点</h4><ul class="list"><li class="current">1</li><li>2</li><li>3</li></ul></div>
+            React.createElement(
+                'div',
+                {id:'box'},
+                [
+                    React.createElement('h4',{key:'top1'},'React 创建虚拟节点'),
+                    React.createElement(
+                        'ul',
+                        {className:'list',key:'top2'},
+                        [
+                            React.createElement('li',{className:'current',key:'data1'},'1'),
+                            React.createElement('li',{key:'data2'},'2'),
+                            React.createElement('li',{key:'data3'},'3'),
+                        ]
+                    ),
+                ]
+            )
+            ,
+            document.querySelector("#app")
+        )
+    </script>
+</body>
+</html>

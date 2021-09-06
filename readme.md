@@ -1636,3 +1636,26 @@
         * 事件总线 event Bus
     * 全局状态管理：vuex
 
+
+## day5-1
+
+### 知识点:React
+
+* 特点
+    * 一次学习，到处编写
+        > react.js
+        * webApp        在浏览器中访问
+            > react-dom
+        * nativeApp     需要在手机端安装使用
+            > react-native
+        * ...
+* 渲染
+    * ReactDOM.render(vNode,target)
+* 创建虚拟节点
+    * React.createElement(type,prop,children)
+
+* JSX
+    > 浏览器不能识别JSX，需要通过babel工具进行编译（`JSX -> babel -> React.createElement()`）
+    * browser.js    babel的浏览器版本
+
+    * 在JSX中使用变量必须放在花括号中
