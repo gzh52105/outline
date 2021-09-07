@@ -30,17 +30,30 @@
         //     )
         // }
         class TodoHead extends React.Component{
-            constructor(){
-                super()
+            constructor(props){
+                super(props)
                 this.state = {
-                    todo:'test'
+                    todo:'',
+                    // num:1
                 }
+                // console.log('TodoHead.constructor',props)
             }
             render(){
+                console.log('TodoHead.render',this.state.num)
+
+                // 创建一个ref对象
+                const myRef = React.createRef();
+                console.log('myRef',myRef)
                 return (
                     <div>
-                        <input type="text" id="todo" value={this.state.todo} onChange={(e)=>{
-                            console.log(e.currentTarget.value)
+                        <input 
+                        type="text" 
+                        // ref={(el)=>this.input=el} 
+                        ref={myRef}
+                        id="todo" 
+                        value={this.state.todo} 
+                        onChange={(e)=>{
+                            // console.log(e.currentTarget.value)
                             this.setState({
                                 todo:e.currentTarget.value
                             })
@@ -49,14 +62,68 @@
                             // 获取输入值
                             // const todo = document.querySelector('#todo').value;
                             // console.log('todo',todo);
-                            console.log('todo',this.state.todo)
+                            
+                            // console.log('start',this.state.num)
+
+                            // 以下3次setState会被合并成一次进行操作
+                            // this.setState({
+                            //     num:2
+                            // },()=>{
+                            //     console.log('callback2=',this.state.num)
+                            // })
+                            // this.setState({
+                            //     num:3
+                            // },()=>{
+                            //     console.log('callback3=',this.state.num)
+                            // })
+                            // this.setState({
+                            //     num:4
+                            // },()=>{
+                            //     console.log('callback4=',this.state.num)
+                            // })
+
+                            // setState第一个参数采用函数形式，会导致setState无法合并
+                            // this.setState(state=>{
+                            //     console.log('fn2',state.num)
+                            //     return {
+                            //         num:state.num+1
+                            //     }
+                            // })
+                            // this.setState(state=>{
+                            //     console.log('fn3',state.num)
+                            //     return {
+                            //         num:state.num+1
+                            //     }
+                            // })
+                            // this.setState(state=>{
+                            //     console.log('fn4',state.num)
+                            //     return {
+                            //         num:state.num+1
+                            //     }
+                            // })
+                            
+                            // console.log('end',this.state.num)
+
+
+                            
+                            this.props.addItem(this.state.todo)
+                            
+                            // 清空输入框
+                            this.setState({
+                                todo:''
+                            })
+                            
+                            // 自动获得焦点
+                            // this.input.focus();
+                            myRef.current.focus();
+                            
                         }}>添加</button>
                     </div>
                 )
             }
         }
-        function TodoItem({item,idx}) {
-            console.log('TodoItem.props',item,idx)
+        function TodoItem({item,idx,removeItem,completeItem}) {
+            // console.log('TodoItem.props',item,idx)
             return (
                 <tr>
                     <td>{idx+1}</td>
@@ -64,16 +131,22 @@
                     <td>{item.addtime}</td>
                     <td>{item.complete ? '是' : '否'}</td>
                     <td>
-                        <button>完成</button>    
-                        <button>删除</button>    
+                        <button onClick={completeItem(item.id)}>完成</button>    
+                        <button onClick={removeItem.bind(null,item.id)}>删除</button>
+                        {
+                            // <button onClick={()=>{
+                            //     removeItem(item.id)
+                            // }}>删除</button>    
+
+                        } 
                     </td>
                 </tr>
             )
         }
 
         // 定义函数组件：TodoBody
-        function TodoBody({list}) {
-            console.log('TodoBody.props',list);
+        function TodoBody({list,removeItem,completeItem}) {
+            // console.log('TodoBody.props',list);
             return (
                 <tbody>
                     {
@@ -81,18 +154,39 @@
                         //     return <TodoItem key={item.id}/>
                         // })
                         list.map((item,idx)=>(
-                            <TodoItem key={item.id} item={item} idx={idx}></TodoItem>
+                            <TodoItem 
+                                key={item.id} 
+                                item={item} 
+                                idx={idx}
+                                removeItem={removeItem}
+                                completeItem={completeItem}
+                            ></TodoItem>
                         ))
                     }
-                    
                 </tbody>
             )
         }
-        function TodoFoot() {
+        function TodoFoot(props) {console.log('TodoFoot.props',props)
+            const {list,renderContent,children} = props;
+            const completeList = list.filter(item=>item.complete)
+            const unCompleteList = list.filter(item=>!item.complete)
             return (
                 <tfoot>
                     <tr>
-                        <td colSpan="5">TodoFoot</td>
+                        <td colSpan="5">
+                            {/*
+                                renderContent ? 
+                                renderContent({list,completeList,unCompleteList}) : 
+                                // <React.Fragment/>的简写
+                                <React.Fragment>
+                                    总数：{list.length}，完成：{completeList.length}，未完成：{unCompleteList.length}
+                                </React.Fragment>
+                            */}
+                            {
+                                // children
+                                children({list,completeList,unCompleteList})
+                            }
+                        </td>
                     </tr>
                 </tfoot>
             )
@@ -129,11 +223,65 @@
                         addtime: Date.now() + 3600 * 1000 * 10
                     }]
                 }
+            
+                // 改变this指向
+                this.addItem = this.addItem.bind(this)
+                this.removeItem = this.removeItem.bind(this)
+                this.completeItem = this.completeItem.bind(this)
+            }
+
+            // 自定义函数：这里定义的方法会自动成为原型中的方法
+            // 添加
+            addItem(todo){
+                // console.log('addItem',todo,this)
+                const newItem = {
+                    id: parseInt(Math.random()*100000),
+                    todo,
+                    complete: false,
+                    checked:false,
+                    addtime: Date.now()
+                }
+                // vue: this.list.unshift()
+
+                // 覆盖式修改
+                this.setState({
+                    list:[newItem,...this.state.list]
+                })
+            }
+
+            removeItem(id){
+                const {list} = this.state;
+
+                const newList = list.filter(item=>item.id !== id);
+
+                this.setState({
+                    list:newList
+                })
+            }
+
+            completeItem(id){
+                return ()=>{
+                    const {list} = this.state;
+    
+                    const newList = list.map(item=>{
+                        
+                        if(item.id === id){
+                            item.complete = true;
+                        }
+                        return item;
+                    })
+                    console.log('newList',newList)
+                    this.setState({
+                        list:newList
+                    })
+
+                }
             }
             render() {
+                // console.log('TodoList=',this);
                 return (
                     <div>
-                    <TodoHead />
+                    <TodoHead addItem={this.addItem} />
                     <table>
                         <thead>
                             <tr>
@@ -156,8 +304,34 @@
                             // [<li>赚他一个亿津巴布韦币</li>,<li>迎娶白富美，达到人生巅峰</li>,<li>出任CEO，达到疯癫状态</li>]
                         }
                         
-                        <TodoBody list={this.state.list} a="10" b={20} />
-                        <TodoFoot />
+                        <TodoBody 
+                        list={this.state.list}
+                        removeItem={this.removeItem}
+                        completeItem={this.completeItem}
+                        />
+                        {/*<TodoFoot 
+                        list={this.state.list} 
+                        renderContent={({list,completeList,unCompleteList})=>{
+                            return (
+                                <div>
+                                    total: {list.length}，complete:{completeList.length}，uncomplete:{unCompleteList.length}
+                                </div>
+                            )
+                        }}
+                    />*/}
+                    {/* <TodoFoot list={this.state.list}>
+                        <div>无任何数据展示</div>
+                        <p>no data</p>
+                    </TodoFoot> */}
+                    <TodoFoot list={this.state.list}>
+                        {
+                            ({list,completeList,unCompleteList})=>{
+                                return <div>
+                                    total: {list.length}，complete:{completeList.length}，uncomplete:{unCompleteList.length}    
+                                </div>
+                            }
+                        }
+                    </TodoFoot>
                     </table>
                     </div>
                 )

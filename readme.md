@@ -1656,13 +1656,23 @@
 
 * JSX
     > 浏览器不能识别JSX，需要通过babel工具进行编译（`JSX -> babel -> React.createElement()`）
-    * 编译：`browser.js`    babel的浏览器版本
+    * 编译：`browser.js` babel的浏览器版本
     * 规则
         * 不能直接使用JS关键字
+            * class -> className
+            * for -> htmlFor
         * 属性必须使用驼峰
+            * onkeyup -> onKeyUp
+            * colspan -> colSpan
         * 必须结束标签
+            * img
+            * input
         * 在JSX中使用变量必须放在花括号中`{}`
             > 花括号中不允许出现声明式语句：let var const
+            ```js
+                {username}
+                {true ? <button>xx</button> : <span></span>} -> {React.createElement()}
+            ```
         * style只能使用对象形式
             ```js
                 const mystyle = {color:'#58bc58'}
@@ -1670,6 +1680,8 @@
                 <div style={{color:'#58bc58'}}></div>
             ```
         * 使用 js 语法注释
+            * 单行注释
+            * 多行注释
 
 * React组件
     * 为什么使用组件
@@ -1708,7 +1720,7 @@
         * 类组件，也称**状态组件**，拥有自己的状态，在状态发生改变时会自动刷新，类组件拥有以下函数组件所没有的功能
             * 状态: state
             * 生命周期
-            * this
+            * this： 只在constructor、render、生命周期函数中指向组件实例
     3. 在实际开发中推荐优先使用函数组件进行开发
 
 * 使用React实现todolist待办事项
@@ -1760,3 +1772,67 @@
         * 事件绑定
             * 使用驼峰
             * event：事件处理函数的最后一个参数
+
+
+## day5-2
+
+### 知识点
+
+* 组件通讯
+    > 数据修改原则: 谁的数据谁修改
+    * 父->子：props
+        1. 父组件操作：给子组件定义属性并传递数据
+        2. 子组件操作
+            * 函数组件：函数的第一个参数为props
+            * 类组件：
+                * constructor的第一个参数
+                * this.props
+    * 子->父：
+        * 把父组件方法传到子组件执行，执行时回传参数
+            1. 父组件操作：通过props传递方法到子组件
+            2. 子组件操作：执行传入方法，并传递参数
+    * 兄弟->兄弟
+        * 兄弟->父->兄弟
+        * 状态提升（推荐）
+            > 把数据放到他们共同的父级
+
+* 改变函数this指向
+    > 在通讯过程中为避免函数的this发生变化，一般在定义函数所在组件的construtor中指定this指向
+    * fn.call(target,a,b,c,...)       把fn的this指向target，并执行fn
+    * fn.apply(target,[a,b,c])      把fn的this指向target，并执行fn
+    * fn.bind(target,a,b,c)       把fn的this指向target，并返回一个新的函数newFn（改变了this指向的fn）
+        > 只生效第一次
+
+* 修改状态: `this.setState()`覆盖式修改
+    * 默认异步操作(自动合并多次setState): `this.setState(state[,callback])`
+    * 依赖上次setState()的结果（不合并setState）：`this.setState(fn[,callback])`
+        * fn: 为一个函数，参数为state，必须返回一个新的state
+* react 组件的数据挂载方式
+    * state
+    * props
+        * 普通属性
+        * render props
+            > 使用一个值为函数的 prop 共享代码的简单技术
+            （类似于 Vue 中的作用域插槽）
+        * children
+            > 类似于于Vue中的插槽
+    * 列表循环
+    * 条件绑定
+    * 事件绑定
+        * event
+        * this指向
+            > 事件处理函数默认没有this指向
+    * ref
+        * 回调函数写法
+            ```js
+                <input ref={el=>this.input=el} />
+
+                this.input //得到input对应的节点
+            ```
+        * createRef()
+            ```js
+                const myRef = React.createRef()
+                <input ref={myRef} />
+
+                myRef.current;// 得到input对应的节点
+            ```
