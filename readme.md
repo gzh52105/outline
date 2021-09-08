@@ -1878,7 +1878,19 @@
     * 从0搭建基于webpack的react项目环境
         * 创建目录
         * 安装依赖
+            * react & react-dom
+            * @babel/core & babel-loader & @babel/preset-react
+            * webpack & webpack-cli & webpack-dev-server
+            * html-webpack-plugin
         * 配置webpack
+            * entry 入口
+            * output
+            * loader
+                > module.rules
+            * plugins
+            * devServer
+                > static.directory
+
         * 启动项目
     * webpack与gulp
         * gulp: 是一个基于任务的构建工具（命令式编程）
@@ -1910,3 +1922,10 @@
         ```
         * webpack: 基于配置的构建工具
             > 在项目根目录下创建`webpack.config.js`（是一个符合commonJS规范的模块）
+
+    * webpack常用加载器
+        * js:babel-loader
+        * css: css-loader + style-loader
+        * sass: sass-loader
+        * less: less-loader
+        * 文件：file-loader
