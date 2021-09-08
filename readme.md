@@ -1803,19 +1803,50 @@
     * fn.bind(target,a,b,c)       把fn的this指向target，并返回一个新的函数newFn（改变了this指向的fn）
         > 只生效第一次
 
-* 修改状态: `this.setState()`覆盖式修改
-    * 默认异步操作(自动合并多次setState): `this.setState(state[,callback])`
-    * 依赖上次setState()的结果（不合并setState）：`this.setState(fn[,callback])`
-        * fn: 为一个函数，参数为state，必须返回一个新的state
+
 * react 组件的数据挂载方式
     * state
+        * 修改状态: `this.setState()`覆盖式修改
+            * 默认异步操作(自动合并多次setState): `this.setState(state[,callback])`
+            * 依赖上次setState()的结果（不合并setState）：`this.setState(fn[,callback])`
+                * fn: 为一个函数，参数为state，必须返回一个新的state
     * props
         * 普通属性
         * render props
             > 使用一个值为函数的 prop 共享代码的简单技术
             （类似于 Vue 中的作用域插槽）
+            ```jsx
+                <Child renderHead={(todo)=>{
+                    return <div><input type="text" value={todo} /><button>添加</button></div>
+                }} />
+
+                // 子组件代码
+                {props.renderHead('text')}
+            ```
         * children
-            > 类似于于Vue中的插槽
+            > 类似于于Vue中的插槽，实现组件可定制化（在父组件生成html结构再写入子组件）
+            ```js
+                <Child>
+                    <p>hello</p>
+                    <input type="text" />
+                </Child>
+                <Child>
+                    {
+                        (data)=>{
+                            return <>
+                                <p>hello</p>
+                                <input type="text" />
+                            </>
+                        }
+                    }
+                </Child>
+
+                // Child内部代码
+                <div>
+                    //{props.children}
+                    {props.children(childData)}
+                </div>
+            ```
     * 列表循环
     * 条件绑定
     * 事件绑定
@@ -1836,3 +1867,46 @@
 
                 myRef.current;// 得到input对应的节点
             ```
+## day5-3
+
+### 知识点
+* webpack
+    * 什么是webpack
+        * 模块打包工具
+    * 工作原理：
+        > JSX -> webpack(babel) -> React.createElement -> 输出到浏览器
+    * 从0搭建基于webpack的react项目环境
+        * 创建目录
+        * 安装依赖
+        * 配置webpack
+        * 启动项目
+    * webpack与gulp
+        * gulp: 是一个基于任务的构建工具（命令式编程）
+        ```js
+            // gulp: sass->css
+            // 创建一个任务
+            gulp.task('buildSass',(done)=>{
+                // 编译sass需要手动编写代码去实现（命令式编程）
+                // 1. 匹配sass文件
+                gulp.src('./src/sass/*.scss')
+
+                // 2. 编译
+                .pipe(sass())
+
+                // 3. 输出未压缩版本
+                .pipe(gulp.dest('./dist'))
+
+                // 4. 输出压缩版本并改名
+
+            })
+
+            // 编译sass: 运行这个任务
+            // gulp buildSass
+
+            // 运行任务：gulp complieES6
+            export.compileEs6 = function(){
+
+            }
+        ```
+        * webpack: 基于配置的构建工具
+            > 在项目根目录下创建`webpack.config.js`（是一个符合commonJS规范的模块）
