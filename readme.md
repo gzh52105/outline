@@ -1996,3 +1996,51 @@
                     * Consumer
                     * contextType
                         > 给子组件设置contextType静态属性(类属性)，设置静态属性后，可通过`this.context`或在constructor中第二个参数获取
+* 生命周期
+    > 组件从创建到销毁的过程
+    * 执行阶段
+        * Initial:      初始化阶段
+            * constructor
+        * Mounting：    挂载阶段
+            * componentWillMount -> UNSAFE_componentWillMount（不推荐）
+            * componentDidMount
+        * Updating：    更新阶段(不断执行render)
+            * componentWillUpdate -> UNSAFE_componentWillUpdate（不推荐）
+            * componentDidUpdate
+        * Unmounting：  卸载阶段
+            * componentWillUnmount
+        * 特殊钩子函数
+            * componentWillReceiveProps -> UNSAFE_componentWillReceiveProps（不推荐）
+            * shouldComponentUpdate
+
+    * 学习生命周期需要搞懂以下两个事情
+        * 执行过程？
+        * 适合做哪个操作？
+            * constructor(props,context)
+                > 定义初始值，改变函数this指向
+            * componentDidMount()
+                > ajax请求，定时器，节点操作等，读取本地存储数据
+            * componentDidUpdate(prevProps, prevState)
+                > 执行依赖新 DOM 节点的操作，依据新的属性发起新的ajax请求（在改钩子函数中修改state**注意避免死循环**）
+                * prevPorps 与 this.props
+                * prevState 与 this.state
+            * componentWillUnmount(
+                > 清除定时器、终止ajax请求等
+            * shouldComponentUpdate(nextProps, nextState)
+                > 组件性能优化
+                * nextProps 与 this.props
+                * nextState 与 this.state
+                ```js
+                    shouldComponentUpdate(nextProps, nextState){
+                        // 判断两个对象的属性是否一致
+                        if(nextProps === this.props){
+                            return false
+                        }
+                    }
+                ````
+* 组件性能优化
+    * 组件在什么场景下会刷新
+        1. state被修改
+        2. props被修改
+        3. forceUpdate() 强制刷新
+        4. 父组件刷新
