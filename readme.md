@@ -1870,28 +1870,50 @@
 ## day5-3
 
 ### 知识点
+* 构建工具
+    * grunt
+    * gulp
+    * webpack   
 * webpack
     * 什么是webpack
         * 模块打包工具
     * 工作原理：
         > JSX -> webpack(babel) -> React.createElement -> 输出到浏览器
+        * 把项目当做一个整体，通过入口文件（如：index.js）分析整个项目结构，找到所有依赖模块，并利用配置好的加载器、插件处理这些模块，最后打包为一个（或多个）浏览器可识别的文件
     * 从0搭建基于webpack的react项目环境
         * 创建目录
+            * src                   源码
+                * components
+                * views
+                * utils
+                * layout
+                * App.js            根组件
+                * index.js          入口文件
+            * public                应用根目录
+            * dist                  编译目录
+            * node_modules          项目依赖包
+            * webpack.config.js     webpack配置文件
+            * package.json  
+                * 依赖
+                * npm script
+            * .gitignore
         * 安装依赖
             * react & react-dom
             * @babel/core & babel-loader & @babel/preset-react
             * webpack & webpack-cli & webpack-dev-server
             * html-webpack-plugin
         * 配置webpack
-            * entry 入口
-            * output
+            * entry     入口（设置webpack工作起点）
+            * output    出口（设置webpack工作终点）
             * loader
                 > module.rules
             * plugins
             * devServer
                 > static.directory
 
-        * 启动项目
+        * 启动项目: npm script
+            * 启动服务器：`webpack server`
+            * 编译：`webpack`
     * webpack与gulp
         * gulp: 是一个基于任务的构建工具（命令式编程）
         ```js
@@ -1929,3 +1951,48 @@
         * sass: sass-loader
         * less: less-loader
         * 文件：file-loader
+    * webpack常用插件
+        * html-webpack-plugin
+### 练习
+* 从0配置基于webpack的Vue项目环境
+
+## day5-4
+
+### 知识点
+* 深层级组件通讯
+    * 逐层传递（繁琐，不推荐）
+    * context 组件共享
+        > 某个组件只要往自己的 context 里面放了某些状态，这个组件之下的所有子组件都能**直接访问**这个状态
+        * 实现步骤
+            1. 创建 Context：
+                ```js
+                    // 默认值在没有Provider共享数据时能获取到
+                    let defaultValue = { username: "laoxie" };
+                    let myContext = React.createContext(defaultValue);
+                ```
+            2. 父组件 Provider
+                > 父组件利用Provider向子组件共享数据
+                ```js
+                    <myContext.Provider value="xxx">
+                        <Child/>
+                    <myContext.Provider>
+                ```
+            3. 子组件接收
+                * 函数组件
+                    * Consumer
+                        ```js
+                            <myContext.Consumer>
+                                {
+                                    (value)=>{
+                                        return (
+                                            <div></div>
+                                        )
+                                    }
+                                }
+                            </myContext.Consumer>
+                        ```
+                    * Hooks
+                * 类组件
+                    * Consumer
+                    * contextType
+                        > 给子组件设置contextType静态属性(类属性)，设置静态属性后，可通过`this.context`或在constructor中第二个参数获取
