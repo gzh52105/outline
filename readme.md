@@ -2032,8 +2032,8 @@
                 * nextState 与 this.state
                 ```js
                     shouldComponentUpdate(nextProps, nextState){
-                        // 判断两个对象的属性是否一致
-                        if(nextProps === this.props){
+                        // 判断两个对象的属性是否一致（使用第三方工具库实现判断，如：lodash -> underscore）
+                        if(nextProps.age === this.props.age){
                             return false
                         }
                     }
@@ -2044,3 +2044,41 @@
         2. props被修改
         3. forceUpdate() 强制刷新
         4. 父组件刷新
+            > 传入子组件的props没有改变
+            ```js
+                this.state = {
+                    a:10,
+                    b:20,
+                }
+
+                <Child a={this.state.a} />
+            ```
+    * PureComponent
+        > PureComponent 与React.Component的区别是PureComponent内部帮我们做了shouldComponentUpdate的简单判断，让state和props不变的情况下自动return false，从而实现性能优化
+    * shouldComponentUpdate()
+        > 选择性返回true
+
+## day5-5
+
+### 知识点
+* ReactRouter常用组件
+    * 路由类型
+        * HashRouter
+        * BrowserRouter
+        * 属性
+            * basename
+    * 路由配置
+        * Switch
+        * Route
+            * path
+            * component
+            * exact
+            * render    renderProps技术
+            * Children  Route双标签中的内容
+        * Redirect
+            * from
+            * to
+            * exact
+* 路由跳转
+    * 声明式导航
+        > 利用内置组件实现导航
