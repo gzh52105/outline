@@ -2061,6 +2061,8 @@
 ## day5-5
 
 ### 知识点
+* ReactRouter
+    > 一切皆组件
 * ReactRouter常用组件
     * 路由类型
         * HashRouter
@@ -2082,3 +2084,17 @@
 * 路由跳转
     * 声明式导航
         > 利用内置组件实现导航
+    * 编程式导航
+        > 利用js进行页面跳转，需要用到history,location,match这几个对象
+        * 如何获取`history`,`location`,`match`
+            * 通过Route.component属性渲染组件
+        * history.push()
+        * history.replace()
+
+* UI组件库
+    * ant-design
+    * element-ui
+    * ...
+
+* 高阶组件
+    > 高阶组件并不是一个React组件，而是一个高阶函数（包装函数）

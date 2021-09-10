@@ -8,6 +8,7 @@ const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRoute
 render(
     <Router>
         <App/>
+        {/* <Route component={App} /> */}
     </Router>
     ,
     document.querySelector('#app')
