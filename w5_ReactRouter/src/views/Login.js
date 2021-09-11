@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {withUser} from '../utils/hoc'
+
 function Login(){
     return (
         <div>
@@ -7,4 +9,4 @@ function Login(){
         </div>
     )
 }
-export default Login;
+export default withUser(Login);

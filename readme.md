@@ -2065,6 +2065,7 @@
     > 一切皆组件
 * ReactRouter常用组件
     * 路由类型
+        > process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter
         * HashRouter
         * BrowserRouter
         * 属性
@@ -2084,13 +2085,21 @@
 * 路由跳转
     * 声明式导航
         > 利用内置组件实现导航
+        * Link
+            * to
+        * NavLink
+            * to
+            * activeStyle
+            * activeClass
+            * replace   不产生浏览记录
     * 编程式导航
         > 利用js进行页面跳转，需要用到history,location,match这几个对象
         * 如何获取`history`,`location`,`match`
-            * 通过Route.component属性渲染组件
-        * history.push()
-        * history.replace()
-
+            * 通过`Route.component`属性渲染组件
+            * `withRouter`高阶函数（高阶组件）
+        * 跳转方法
+            * history.push()
+            * history.replace()
 * UI组件库
     * ant-design
     * element-ui
@@ -2098,3 +2107,48 @@
 
 * 高阶组件
     > 高阶组件并不是一个React组件，而是一个高阶函数（包装函数）
+
+## day5-6
+
+### 知识点
+* 高阶组件HOC（High Order Component）
+    > 高阶组件并不是一个React组件，而是一个高阶函数（包装函数）
+    * 纯函数
+        * 不修改传入的参数
+        * 固定输入有固定输出
+        ```js
+            function sum(a,b){
+                return a+b;
+            }
+            sum(10,20);// 30
+            sum(10,20);// 30
+
+            function randomNumber(min,max){
+                return parseInt(Math.random*(max-min+1))+min
+            }
+            randomNumber(10,20);//11
+            randomNumber(10,20);//16
+
+            function formatData(data){
+                const newData = []
+                for(let key in data){
+                    let item = []
+                    item[0] = key
+                    item[1] = data[key]
+                    newData.push(item)
+                }
+                return newData
+            }
+            formatData({a:10,b:20,c:30}); // [['a',10],['b',20],['c',20]]
+        ```
+    * 高阶组件定义
+        > 命名规则：`with`开头
+        * 定义方式一： 
+            * 属性代理
+            * 提取公共代码
+        * 定义方式一： 反向继承
+
+        > PS: 定义高阶组件时必须向下传递props与children
+
+### 练习
+* 实现withStorage高阶组件

@@ -163,8 +163,8 @@ class App extends React.Component {
                             }}
                         >
                             <Switch>
-                                <Route path="/home">
-                                    <Home></Home>
+                                <Route path="/home" component={Home}>
+                                    {/* <Home></Home> */}
                                 </Route>
                                 <Route path="/class" component={Class}/>
                                 <Route path="/student/:type" component={Student}/>
@@ -180,6 +180,6 @@ class App extends React.Component {
     }
 }
 
+const NewApp = withRouter(App)
 
-
-export default withRouter(App);
+export default NewApp;
