@@ -6,6 +6,12 @@ module.exports = {
     output:{
         path:path.join(__dirname, 'dist')
     },
+    resolve:{
+        // 配置路径别名
+        alias:{
+            '@':path.join(__dirname, 'src'),
+        }
+    },
     module:{
         rules:[
             {
@@ -14,7 +20,10 @@ module.exports = {
                 use:{
                     loader:'babel-loader',
                     options:{
-                        // plugins:[],// 插件
+                        // 插件
+                        plugins:[
+                            ['@babel/plugin-proposal-decorators',{legacy: true}]
+                        ],
                         presets:['@babel/preset-react'],// 插件集合
                     }
                 },

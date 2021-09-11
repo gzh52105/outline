@@ -2142,13 +2142,23 @@
             formatData({a:10,b:20,c:30}); // [['a',10],['b',20],['c',20]]
         ```
     * 高阶组件定义
-        > 命名规则：`with`开头
+        > 命名规则：`with`开头，高阶组件的参数为组件，返回值为新组件
         * 定义方式一： 
             * 属性代理
             * 提取公共代码
         * 定义方式一： 反向继承
+            > 实现页面访问权限控制
 
         > PS: 定义高阶组件时必须向下传递props与children
 
 ### 练习
 * 实现withStorage高阶组件
+    > 函数柯里化：通过函数调用继续返回函数的方式，实现多次接收参数后统一处理的函数编码形式(好处：降低通用性，提高适用性)
+        ```js
+            withStorage('userInfo')(Home)
+        ```
+* 增强withStorage
+    ```js
+        withStorage('userInfo','token')(Home)
+        withStorage('userInfo','token','myData')(Home)
+    ```

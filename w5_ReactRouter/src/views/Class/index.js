@@ -3,8 +3,14 @@ import { Switch, Redirect, Route } from 'react-router-dom'
 
 import List from './List'
 import Add from './Add'
+import { withAuth,withLogin } from '../../utils/hoc'
 
+// ES7装饰器
+// @withLogin
 class Class extends React.Component{
+    componentDidMount(){
+        console.log('Class.componentDidMount')
+    }
     render(){
         console.log('Class.props', this.props)
     const { path } = this.props.match
@@ -37,5 +43,7 @@ class Class extends React.Component{
 //         </div>
 //     )
 // }
+
+// Class = withLogin(Class);
 
 export default Class;

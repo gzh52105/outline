@@ -9,6 +9,7 @@ import Class from './views/Class'
 import Student from './views/Student'
 import Subject from './views/Subject'
 
+
 import 'antd/dist/antd.css';
 import './App.scss'
 
@@ -56,7 +57,7 @@ class App extends React.Component {
                     ]
                 },
                 {
-                    path: '/xueke',
+                    path: '/subject',
                     text: '学科管理',
                     icon: <ReconciliationOutlined />,
                     children: [
@@ -163,6 +164,7 @@ class App extends React.Component {
                             }}
                         >
                             <Switch>
+                                <Route path="/login" component={Login} />
                                 <Route path="/home" component={Home}>
                                     {/* <Home></Home> */}
                                 </Route>
@@ -180,6 +182,6 @@ class App extends React.Component {
     }
 }
 
-const NewApp = withRouter(App)
+App = withRouter(App)
 
-export default NewApp;
+export default App;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {withUser} from '../utils/hoc'
+import {withUser,withStorage} from '../utils/hoc'
 
 function Home(props){
     console.log('Home.props',props)
@@ -16,5 +16,6 @@ function Home(props){
         </div>
     )
 }
-const NewHome = withUser(Home)
-export default NewHome;
+Home = withUser(Home)
+Home = withStorage('userInfo')(Home)
+export default Home;
