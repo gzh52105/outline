@@ -74,7 +74,12 @@ class Add extends React.Component{
                     onFinish={this.submit}
                 >
                     
-                    <Form.Item label="班级名称" name="name">
+                    <Form.Item label="班级名称" name="name" rules={[
+                        {
+                            required: true,
+                            message: '请填写班级名称',
+                        },
+                    ]} hasFeedback>
                         <Input />
                     </Form.Item>
                     <Form.Item label="学科" name="category">

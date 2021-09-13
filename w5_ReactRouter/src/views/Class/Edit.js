@@ -100,7 +100,12 @@ class Add extends React.Component{
                     <Form.Item name="_id" hidden>
                         <Input />
                     </Form.Item>
-                    <Form.Item label="班级名称" name="name">
+                    <Form.Item label="班级名称" name="name" rules={[
+                        {
+                            required: true,
+                            message: '请填写班级名称',
+                        },
+                    ]}>
                         <Input />
                     </Form.Item>
                     <Form.Item label="学科" name="category">

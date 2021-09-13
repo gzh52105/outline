@@ -10,6 +10,6 @@ function Subject(){
     )
 }
 
-Subject = withLogin(Subject);
+// Subject = withLogin(Subject);
 
 export default Subject;
