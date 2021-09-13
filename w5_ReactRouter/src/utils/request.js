@@ -5,7 +5,10 @@ export const apiUrl = baseUrl + '/api'
 const instance = axios.create({
     // 默认配置
     baseURL:apiUrl,
-    withCredentials:true
+    withCredentials:true,
+    headers:{
+        Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imxhb3hpZSIsImlhdCI6MTYzMTUwNTY1NiwiZXhwIjoxNjMxNTEyODU2fQ.MTj5iq0Ge8dTnITaQs2k0kGqMK0O2Nk_T40ooP_MYMI'
+    }
 })
 
 // export default instance;

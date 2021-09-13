@@ -107,7 +107,7 @@ class App extends React.Component {
             //         </Switch>
 
             // </div>
-            <Layout style={{ height: '100vh' }}>
+            <Layout style={{ minHeight: '100vh' }}>
                 <Header className="header" style={{ padding: '0 20px' }}>
 
                     <Row>

@@ -3,6 +3,7 @@ import { Switch, Redirect, Route } from 'react-router-dom'
 
 import List from './List'
 import Add from './Add'
+import Edit from './Edit'
 import { withAuth,withLogin } from '../../utils/hoc'
 
 // ES7装饰器
@@ -20,6 +21,7 @@ class Class extends React.Component{
             <Switch>
                 <Route path={path + "/list"} component={List} />
                 <Route path={path + "/add"} component={Add} />
+                <Route path={path + "/eidt/:id"} component={Edit} />
                 <Redirect from={path + ""} to={path + "/list"} exact />
 
             </Switch>

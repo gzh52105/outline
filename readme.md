@@ -2162,3 +2162,17 @@
         withStorage('userInfo','token')(Home)
         withStorage('userInfo','token','myData')(Home)
     ```
+
+## day6-1
+
+### 知识点
+* 路由传参
+    * query
+        > 获取：props.location.search
+        * URL
+        * URLSearchParams
+    * params
+        > props.match.params
+        * 动态路由
+    * 任意参数
+        > 刷新后丢失

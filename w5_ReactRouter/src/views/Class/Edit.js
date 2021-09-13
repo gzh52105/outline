@@ -18,6 +18,7 @@ class Add extends React.Component{
     state = {
         subjectList:[],
         cities:[],
+        // classData:{},
         initialValues:{
             name:'',
             category:'HTML5',
@@ -25,20 +26,39 @@ class Add extends React.Component{
         }
     }
     submit = (values)=>{
-        console.log('values',values)
-        request.post('/class',{
-            ...values
+        console.log('values',values);// {_id,name,category,city}
+        const {_id,...fields} = values;
+        request.put('/class/'+_id,{
+            ...fields
         }).then(data=>{
             console.log('category',data);
             if(data.code === 201){
-                message.success('添加成功');
+                message.success('修改成功');
                 this.props.history.push('/class')
             }else{
-                message.error('添加失败')
+                message.error('修改失败')
             }
         })
     }
     componentDidMount(){
+        // 获取当前班级信息
+        console.log('Edit.prop=',this.props)
+        const classId = this.props.match.params.id
+        const search = new URLSearchParams(this.props.location.search)
+        const id = search.get('id');
+        console.log('id=',id,classId)
+        request.get('/class/'+id).then(data=>{
+            console.log('classDetail',data)
+            // this.setState({
+            //     classData:data.data
+            // })
+
+            // 通过form实例设置表单的值
+            this.form.setFieldsValue(data.data)
+        })
+        
+
+        // 获取学科
         request.get('/category',{
             total:false,
             size:100
@@ -48,6 +68,8 @@ class Add extends React.Component{
                 subjectList:data.data
             })
         })
+
+        // 获取分校
         request.get('/city',{
             total:false,
             size:100
@@ -63,6 +85,7 @@ class Add extends React.Component{
         return (
             <div>
                 <Form
+                    ref={el=>this.form=el}
                     labelCol={{
                         span: 4,
                     }}
@@ -74,6 +97,9 @@ class Add extends React.Component{
                     onFinish={this.submit}
                 >
                     
+                    <Form.Item name="_id" hidden>
+                        <Input />
+                    </Form.Item>
                     <Form.Item label="班级名称" name="name">
                         <Input />
                     </Form.Item>
