@@ -2214,11 +2214,19 @@
         * 函数组件每次更新都会从上往下执行完内部所有的代码
     * 常用Hooks
         * useState
-            > 用法：useState(initState)
+            > 用法：`useState(initState)`
+            ```js
+                this.state = {
+                    qty:1,
+                    count:10
+                }
+                const [qty,setQty] = useState(1)
+                const [count,setCount] = useState(10)
+            ```
         * useEffect
-            > 格式：useEffect(fn,[dependencies])
+            > 格式：`useEffect(fn,[dependencies])`
             * 用法一：`useEffect(()=>{})`
-                > 等效于componentDidMount + componentDidUpdate的效果
+                > 不推荐，等效于componentDidMount + componentDidUpdate的效果
             * 用法二：指定依赖，`useEffect(()=>{},[qty])`
                 > 等效于componentDidMount + shouldComponentUpdate的效果
             * 用法三：空依赖，`useEffect(()=>{},[])`
@@ -2232,4 +2240,57 @@
                         }
                     },[])
                 ```
+        * useMemo
+            > 语法：`useMemo(fn,[dependencies])`，得到fn的返回值，一般用于一些比较消耗资源的运算
+            * 用法一：普通用法（不推荐，等效于传统用法）
+            ```js
+                const totalPrice = useMemo(function(){
+                    return classList.reduce((val,item)=>{
+                        return val + item.price * item.qty
+                    },0)
+                })
+            ```
+
+            * 用法二：空依赖，初始化时执行并缓存，更新时不会重新执行useMemo中的代码，永远得到缓存值
+            ```js
+                const totalPrice = useMemo(function(){
+                    return classList.reduce((val,item)=>{
+                        return val + item.price * item.qty
+                    },0)
+                },[])
+            ```
+
+            * 用法三：指定依赖，初始化时执行并缓存，只有在依赖的数据发生变化时重新执行useMemo中的代码并返回新的值，否则得到缓存值
+            ```js
+                const totalPrice = useMemo(function(){
+                    return classList.reduce((val,item)=>{
+                        return val + item.price * item.qty
+                    },0)
+                },[classList])
+            ```
+        * useCallback
+            > 语法：`useCallback(fn,[dependencies])`，一般用于优化函数创建，实现性能优化
+            * 用法一：普通用法（不推荐）
+            * 用法二：空依赖
+                ```js
+                    const [qty] = useState(1)
+                    const handle = useCallback(()=>{
+                        // qty,count
+                    },[])
+                ```
+                PS: 空依赖写法配合`setState`用法，可以实现状态的修改
+                ```js
+                    setState(function(state){
+                        return newState
+                    })
+                ```
+            * 用法三：指定依赖
+                ```js
+                    const [qty] = useState(1); //2
+                    const handle = useCallback(()=>{
+                        console.log(qty)
+                    },[qty])
+                ```
+        * useReducer
+            > 一个增强版useState
     * 自定义hooks

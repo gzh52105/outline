@@ -200,9 +200,7 @@ class Manage extends React.Component {
                                 <Route path={basePath + "/student/:type"} component={Student}/>
                                 <Route path={basePath + "/subject"} component={Subject}/>
                                 <Redirect from={basePath} to="/home" exact />
-                                
                             </Switch>
-
                             <Hooks/>
                         </Content>
                     </Layout>
