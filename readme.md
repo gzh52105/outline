@@ -2176,3 +2176,60 @@
         * 动态路由
     * 任意参数
         > 刷新后丢失
+* 用户权限
+    * 用户 -> 角色 -> 权限
+    * 分类
+        * 页面访问权限
+        * 功能权限（按钮级别权限）
+        * 数据权限
+            > 根据用户级别与数据状态进行展示
+    ```js
+        {
+            classManage:{
+                edit:true,
+                delete:false
+            },
+            subjectManage:{
+                edit:true,
+                delete:true
+            }
+        }
+    ```
+
+## day6-2
+
+### 知识点:Hooks
+* React组件类型
+    * 函数组件（无状态组件）
+        > 优先使用函数组件（性能）
+    * 类型组件（状态组件）
+        * state
+        * 生命周期
+        * this
+* Hooks
+    > hooks是React16.8新增特性，用于增强函数组件的功能
+    * 注意事项
+        * 只能在函数组件中或其他hook中使用
+        * 只能在函数组件最外层使用（不能在代码块中使用）
+        * 函数组件每次更新都会从上往下执行完内部所有的代码
+    * 常用Hooks
+        * useState
+            > 用法：useState(initState)
+        * useEffect
+            > 格式：useEffect(fn,[dependencies])
+            * 用法一：`useEffect(()=>{})`
+                > 等效于componentDidMount + componentDidUpdate的效果
+            * 用法二：指定依赖，`useEffect(()=>{},[qty])`
+                > 等效于componentDidMount + shouldComponentUpdate的效果
+            * 用法三：空依赖，`useEffect(()=>{},[])`
+                > 等效于componentDidMount的效果
+            * 用法四：返回一个函数，
+                > 等效于componentWillUnmount的效果
+                ```js
+                    useEffect(()=>{
+                        return function(){
+                            // 这里的代码只有在组件销毁时执行
+                        }
+                    },[])
+                ```
+    * 自定义hooks
