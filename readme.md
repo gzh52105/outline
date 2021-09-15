@@ -2334,3 +2334,54 @@
         * useLayoutEffect
             > 用法与useEffect一致，是useEffect的同步版本，等效于类组件中的componentWillMount
     * 自定义hooks
+        * useStorage
+
+
+## day6-3
+
+### 知识点
+
+* Redux: 全局状态管理工具
+    * 核心配置
+        * store     数据仓库
+        * state     状态（用于全局共享）
+        * reducer   修改状态的方法
+            > 是一个用于修改state的纯函数，接收state,action作为参数，且必须返回一个新的state
+        * action    动作/命令
+            > 格式：`{type}`，调用方式：`store.dispatch(action)`
+    * store核心方法
+        * getState()        获取state
+        * dispatch(action)  修改state
+        * subscribe(fn)     监听state修改
+    ```js
+        // Vuex
+        const store = new Vuex.Store({
+            // 核心配置
+            state,
+            getters,
+            mutations,
+            actions,
+            modules
+        })
+        // 注入vue根实例
+        new Vue({
+            ...
+            store
+        })
+        store.commit('mutation');// store.commit({})
+        store.dispatch('action');// store.dispath({type:'action'})
+
+
+        // redux 与 react是两个独立产品
+        const store = createStore(reducer,initState)
+
+        store.dispatch(action); // action格式：{type}
+    ```
+* react组件刷新条件
+    * state被修改
+    * props被修改
+    * 强制刷新
+    * 父组件刷新
+* react组件与redux组件的结合
+    * 使用高阶组件`withRedux`通过props方式把redux数据传入组件
+
