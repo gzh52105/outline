@@ -5,6 +5,10 @@ import UseEffect  from './UseEffect';
 import UseMemo  from './UseMemo';
 import UseCallback  from './UseCallback';
 import UseReducer  from './UseReducer';
+import UseContext  from './UseContext';
+import UseRef  from './UseRef';
+import UseLayoutEffect  from './UseLayoutEffect';
+import UseStorage  from './UseStorage';
 
 function Hooks(){
     const [show,changeShow] = React.useState(true)
@@ -23,7 +27,11 @@ function Hooks(){
             }}>{show ? 'show' : 'hide'}</button> */}
             {/* <UseMemo /> */}
             {/* <UseCallback/> */}
-            <UseReducer/>
+            {/* <UseReducer/> */}
+            {/* <UseContext /> */}
+            {/* <UseRef /> */}
+            {/* <UseLayoutEffect /> */}
+            <UseStorage />
         </div>
     )
 }

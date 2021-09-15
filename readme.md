@@ -2214,14 +2214,19 @@
         * 函数组件每次更新都会从上往下执行完内部所有的代码
     * 常用Hooks
         * useState
-            > 用法：`useState(initState)`
+            > 用法：`useState(initState)`，返回状态与改变这个状态的方法组成的数组
             ```js
+                // 类组件
                 this.state = {
                     qty:1,
                     count:10
                 }
+                this.setState({qty:2})
+
+                // 函数组件
                 const [qty,setQty] = useState(1)
                 const [count,setCount] = useState(10)
+                setQty(2);
             ```
         * useEffect
             > 格式：`useEffect(fn,[dependencies])`
@@ -2269,7 +2274,7 @@
                 },[classList])
             ```
         * useCallback
-            > 语法：`useCallback(fn,[dependencies])`，一般用于优化函数创建，实现性能优化
+            > 语法：`useCallback(fn,[dependencies])`，一般用于优化函数创建（如：缓存事件处理函数），实现性能优化
             * 用法一：普通用法（不推荐）
             * 用法二：空依赖
                 ```js
@@ -2292,5 +2297,40 @@
                     },[qty])
                 ```
         * useReducer
-            > 一个增强版useState
+            > 一个增强版useState，一般用于复杂状态的处理，返回一个状态与修改这个状态函数组成的数组
+            * reducer   修改状态的方法
+                > 接收state与action作为参数，必须返回一个新的state
+            * state     状态
+            * action    修改状态命令
+            ```js
+                const reducer = function(state,action){
+                    switch(action.type){
+                        // case ...
+                    }
+                }
+                const initState = {}
+                const [state,dispatch] = useReducer(reducer,initState)
+
+                // 修改状态
+                dispatch({type:'xx'})
+            ````
+        * useContext
+            > 语法：`useContext(context)`，返回context共享的数据，用于简化context的获取
+
+            ```js
+                // 1. 创建Context
+                const myContext = React.createContext(defaultValue)
+
+                // 2. 父组件共享数据
+                <myContext.Provider value={{a:10,b:20}}>
+                    <Child/>
+                </myContext.Provider>
+
+                // 3. 子组件接收
+                // 函数组件: Consumer + useContext
+                // 类组件：Consumer + contextType
+            ```
+        * useRef
+        * useLayoutEffect
+            > 用法与useEffect一致，是useEffect的同步版本，等效于类组件中的componentWillMount
     * 自定义hooks

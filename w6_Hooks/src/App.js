@@ -8,6 +8,7 @@ import Manage from './views/Manage'
 
 import 'antd/dist/antd.css';
 import './App.scss'
+import './test.css'
 
 @withStorage('userInfo')
 @withRouter
@@ -25,7 +26,7 @@ class App extends React.Component {
         }
         const isLogin = !!userInfo._id
         return (
-            
+
             <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/manage" component={Manage} />

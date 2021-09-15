@@ -19,8 +19,20 @@ const reducer = function (state, action) {
             return [action.goods, ...state]
         case 'delete':
             return state.filter(item => item.id !== action.id)
-        // case 'changeqty':
-        // case 'clear':
+        
+        // dispathch({type:'changeqty',id,qty})
+        case 'changeqty':
+            return state.map(item=>{
+                const newItem = {...item}
+                if(newItem.id == action.id){
+                    newItem.qty = action.qty
+                }
+                return newItem;
+            })
+
+        // dispatch({type:'clear'})
+        case 'clear':
+            return []
 
     }
 }
@@ -39,17 +51,24 @@ function UseReducer(props) {
     const totalPrice = useMemo(()=>{
         return cartlist.reduce((val,item)=>val+item.price*item.qty,0)
     },[cartlist])
-
+    // 删除
     const removeItem = useCallback(function(id){
         dispatch({type:'delete',id})
     },[])
+    // 添加
     const addItem = useCallback(function(){
         const id = parseInt(Math.random()*100000)
         const goods = {id , name: "goods"+id, price: 98, qty: 1}
         dispatch({type:'add',goods})
     },[])
-    const changeQty = useCallback(function(){
-        
+    // 修改数量
+    const changeQty = useCallback(function(id,e){
+        console.log('value',e.target.value);
+        dispatch({type:'changeqty',id,qty:e.currentTarget.value})
+    },[])
+    //清空购物车
+    const clearCart = useCallback(function(){
+        dispatch({type:'clear'})
     },[])
 
     console.log('end')
@@ -64,14 +83,14 @@ function UseReducer(props) {
                 cartlist.map(item=>(
                     <li key={item.id}>
                         <h5>{item.name}</h5>
-                        <p>{item.price} &times; <input type="number" value={item.qty} onChange={changeQty} /></p>
+                        <p>{item.price} &times; <input type="number" value={item.qty} onChange={changeQty.bind(null,item.id)} /></p>
                         <button onClick={removeItem.bind(null,item.id)}>删除</button>
                     </li>
                 ))
             }
             </ul>
             <button onClick={addItem}>添加</button>
-            <button>清空购物车</button>
+            <button onClick={clearCart}>清空购物车</button>
 
             <div>总价：{totalPrice}</div>
         </div>
