@@ -25,11 +25,11 @@ function Home(props) {
     return (
         <div>
             Home
-            <p>用户名：{props.user.username}</p>
+            {/* <p>用户名：{props.user.username}</p>
             <button onClick={() => {
                 // props.dispatch({type:'logout'})
                 props.logout()
-            }}>退出</button>
+            }}>退出</button> */}
         </div>
     )
 }

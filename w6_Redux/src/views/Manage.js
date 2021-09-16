@@ -3,6 +3,7 @@ import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink,withR
 import { Layout, Menu, Breadcrumb, Row, Col, Button } from 'antd';
 import { AlipayOutlined, UserOutlined, LaptopOutlined, NotificationOutlined, HomeOutlined, InsertRowLeftOutlined, UsergroupAddOutlined, ReconciliationOutlined } from '@ant-design/icons';
 import { withStorage,withLogin } from '@/utils/hoc';
+import {connect} from 'react-redux'
 
 import Login from './Login'
 import Home from './Home'
@@ -17,7 +18,6 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 @withLogin
-@withStorage('userInfo')
 class Manage extends React.Component {
     constructor() {
         super()
@@ -84,13 +84,13 @@ class Manage extends React.Component {
         console.log(this.props)
         this.props.history.push(key);
     }
-    logout = ()=>{
-        // 清空本地存储信息
-        localStorage.removeItem('userInfo');
-        // this.props.history.push('/login')
-        this.forceUpdate();
-        location.reload();
-    }
+    // logout = ()=>{
+    //     // 清空本地存储信息
+    //     // localStorage.removeItem('userInfo');
+    //     // this.props.history.push('/login')
+    //     // this.forceUpdate();
+    //     // location.reload();
+    // }
     UNSAFE_componentWillMount(){
         // 获取当前页面路径
         const {pathname} = this.props.location
@@ -105,36 +105,9 @@ class Manage extends React.Component {
     render() {
         console.log('Manage.props',this.props)
         const { menu,defaultOpenKeys,defaultSelectedKeys } = this.state;
-        let {userInfo} = this.props;
-        if(!userInfo){
-            userInfo = {}
-        }
+        let {userInfo,logout,isLogin} = this.props;
         const {path:basePath} = this.props.match
         return (
-            // <div>
-            //     App
-
-            //     <nav>
-            //         <NavLink to="/home" activeStyle={{color:'#f00'}}>首页</NavLink>
-            //         <NavLink to="/login" activeStyle={{color:'#f00'}}>登录</NavLink>
-            //     </nav>
-            //         <Switch>
-            //             <Route path="/login" component={Login} />
-            //             <Route path="/home">
-            //                 <Home></Home>
-            //             </Route>
-            //             <Route path="/notfound" 
-            //             // render={()=><div>notfound</div>}
-            //             >
-            //                 <div>404, 您访问的页面不存在</div>
-            //             </Route>
-
-            //             {/* 重定向 */}
-            //             <Redirect from="/" to="/home" exact />
-            //             <Redirect to="/notfound" />
-            //         </Switch>
-
-            // </div>
             <Layout style={{ minHeight: '100vh' }}>
                 <Header className="header" style={{ padding: '0 20px' }}>
 
@@ -144,7 +117,7 @@ class Manage extends React.Component {
                             <h1>班级管理系统</h1>
                         </div></Col>
                         <Col span={6} className="txt-right">
-                            {userInfo.username} <Button type="link" onClick={this.logout}>退出</Button>
+                            {userInfo.username} <Button type="link" onClick={logout}>退出</Button>
                         </Col>
                     </Row>
                 </Header>
@@ -211,6 +184,19 @@ class Manage extends React.Component {
         )
     }
 }
-
+const mapStateToProps = function(state){
+    return {
+        userInfo:state.userInfo,
+        isLogin:Boolean(state.userInfo._id)
+    }
+}
+const mapDispatchToProps = function(dispatch){
+    return {
+        logout(){
+            dispatch({type:'logout'})
+        }
+    }
+}
+Manage = connect(mapStateToProps,mapDispatchToProps)(Manage)
 
 export default Manage;

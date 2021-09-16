@@ -2413,3 +2413,9 @@
         2. 利用高阶组件`connect`定义传入目标组件的数据和修改state的方法
             * `mapStateToProps(state,props)`
             * `mapDispatchToProps(dispatch,props)`
+* 利用redux+高阶组件实现页面访问权限控制
+    * redux保存用户信息
+        * token
+    * 高阶组件`withLogin`控制用户是否能访问改页面
+    * 服务器校验token
+        > 先放行后校验的方式

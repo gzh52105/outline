@@ -52,7 +52,7 @@ module.exports = {
                         // 设置一个文件大小临界值：
                         // * 小于等于这个值的图片会自动转成base64编码
                         // * 大于这个值，采用url形式
-                        // limit: 1000,
+                        limit: 1000,
 
                         // 格式化图片名称：该目录相对于output输出目录
                         name: 'img/[name]-[hash:5].[ext]',

@@ -10,6 +10,7 @@ const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRoute
 
 render(
     <Provider store={store}>
+        {/* context.Provier */}
         <myContext.Provider value={{a:10,b:20}}>
             <Router>
                 <App/>
