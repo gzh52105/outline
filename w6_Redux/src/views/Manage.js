@@ -201,8 +201,8 @@ class Manage extends React.Component {
                                 <Route path={basePath + "/subject"} component={Subject}/>
                                 <Redirect from={basePath} to="/home" exact />
                             </Switch>
-                            {/* <Hooks/>
-                            <div className="goods"></div> */}
+                            {/* <Hooks/> */}
+                            <div className="goods"></div>
 
                         </Content>
                     </Layout>

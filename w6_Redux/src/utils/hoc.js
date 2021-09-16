@@ -98,16 +98,41 @@ export function withLogin(InputComponent){
     return OutputComponent;
 }
 
-export function withRedux(InputComponent){
-    return function OutputComponent(props){
-        const reduxState = store.getState()
-        const [state,setState] = useState(reduxState)
-        store.subscribe(()=>{
-            const newState = store.getState()
-            setState(newState);
-        })
-        return <InputComponent {...props} {...state} dispatch={store.dispatch}>
-            {props.children}
-        </InputComponent>
+// export function withRedux(InputComponent){
+//     return function OutputComponent(props){
+//         const reduxState = store.getState()
+//         const [state,setState] = useState(reduxState)
+//         store.subscribe(()=>{
+//             const newState = store.getState()
+//             setState(newState);
+//         })
+//         return <InputComponent {...props} {...state} dispatch={store.dispatch}>
+//             {props.children}
+//         </InputComponent>
+//     }
+// }
+
+// 利用函数柯里化实现选择性共享Redux数据
+export function withRedux(callback){
+    return function(InputComponent){
+        return function OutputComponent(props){
+            const reduxState = store.getState()
+            const [state,setState] = useState(callback(reduxState,store.dispatch))
+            store.subscribe(()=>{
+                const newState = store.getState()
+                setState(callback(newState,store.dispatch));
+            })
+            return <InputComponent {...props} {...state}>
+                {props.children}
+            </InputComponent>
+        }
     }
 }
+// withRedux((state,dispatch)=>{
+//     return {
+//         userInfo:state.userInfo,
+//         logout(){
+//             dispatch({type:'logout'})
+//         }
+//     }
+// })(Home)

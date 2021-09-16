@@ -2340,8 +2340,19 @@
 ## day6-3
 
 ### 知识点
-
-* Redux: 全局状态管理工具
+* 全局状态管理工具解决了什么问题，为什么要使用它
+    1. 数据在多个组件中共享的问题
+    2. 数据更新的问题
+    3. 组件刷新的问题
+* Redux: 全局状态管理工具（不依赖任何框架的状态管理工具）
+    * 使用步骤
+        1. 安装引入
+        2. 创建store
+            > 定义reducer与初始state
+        3. 在React组件中使用
+            * 获取：store.getState()
+            * 修改：store.dispatch(action)
+            * 监听：store.subscribe(fn)
     * 核心配置
         * store     数据仓库
         * state     状态（用于全局共享）
@@ -2368,6 +2379,9 @@
             ...
             store
         })
+        // 获取：
+        store.state.xxx
+        // 修改
         store.commit('mutation');// store.commit({})
         store.dispatch('action');// store.dispath({type:'action'})
 
@@ -2385,3 +2399,17 @@
 * react组件与redux组件的结合
     * 使用高阶组件`withRedux`通过props方式把redux数据传入组件
 
+## day6-4
+
+### 知识点
+* react-redux桥接工具
+    > 因为react与redux是两个独立的产品，通过react-redux桥接工具让开发者更方便地在react组件中使用redux数据
+    * 高阶组件：`connect()`
+        > 使用高阶组件把数据和修改方法作为props传入React目标组件
+    * 组件：`Provider`
+        > 使用context共享redux数据
+    * 使用步骤 
+        1. 利用`Provider`组件共享store
+        2. 利用高阶组件`connect`定义传入目标组件的数据和修改state的方法
+            * `mapStateToProps(state,props)`
+            * `mapDispatchToProps(dispatch,props)`
