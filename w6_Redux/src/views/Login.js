@@ -12,9 +12,15 @@ const mapStateToProps = function(state){
 }
 const mapDispatchToProps = function(dispatch){
     return {
-        login(userInfo){
-            // dispatch({type:'login',userInfo})
-            dispatch(userAction.login(userInfo))
+        // login(userInfo){
+        //     // dispatch({type:'login',userInfo})
+        //     dispatch(userAction.login(userInfo))
+        // },
+        login(values){
+            const result = dispatch(userAction.loginAsync(values))
+            console.log('result=',result)
+            return result;
+
         }
     }
 }
@@ -30,9 +36,16 @@ class Login extends React.Component {
     }
     submit = async (values)=>{
         console.log('values',values)
-        const data = await request.post('/login',values)
+        // const data = await request.post('/login',values)
+        // if(data.code === 200){
+        //     this.props.login(data.data)
+        //     this.props.history.push('/manage/home');
+        // }else{
+        //     message.error('用户名或密码不正确')
+        // }
+        const data = await this.props.login(values);
+        
         if(data.code === 200){
-            this.props.login(data.data)
             this.props.history.push('/manage/home');
         }else{
             message.error('用户名或密码不正确')

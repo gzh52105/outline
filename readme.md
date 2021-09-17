@@ -2370,8 +2370,8 @@
             // 核心配置
             state,
             getters,
-            mutations,
-            actions,
+            mutations,  // 同步修改
+            actions,    // 异步修改
             modules
         })
         // 注入vue根实例
@@ -2487,3 +2487,28 @@
                 return result;
             }
         ```
+* redux的工作流程
+* 利用发布订阅模式实现简易 redux
+* redux中间件
+    ```js
+        // 同步修改
+        dispatch({type:'logout'})
+
+        // 涉及到异步任务，我们通常的做法是：在组件中先发起ajax请求，等待数据返回后再通过dispatch修改state
+        dispatch({type:'login',userInfo})
+
+        createStore(reducer,initState,enhancer)
+    ```
+    * 使用中间件步骤
+        1. 安装引入
+        2. 利用applyMiddleware包装中间件
+        3. 传入createStore第三个参数
+            > 中间件生效后，可以在actionCreator中返回一个函数
+    
+    > 异步action -> actionCreator -> server -> 同步action -> reducer
+
+    * 常用中间件
+        * redux-thunk
+        * redux-saga
+            * Generator 生成器函数
+            * Iterator  迭代器
