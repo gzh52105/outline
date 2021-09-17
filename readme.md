@@ -2419,3 +2419,71 @@
     * 高阶组件`withLogin`控制用户是否能访问改页面
     * 服务器校验token
         > 先放行后校验的方式
+
+
+## day6-5
+
+### 知识点
+* redux模块化（reducer模块化）
+    * combineReducers(object)
+    ```js
+        // vuex
+        new Vuex.Store({
+            modules:{
+                a,
+                b
+            }
+        })
+
+        const reducer = combineReducers({
+            user:userReduer,
+            common:commonReducer
+        })
+
+        const store = createStore(reducer)
+    ```
+* redux简化操作
+    ```js
+        // 修改操作
+        const action = {
+            type:'USER_LOGIN_ASYNC',
+            userInfo
+        }
+        dispatch(action)
+
+        // 容易写错
+        dispatch({
+            type:'USER_LOGIN_ASYCN',
+            userInfo
+        })
+    ```
+    * 解决经常写错action的问题： action creator
+        ```js
+            function login(userInfo){
+                return {
+                    type:'USER_LOGIN_ASYNC',
+                    userInfo
+                }
+            }
+
+            dispatch(login(res.data))
+        ```
+    * 简化修改state的方法：`bindActionCreators`
+        > 如有多个修改state的方法需要传入目标组件，则可以使用bindActionCreators简化操作
+        ```js
+            function bindActionCreators(actionCreators,dispatch){
+                // {login,logout}
+                const result = {}
+                for(let key in actionCreators){
+                    //result[key] = function(...args){
+                        //const action = actionCreators[key](...args)
+                        //dispatch(action)
+                    //}
+                    result[key] = function(){
+                        const action = actionCreators[key].apply(this,arguments)
+                        dispatch(action)
+                    }
+                }
+                return result;
+            }
+        ```

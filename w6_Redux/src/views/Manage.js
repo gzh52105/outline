@@ -4,6 +4,8 @@ import { Layout, Menu, Breadcrumb, Row, Col, Button } from 'antd';
 import { AlipayOutlined, UserOutlined, LaptopOutlined, NotificationOutlined, HomeOutlined, InsertRowLeftOutlined, UsergroupAddOutlined, ReconciliationOutlined } from '@ant-design/icons';
 import { withStorage,withLogin } from '@/utils/hoc';
 import {connect} from 'react-redux'
+import userAction from '@/store/actions/user'
+import {bindActionCreators} from  'redux'
 
 import Login from './Login'
 import Home from './Home'
@@ -186,16 +188,24 @@ class Manage extends React.Component {
 }
 const mapStateToProps = function(state){
     return {
-        userInfo:state.userInfo,
-        isLogin:Boolean(state.userInfo._id)
+        userInfo:state.user.userInfo,
+        isLogin:Boolean(state.user.userInfo._id)
     }
 }
 const mapDispatchToProps = function(dispatch){
-    return {
-        logout(){
-            dispatch({type:'logout'})
-        }
-    }
+    // return {
+    //     logout(){
+    //         // dispatch({type:'logout'})
+    //         dispatch(userAction.logout())
+    //     },
+    //     login(userInfo){
+    //         dispatch(userAction.login(userInfo))
+    //     }
+    // }
+
+    // 以下一行代码实现以上代码效果
+    return bindActionCreators(userAction,dispatch)
+    
 }
 Manage = connect(mapStateToProps,mapDispatchToProps)(Manage)
 
