@@ -1,6 +1,7 @@
 import {createStore,applyMiddleware,compose} from 'redux'
 import thunk from 'redux-thunk';
 import reducer from './reducers'
+import {composeWithDevTools } from 'redux-devtools-extension';
 
 // 1.引入saga
 import createSagaMiddleware from 'redux-saga';
@@ -20,7 +21,8 @@ let sagaEnhancer = applyMiddleware(sagaMiddleware)
 const thunkEnhancer = applyMiddleware(thunk)
 
 // 把多个中间件组合成一个中间件
-const enhancer = compose(sagaEnhancer,thunkEnhancer)
+// const enhancer = compose(sagaEnhancer,thunkEnhancer,composeWithDevTools())
+const enhancer = composeWithDevTools(sagaEnhancer,thunkEnhancer)
 
 // 4. 将中间件 连接至 Store
 const store = createStore(reducer,enhancer);

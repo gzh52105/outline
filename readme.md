@@ -2603,3 +2603,10 @@
             ```js
                 sagaMiddleware.run(rootSaga);
             ```
+* 调用工具
+    * redux devTools
+        * 安装
+        * 使用`redux-devtools-extension`中间件
+    * react developer tools
+
+* 项目要求
