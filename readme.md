@@ -2610,3 +2610,57 @@
     * react developer tools
 
 * 项目要求
+
+* git
+    * 备注：vim
+    * 提交：git commit
+    * 推送: git push
+    * 拉取：git pull
+        * git fetch
+        * git merge
+    * 冲突
+        > 在团队开发中，冲突不可避免，但可以通过合理的分工与沟通较少冲突的可能
+        * 不要一个人去解决冲突
+        * 解决完冲突必须重新提交
+
+* CRA(create-react-app)
+    * 安装
+        ```js
+            npm i -g create-react-app
+        ```
+    * 创建项目
+        ```js
+            create-react-app myapp
+        ```
+    * 扩展webpack配置
+        > cra把所有的Webpack配置封装到react-scripts模块中
+        * 在react-scripts模块中找到webpack配置并修改（不推荐）
+        * eject（不推荐，该操作不可逆）
+            > 删除react-scripts工具，并暴露项目所有依赖与webpack配置
+            ```js
+                npm run eject
+            ```
+        * 利用第三方工具`react-app-rewired`扩展webpack配置
+            1. 安装`react-app-rewired`
+            2. 添加配置
+                > 在项目根目录下添加`config-overrides.js`文件（commmonJS规范）
+                ```js
+                    const { injectBabelPlugin } = require('react-app-rewired');
+                    const path = require('path')
+                    module.exports = function override(config, env) {
+                        // config: webpack配置
+                        // env: 环境变量
+
+                        // 添加别名
+                        config.resolve.alias['@'] = path.join(__dirname,'./src/')
+
+                        // 添加装饰器支持
+                        config = injectBabelPlugin([
+                            "@babel/plugin-proposal-decorators", 
+                            { "legacy": true }
+                        ], config);
+                        
+                        return config;
+                    }
+                ```
+            3. 修改package.json中的npm script
