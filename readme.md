@@ -2505,10 +2505,101 @@
         3. 传入createStore第三个参数
             > 中间件生效后，可以在actionCreator中返回一个函数
     
-    > 异步action -> actionCreator -> server -> 同步action -> reducer
+    * 处理异步任务
+        * 传统做法：在组件中先发起ajax请求，等待数据返回后再通过dispatch修改state
+            > ajax -> action -> reducer
+        * 中间件做法：异步action -> actionCreator -> server -> 同步action -> reducer
 
     * 常用中间件
         * redux-thunk
+            > 让action creator支持函数形式
         * redux-saga
             * Generator 生成器函数
             * Iterator  迭代器
+## day6-6
+
+### 面试题
+* for...of是否能遍历对象
+
+### 知识点
+* ES6新特性
+    * Generator 生成器函数
+        > 返回一个Iterator
+    * Iterator  迭代器
+        > 一个可以自定义遍历规则的对象（带next方法的对象）
+
+    ```js
+        function show(){
+            return 100
+        }
+        show(); // undefined -> 100
+        new show(); // object -> object
+
+        async function show(){
+            return 100
+        }
+        show(); // promise(fulfilled,undefined) -> promise(fulfilled,100)
+
+        // 生成器函数Generator：返回一个迭代器Iterator
+        function * show(){
+
+        }
+        show();// 迭代器Iterator
+    ```
+
+* 属性分类
+    * 存储器属性: getter&setter
+        > 本身没有值的属性，一般用于代理或监听别的属性
+    * 值属性
+        > 拥有值的属性
+* 属性特性
+    * 值属性
+        * configurable  可配置型
+        * enumberable   可以枚举行
+        * writable      可写性
+        * value         值
+    * 存储器属性
+        * configurable
+        * enumberable
+        * get
+        * set
+
+    ```js
+        var obj = {
+            // 值属性
+            username:'laoxie',
+            _age:18,
+
+            // 存储器属性
+            get age(){
+                return this._age;
+            }
+            set age(newValue){
+                this._age = newValue
+            }
+        }
+
+    ```
+
+* redux-saga
+    * 使用步骤
+        1. 安装引入
+            ```js
+                import createSagaMiddleware from 'redux-saga';
+            ```
+        2. 创建saga中间件
+            ```js
+                const sagaMiddleware = createSagaMiddleware();
+            ```
+        3. 包装中间件
+            ```js
+                let enhancer = applyMiddleware(sagaMiddleware)
+            ```
+        4. 将中间件 连接至 Store
+            ```js
+                const store = createStore(reducer,enhancer);
+            ```
+        5. 引入并运行自定义Saga配置
+            ```js
+                sagaMiddleware.run(rootSaga);
+            ```

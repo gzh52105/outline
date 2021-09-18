@@ -17,9 +17,18 @@ const mapDispatchToProps = function(dispatch){
         //     dispatch(userAction.login(userInfo))
         // },
         login(values){
-            const result = dispatch(userAction.loginAsync(values))
-            console.log('result=',result)
-            return result;
+            // redux-thunk
+            // const result = dispatch(userAction.loginAsync(values))
+
+            // redux-saga
+            return new Promise((resolve)=>{
+                dispatch({type:'login_async',userInfo:values,success(data){
+                    console.log('success=',data)
+                    resolve(data)
+                }})
+
+            })
+            
 
         }
     }
