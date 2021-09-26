@@ -1,14 +1,19 @@
-import React from 'react'
+import React,{lazy} from 'react'
 import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink,withRouter } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Row, Col, Button } from 'antd';
 import { AlipayOutlined, UserOutlined, LaptopOutlined, NotificationOutlined, HomeOutlined, InsertRowLeftOutlined, UsergroupAddOutlined, ReconciliationOutlined } from '@ant-design/icons';
 import { withStorage,withLogin } from '@/utils/hoc';
 
-import Login from './Login'
+// import Login from './Login'
 import Home from './Home'
-import Class from './Class'
-import Student from './Student'
-import Subject from './Subject'
+// import Class from './Class'
+// import Student from './Student'
+// import Subject from './Subject'
+
+// const Home = lazy(() => import("./views/Home"));
+const Class = lazy(() => import("./Class"));
+const Student = lazy(() => import("./Student"));
+const Subject = lazy(() => import("./Subject"));
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;

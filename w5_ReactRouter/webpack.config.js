@@ -77,6 +77,9 @@ module.exports = {
         // 支持history路由
         historyApiFallback: true,
 
+        // 服务器压缩
+        compress:true,
+
         // 代理服务器
         // proxy:{
         //     '/offer':{

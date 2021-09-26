@@ -1,9 +1,15 @@
-import React from 'react'
+import React,{lazy,Suspense} from 'react'
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom'
 import { withStorage } from './utils/hoc';
+import {LoadingOutlined} from '@ant-design/icons'
 
+// 传统路由写法
 import Login from './views/Login'
-import Manage from './views/Manage'
+// import Manage from './views/Manage'
+
+// 路由懒加载
+// const Login = lazy(() => import("./views/Login"));
+const Manage = lazy(() => import("./views/Manage"));
 
 
 import 'antd/dist/antd.css';
@@ -25,13 +31,13 @@ class App extends React.Component {
         }
         const isLogin = !!userInfo._id
         return (
-
-            <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/manage" component={Manage} />
-                <Redirect from="/" to="/login" exact />
-            </Switch>
-
+            <Suspense fallback={<LoadingOutlined />}>
+                <Switch>
+                    <Route path="/login" component={Login} />
+                    <Route path="/manage" component={Manage} />
+                    <Redirect from="/" to="/login" exact />
+                </Switch>
+            </Suspense>
         )
     }
 }
