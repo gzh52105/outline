@@ -1,0 +1,32 @@
+<view>
+  <view class="title">WXML使用</view>
+  <text class="{{username}}">hello </text>
+  <text>{{username}}</text>
+
+  <icon type="success" size="93" color="#58bc58"></icon>
+</view>
+<view>
+  <label>双向数据绑定：</label>
+  单向+事件：<input type="text" value="{{username}}" bind:input="changeUsername"  />
+  model:<input type="text" model:value="{{username}}"  />
+</view>
+<view>
+  列表循环
+  <view wx:for="{{goodslist}}" wx:key="id">
+    {{index+1}}-{{item.name}}
+    <text>{{item.price}}</text>
+    <view>
+      嵌套遍历
+      <view wx:for="{{item.imgs}}" wx:key="*this" wx:for-index="idx">
+        {{index+1}}-{{idx+1}}:{{item}}
+      </view>
+    </view>
+  </view>
+
+  <view wx:for="{{datalist}}" wx:key="*this">
+    {{item}}
+  </view>
+</view>
+
+<button wx:if="{{show}}" type="warn">1</button>
+<button wx:else type="primary">2</button>

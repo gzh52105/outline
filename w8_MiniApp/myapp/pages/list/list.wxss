@@ -1,0 +1,4 @@
+/* pages/list/list.wxss */
+.title{
+  font-size:30px;
+}

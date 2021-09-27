@@ -2689,3 +2689,72 @@
             > 默认采用svg技术
 
 ## day8-1
+* 微信小程序
+    * 注册
+    * 配置
+    * 准备工作
+        * 下载微信开发者工具
+* 文件类型
+    * json
+    * wxss
+        * 新增了尺寸单位rpx
+        * 样式作用域
+            * 写在app.wxss中的样式所有页面都能生效
+            * 写在PAGE.wxss中的样式只有在当前页面才生效（无论什么选择器）
+    * js
+    * wxml
+* 作用范围
+    * 全局文件
+        * app.js
+        * app.json
+        * app.wxss
+        * project.config.json
+        * sitemap.json
+    * 页面文件
+        * PAGE.js
+        * PAGE.json
+        * PAGE.wxss
+        * PAGE.wxml
+* 页面分类
+    * tabbar页面
+        > 设置在tabbar中的页面
+    * 普通页面（非tabbar页面）
+        > tabbar页面除外的页面
+
+* wxml语法
+    * 数据绑定
+        * 单向：`{{}}`
+        * 双向：
+            * 单向+事件
+            * model
+                ```js
+                    <input model:value="{{username}}" />
+                ```
+    * 事件绑定
+        * bind:事件类型=事件处理函数
+            ```js
+                <button bind:tap="handle"></button>
+            ```
+        * capture捕获事件
+            ```js
+                <button capture-bind:tap="handle"></button>
+            ```
+        * catch：阻止事件传播
+            ```js
+                <button catch:tap="handle"></button>
+            ```
+        * event
+            * detail    保存事件发生时的信息
+    * 列表渲染
+        * wx:for
+            * item
+            * index
+        * wx:key
+        * wx:for-item   修改item名称
+        * wx:for-index  修改index名称
+    * 条件渲染
+        * wx:if
+        * wx:else
+        * wx:elif
+
+        v-if/v-else/v-else-if
