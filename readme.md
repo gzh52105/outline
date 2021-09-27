@@ -2681,3 +2681,11 @@
         * ...
     * 采用技术
         * canvas + js接口
+        * svg
+    * 框架
+        * echarts
+            > 默认采用canvas技术
+        * highcharts
+            > 默认采用svg技术
+
+## day8-1
