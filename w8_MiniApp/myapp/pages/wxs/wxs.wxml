@@ -1,0 +1,52 @@
+<!-- 1.引入模板文件 -->
+<import src="/template/index.wxml"></import>
+
+<text>wxs模块化脚本</text>
+<view>formatDate:{{tools.formatDate('2008-8-8')}}</view>
+<view>baseUrl:{{utils.baseUrl}}</view>
+
+<button bind:tap="handle">js事件处理函数</button>
+
+<!-- 基础库2.4.4后支持wxs函数作为事件处理函数 -->
+<button bind:tap="{{tools.handle}}">wxs事件处理函数</button>
+
+<!-- 2. 使用模板 -->
+<template is="datalist"></template>
+<template is="list" data="{{title:'用户列表',list:['laoxie','tiantian','jingjing']}}"></template>
+<template  is="list" data="{{title:'技术列表',list:['html','css','javascript','微信小程序','Vue','React']}}"></template>
+
+
+<!-- include使用模板 -->
+<view>include使用模板</view>
+<include src="/template/index.wxml"></include>
+
+<wxs src="./tools.wxs" module="utils"></wxs>
+
+<wxs module="tools">
+  // WXS 与 JavaScript 是不同的语言，有自己的语法，并不和 JavaScript 一致，wxs只是参考了js（ES5）这门语言的语法
+
+  function formatDate(date){
+    var d = date ? getDate(date) : getDate()
+    var year = d.getFullYear();
+    var month = d.getMonth()+1;
+    var ddate = d.getDate();
+
+    // Date.now();
+    // Date.parse('2008-8-8')
+    return year + '-' + month + '-' + ddate
+  }
+
+  function handle(){
+    console.log('wxs事件处理函数');
+
+    // Math.pow(2,16);
+    // parseInt(20.3); // 20
+  }
+
+  // 模块具有独立作用域，要在其他地方调用模块中的方法，则必须导出(遵循commonJS规范)
+  module.exports = {
+    formatDate:formatDate,
+    handle:handle
+  }
+
+</wxs>

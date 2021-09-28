@@ -14,6 +14,22 @@ const formatNumber = n => {
   return n[1] ? n : `0${n}`
 }
 
-module.exports = {
-  formatTime
+const request = function(){
+
 }
+
+module.exports = {
+  formatTime,
+  request
+}
+
+// 以上写法等效于以下代码
+// export default {
+//   formatTime,
+//   request
+// }
+
+// export {
+//   formatTime,
+//   request
+// }

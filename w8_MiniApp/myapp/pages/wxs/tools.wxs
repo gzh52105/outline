@@ -1,0 +1,15 @@
+var baseUrl = 'http://laoxie.com'
+
+function request(){
+  // WXS 中不能调用其他 JavaScript 文件中定义的函数，也不能调用小程序提供的 API
+
+  // wx.request()
+}
+
+
+module.exports = {
+  baseUrl:baseUrl,
+  getUrl:function(){
+    return this.baseUrl
+  }
+}

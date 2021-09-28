@@ -6,3 +6,5 @@
 <navigator url="/pages/list/list" open-type="redirect">list页面(redirect)</navigator>
 
 <button bind:tap="gotoList">跳到list页面</button>
+
+<view>formatDate:{{parseInt('20.3')}}</view>

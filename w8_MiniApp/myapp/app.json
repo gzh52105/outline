@@ -4,6 +4,7 @@
     "pages/mine/mine",
     "pages/logs/logs",
     "pages/test/test",
+    "pages/wxs/wxs",
     "pages/list/list"
   ],
   "window": {

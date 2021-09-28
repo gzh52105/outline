@@ -2762,9 +2762,19 @@
 ### 知识点
 * js逻辑文件
     * app.js
-        > `App()` 注册一个小程序，只能在app.js中调用，只能调用一次
+        > `App()` 注册一个小程序，只能在app.js中调用，只能调用一次，在任何子页面中通过`getApp()`获取小程序实例
+        * onLaunch(options)
+        * onShow(options)
+        * onHide()
+        * 其他
     * PAGE.js
         > `Page()` 注册小程序中的一个页面
+        * onLoad(options)
+        * onShow()
+        * onReady()
+        * onHide()
+        * onUnload()
+        * 其他
 * 前台与后台
     > 相对与小程序来说，显示小程序就是切前台，隐藏小程序就是切后台
     * 前台：显示小程序界面
@@ -2774,7 +2784,7 @@
 
 * 页面跳转
     * 组件跳转：navigator
-        * open-type: 跳转方式
+        * open-type: 跳转方式s
             * navigate	对应 wx.navigateTo 或 wx.navigateToMiniProgram 的功能	
                 > 跳转非tabbar页面（保留当前页面）
             * redirect	对应 wx.redirectTo 的功能	
@@ -2784,3 +2794,84 @@
             * navigateBack	对应 wx.navigateBack 的功能	1.1.0
             * exit	退出小程序，target="miniProgram"时生效	2.1.0
     * 接口跳转：
+        * wx.navigateTo()   跳转非tabbar页面，保留当前页面
+        * wx.redirectTo()   跳转非tabbar页面，关闭当前页面
+        * wx.switchTab()    跳转tabbar页面，关闭其他非tabbar页面
+        * wx.reLaunch()     
+        * navigateBack()    返回上一个页面
+
+* 模块化
+    * js模块
+        > 微信小程序中支持以下两种规范的模块，两种模块可相互引用
+        * commonJS
+        * ESModule
+
+        * 模块分类
+            * 自定义模块
+            * 第三方模块
+                > 在小程序中使用npm模块
+                1. 生成package.json
+                    ```bash
+                        npm init
+                    ```
+                2. 安装模块
+                    ```bash
+                        npm i <module>
+                    ```
+                3. 构建npm模块
+                    > 把第三方模块编译成符合微信小程序规范的模块(工具->构建npm)，项目中必须包含package.json
+                    * 构建成功后，生成`miniprogram_npm`
+                4. 引入
+                    * `import...from`
+                    * `require()`
+
+    * wxs模块
+        > 微信小程序模块化脚本文件，是一种类似于javascript的语言，用来弥补wxml中不能操作js中方法的不足，WXS 与 JavaScript 是不同的语言，有自己的语法，并不和 JavaScript 一致。
+
+        > 注意：wxs语法参考了ES5，不能使用ES6+的代码
+
+        * 定义
+            * 在wxml中定义
+                ```html
+                    <wxs module="tools">
+                        
+                        module.exports = {
+
+                        }
+                    </wxs>
+                ```
+            * 在.wxs文件中定义
+                ```html
+                    <wxs module="utils" src="./tools.wxs"></wxs>
+                ```
+        * 使用
+            ```html
+                <view>{{tools.xxx}}</view>
+                <view>{{utils.xxx}}</view>
+            ```
+
+    * wxml模板
+        * 定义
+            * `<template>`
+                * name
+            ```html
+                <template name="list">
+                    <!-- 公共结构 -->
+                </template>
+            ```
+        * 使用
+            > 
+            * `<import>`
+                * is：指定模板
+                * data: 给模板传递数据
+            * `<include>`
+                >可以将目标文件除了 <template/> <wxs/> 外的整个代码引入，相当于是拷贝到 include 位置
+            ```html
+                <import src="/template/index.wxml" />
+
+                <!-- 复用 -->
+                <template is="list"></template>
+
+                <!-- 复用并传递数据 -->
+                <template is="list" data=""></template>
+            ```

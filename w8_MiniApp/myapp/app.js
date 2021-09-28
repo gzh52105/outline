@@ -30,7 +30,9 @@ App({
   globalData: {
     userInfo: null
   },
+
+  // 全局方法
   request(){
-    
+
   }
 })

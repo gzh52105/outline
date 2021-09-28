@@ -1,4 +1,18 @@
-// pages/test/test.js
+// 引入模块
+// commonJS
+// const {request} = require('../../utils/util')
+const request = require('../../utils/request')
+console.log('request',request)
+
+// ESModule
+import * as utils from '../../utils/util'
+// import request from '../../utils/request'
+// console.log('request',request);
+
+// 引入第三方模块
+import * as axios from 'axios'
+console.log('axios=',axios)
+
 Page({
 
   /**
@@ -62,6 +76,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  formatDate(){
+    return '202109-28'
   },
 
   gotoList(){

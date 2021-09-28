@@ -23,6 +23,12 @@
           "pathName": "pages/test/test",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "wxs",
+          "pathName": "pages/wxs/wxs",
+          "query": "",
+          "scene": null
         }
       ]
     }

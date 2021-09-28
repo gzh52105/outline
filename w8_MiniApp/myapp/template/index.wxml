@@ -1,0 +1,44 @@
+<!-- 利用template把重复或类似的结构提取到模板中，并起个名字name -->
+<template name="datalist">
+  <view>
+    <view class="title">标题</view>
+    <view class="list">
+      <view class="item">data1</view>
+      <view class="item">data2</view>
+      <view class="item">data3</view>
+      <view class="item">data4</view>
+      <view class="item">data5</view>
+    </view>
+  </view>
+
+</template>
+
+<view>
+  test:->test
+</view>
+
+<template name="list">
+  <view>
+    <view class="title">{{title}}</view>
+    <view class="list">
+      <view class="item" wx:for="{{list}}">{{item}}</view>
+    </view>
+  </view>
+
+</template>
+
+<view>
+  其他数据
+  <view>日期：{{tools.formatDate()}}</view>
+</view>
+<wxs module="tools">
+  function formatDate(){
+    var d = getDate();
+
+    return d.toLocaleDateString()
+  }
+
+  module.exports = {
+    formatDate:formatDate
+  }
+</wxs>
