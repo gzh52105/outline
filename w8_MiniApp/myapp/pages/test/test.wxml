@@ -1,0 +1,8 @@
+<!--pages/test/test.wxml-->
+<text>{{msg}}</text>
+
+<navigator url="/pages/list/list" open-type="navigate">list页面(navigate，默认)</navigator>
+<navigator url="/pages/index/index" open-type="switchTab">首页（switchTab,tabbar页面）</navigator>
+<navigator url="/pages/list/list" open-type="redirect">list页面(redirect)</navigator>
+
+<button bind:tap="gotoList">跳到list页面</button>

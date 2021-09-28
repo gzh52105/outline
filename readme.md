@@ -2695,14 +2695,14 @@
     * 准备工作
         * 下载微信开发者工具
 * 文件类型
-    * json
-    * wxss
+    * json  配置文件
+    * wxss  样式文件
         * 新增了尺寸单位rpx
         * 样式作用域
             * 写在app.wxss中的样式所有页面都能生效
             * 写在PAGE.wxss中的样式只有在当前页面才生效（无论什么选择器）
-    * js
-    * wxml
+    * js    逻辑文件
+    * wxml  布局文件
 * 作用范围
     * 全局文件
         * app.js
@@ -2757,4 +2757,30 @@
         * wx:else
         * wx:elif
 
-        v-if/v-else/v-else-if
+## day8-2
+
+### 知识点
+* js逻辑文件
+    * app.js
+        > `App()` 注册一个小程序，只能在app.js中调用，只能调用一次
+    * PAGE.js
+        > `Page()` 注册小程序中的一个页面
+* 前台与后台
+    > 相对与小程序来说，显示小程序就是切前台，隐藏小程序就是切后台
+    * 前台：显示小程序界面
+    * 后台：隐藏小程序界面（切换到其他程序后，让小程序在后台中运行）
+* 场景值
+    > 从什么场景切换会小程序界面（通过什么途径进入小程序）
+
+* 页面跳转
+    * 组件跳转：navigator
+        * open-type: 跳转方式
+            * navigate	对应 wx.navigateTo 或 wx.navigateToMiniProgram 的功能	
+                > 跳转非tabbar页面（保留当前页面）
+            * redirect	对应 wx.redirectTo 的功能	
+            * switchTab	对应 wx.switchTab 的功能	
+                > 跳转tabbar页面（关闭其他非tabbar页面）
+            * reLaunch	对应 wx.reLaunch 的功能	1.1.0
+            * navigateBack	对应 wx.navigateBack 的功能	1.1.0
+            * exit	退出小程序，target="miniProgram"时生效	2.1.0
+    * 接口跳转：

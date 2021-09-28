@@ -1,68 +1,46 @@
-// pages/list/list.js
-
-const app = getApp();
-console.log('app=',app);
-
+// pages/test/test.js
 Page({
 
   /**
-   * 页面的初始数据
+   * 页面的初始数据,类似于Vue
    */
   data: {
-    show:false,
-    datalist:[10,20,30,40],
-    goodslist:[{
-      id:1,
-      name:'goods1',
-      price:100,
-      imgs:['img/m1.jpg','img/m2.jpg','img/m2.jpg']
-    },{
-      id:2,
-      name:'goods2',
-      price:200,
-      imgs:['img/m1.jpg','img/m2.jpg','img/m2.jpg']
-    },{
-      id:3,
-      name:'goods3',
-      price:300,
-      imgs:['img/m1.jpg','img/m2.jpg','img/m2.jpg']
-    }],
-    username:'laoxie'
+    msg:'测试文件'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log('test.onLoad',options)
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    console.log('test.onReady')
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    console.log('test.onShow')
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log('test.onHide')
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log('test.onUnload')
   },
 
   /**
@@ -86,13 +64,19 @@ Page({
 
   },
 
-  changeUsername(e){
-    // 修改数据，参考react写法
-    // 
-    this.setData({
-      username:e.detail.value
+  gotoList(){
+    // 编程式导航
+    // wx.navigateTo({
+    //   url: '/pages/list/list',
+    // })
+    // wx.redirectTo({
+    //   url: '/pages/list/list',
+    // })
+    // wx.switchTab({
+    //   url: '/pages/list/list',
+    // })
+    wx.reLaunch({
+      url: '/pages/list/list',
     })
-
-    // console.log('e',e)
   }
 })
