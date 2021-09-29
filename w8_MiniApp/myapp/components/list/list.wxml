@@ -1,0 +1,6 @@
+<view>
+  <view class="title">
+    自定义组件
+  </view>
+  <view class="~price">102</view>
+</view>

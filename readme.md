@@ -2756,6 +2756,13 @@
         * wx:if
         * wx:else
         * wx:elif
+        ```js
+            <view wx:if="{{isLogin}}">退出</view>
+            <block wx:else>
+                <view>注册</view>
+                <view>登录</view>
+            </block>
+        ```
 
 ## day8-2
 
@@ -2875,3 +2882,49 @@
                 <!-- 复用并传递数据 -->
                 <template is="list" data=""></template>
             ```
+
+## day8-3
+
+### 知识点
+* 组件化
+    * 内置组件
+        * image
+    * 自定义组件
+        * 文件
+            * js        逻辑
+                > Component() 创建自定义组件
+            * json      配置
+                ```js
+                    {
+                        "component": true
+                    }
+                ```
+            * wxml      结构
+            * wxss      样式
+        * 使用
+            * 注册
+                * 局部组件：在PAGE.json中注册
+                    > 只有在当前页面使用
+                    ```js
+                        {
+                            "usingComponents":{}
+                        }
+                    ```
+                * 全局组件：在app.json中注册
+                    > 全局组件可以在任意页面使用
+                    ```js
+                        {
+                            "usingComponents":{}
+                        }
+                    ```
+        * 配置参数
+            * data
+            * properties
+            * observers
+            * methods
+            * externalClasses   允许使用外部样式
+                > 组件的样式是独立的，外部样式默认不能影响组件中的效果
+                ```js
+                    // 在组件wxml结构中使用外部样式
+                    <view class="~price"></view>
+                ```

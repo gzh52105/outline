@@ -8,3 +8,6 @@
 <button bind:tap="gotoList">跳到list页面</button>
 
 <view>formatDate:{{parseInt('20.3')}}</view>
+
+<view>使用自定义组件</view>
+<mylist></mylist>

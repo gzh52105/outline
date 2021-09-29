@@ -30,3 +30,7 @@
 
 <button wx:if="{{show}}" type="warn">1</button>
 <button wx:else type="primary">2</button>
+
+<view class="price">100</view>
+<view>mylist:</view>
+<list title="list" index="{{10}}" class="mylist"></list>
