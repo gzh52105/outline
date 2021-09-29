@@ -1,25 +1,23 @@
 {
-  "pages": [
+  "pages":[
     "pages/index/index",
+    "pages/list/list",
     "pages/mine/mine",
-    "pages/logs/logs",
-    "pages/test/test",
-    "pages/wxs/wxs",
-    "pages/wui/wui",
-    "pages/list/list"
+    "pages/logs/logs"
   ],
-  "window": {
-    "backgroundTextStyle": "dark",
+  "window":{
+    "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#58bc58",
-    "navigationBarTitleText": "H5面试宝典",
-    "navigationBarTextStyle": "white",
-    "backgroundColor":"#ff0"
+    "navigationBarTitleText": "面试题宝典",
+    "navigationBarTextStyle":"white"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "weui": true
   },
   "tabBar":{
     "custom": true,
-    "position": "top",
-    "color": "#333",
-    "selectedColor": "#f0c",
     "list":[
       {
         "text": "首页",
@@ -40,15 +38,5 @@
         "selectedIconPath": "assets/img/mine_active.png"
       }
     ]
-  },
-  "style": "v2",
-  "sitemapLocation": "sitemap.json",
-  "usingComponents": {
-    "list":"/components/list/list",
-    "mp-dialog": "weui-miniprogram/dialog/dialog",
-    "mp-actionSheet": "weui-miniprogram/actionsheet/actionsheet"
-  },
-  "useExtendedLib": {
-    "weui": true
   }
 }

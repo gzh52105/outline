@@ -1,0 +1,3 @@
+<button type="primary" bind:tap="openActionSheet">支付</button>
+<mp-actionSheet bind:actiontap="handlePay" show="{{show}}" actions="{{groups}}" title="选择支付方式">
+</mp-actionSheet>

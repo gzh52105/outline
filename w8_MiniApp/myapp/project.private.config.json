@@ -29,6 +29,12 @@
           "pathName": "pages/wxs/wxs",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/wui/wui",
+          "pathName": "pages/wui/wui",
+          "query": "",
+          "scene": null
         }
       ]
     }

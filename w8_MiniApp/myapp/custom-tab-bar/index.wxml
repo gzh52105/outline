@@ -1,0 +1,8 @@
+<view class="tabbar">
+  <view class="tabbar-item" wx:for="{{list}}" wx:key="pagePath">
+  <navigator url="{{item.pagePath}}" open-type="switchTab">
+  <image src="{{current === item.pagePath ? item.selectedIconPath : item.iconPath}}" mode="aspectFit" />
+  <text>{{item.text}}</text>
+  </navigator>
+  </view>
+</view>

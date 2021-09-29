@@ -2928,3 +2928,23 @@
                     // 在组件wxml结构中使用外部样式
                     <view class="~price"></view>
                 ```
+    * 第三方组件库
+        * 常用
+            * weui-miniprogram
+                > 支持扩展库引入，不占用包大小（推荐）
+                ```js
+                // app.json中配置useExtendedLib属性
+                // 目前只支持微信小程序官网库：kbone,weui
+                    "useExtendedLib": {
+                        "weui": true
+                    }
+                ```
+            * vant-weapp
+        * 使用步骤
+            1. 安装：npm i
+            2. 构建: 工具->构建npm
+            3. 注册组件
+                > 通过useExtendedLib使用，只需要操作第3步，可省略1,2,4步（目前只支持kbone,weui）
+            4. 引入样式
+
+    >PS：使用组件，每个页面都是一个独立的实例
