@@ -23,6 +23,7 @@ Page({
         canIUseGetUserProfile: true
       })
     }
+
   },
   onShow(){
     // 获取当前页面tabbar实例

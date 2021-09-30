@@ -2948,3 +2948,23 @@
             4. 引入样式
 
     >PS：使用组件，每个页面都是一个独立的实例
+
+## day8-4
+
+### 知识点
+* 授权
+    * 流程
+        1. `wx.getSetting()`获取授权信息，查看是否已授权
+        2. 如所需要的功能未授权，则通过`wx.authorize()`主动向用户请求授权
+            > 如果用户已经拒绝过授权，则不会出现弹窗，可以通过`wx.openSetting()`打开设置界面（该方法必须伴随用户点击事件才能调用）
+            ```js
+                wx.getSetting({
+                    success({authSetting}){
+                        // authSetting: 所有已授权信息
+
+                        if(!authSetting['scope.camera']){
+                            wx.authorize()
+                        }
+                    }
+                })
+            ```
