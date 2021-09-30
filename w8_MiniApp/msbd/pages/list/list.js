@@ -5,19 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    iqlist:[],
+    page:1,
+    size:10,
+    total:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.request({
-      url: 'http://120.76.247.5:2001/api/iq',
-      success(data){
-        console.log('data=',data)
-      }
-    })
+    this.getData();
   },
 
   /**
@@ -55,14 +53,26 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    this.setData({
+      page:1,
+      size:20,
+      total:0,
+      iqlist:[]
+    },()=>{
+      this.getData()
 
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.setData({
+      page:this.data.page+1
+    },()=>{
+      this.getData();
+    })
   },
 
   /**
@@ -70,5 +80,27 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  getData(){
+    const {page,size,iqlist} = this.data;
+    wx.request({
+      url: 'https://api.qfh5.cn/api/iq',
+      data:{
+        page,
+        size
+      },
+      success:({data})=>{
+        console.log('data=',data)
+
+        this.setData({
+          iqlist:iqlist.concat(data.data.result),
+          total:data.data.total
+        })
+
+        
+        wx.stopPullDownRefresh()
+      }
+    })
   }
 })

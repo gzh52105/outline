@@ -1,1 +1,2 @@
-<mp-tabbar list="{{list}}" current="{{current}}" bind:change="changeTabbar"></mp-tabbar>
+
+<mp-tabbar ext-class="tabbar" list="{{list}}" current="{{current}}" bind:change="changeTabbar"></mp-tabbar>

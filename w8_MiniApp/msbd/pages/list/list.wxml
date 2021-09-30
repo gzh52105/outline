@@ -1,2 +1,4 @@
-<!--pages/list/list.wxml-->
-<text>pages/list/list.wxml</text>
+
+<mp-cells ext-class="my-cells" title="面试题列表">
+    <mp-cell wx:for="{{iqlist}}" wx:key="_id" value="{{item.question}}" footer="{{item.answer + '回答'}}" link></mp-cell>
+</mp-cells>
