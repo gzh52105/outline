@@ -65,6 +65,12 @@
           "pathName": "pages/db/db",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/file/file",
+          "pathName": "pages/file/file",
+          "query": "",
+          "scene": null
         }
       ]
     }

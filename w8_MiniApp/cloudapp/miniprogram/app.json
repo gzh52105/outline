@@ -12,6 +12,7 @@
     "pages/updateRecordSuccess/index",
     "pages/sumRecord/index",
     "pages/sumRecordResult/index",
+    "pages/file/file",
     "pages/db/db"
   ],
   "window": {

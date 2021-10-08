@@ -1,0 +1,3 @@
+<!--pages/file/file.wxml-->
+
+<button type="primary" bind:tap="uploadFile">上传相册图片</button>

@@ -5,13 +5,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    classList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
+    // @在小程序端直接操作数据库（有权限问题）
     // 获取数据库对象
     const db = wx.cloud.database()
 
@@ -30,6 +31,24 @@ Page({
     }).remove()
 
     console.log('data2',data2)
+
+
+    // @利用云函数操作数据库
+    wx.cloud.callFunction({
+      name:'h52105',
+      data:{
+        type:'get',
+        config:{
+          size:15
+
+        }
+      }
+    }).then(res=>{
+      console.log('res=',res);
+      this.setData({
+        classList:res.result.data
+      })
+    })
 
   },
 
@@ -80,5 +99,29 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  removeItem(e){
+    const {id} = e.currentTarget.dataset;
+    console.log('id',id)
+
+    wx.cloud.callFunction({
+      name:'h52105',
+      data:{
+        type:'remove',
+        query:{_id:id}
+      }
+    }).then(res=>{
+      console.log('delete',res);
+
+      if(res.result.stats.removed>0){
+        wx.showToast({
+          title:'删除成功'
+        })
+        this.setData({
+          classList:this.data.classList.filter(item=>item._id!=id)
+        })
+      }
+    })
   }
 })

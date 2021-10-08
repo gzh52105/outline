@@ -1,3 +1,7 @@
 <view>
   <view>database操作</view>
+  <view wx:for="{{classList}}" wx:key="_id" class="item">
+    {{index+1}}. {{item.city}}-{{item.category}}-{{item.name}}
+  <text bind:tap="removeItem" data-id="{{item._id}}" >x</text>
+  </view>
 </view>

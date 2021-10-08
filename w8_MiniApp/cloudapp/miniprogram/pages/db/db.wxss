@@ -1,1 +1,7 @@
 /* pages/db/db.wxss */
+.item{
+  position: relative;
+  padding:10px;
+  border-bottom:1px dotted #ccc;
+}
+.item text{position: absolute;top:0;right:0;padding:10px;}
