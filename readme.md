@@ -2974,3 +2974,49 @@
 * 接口地址
 > 链接：https://easydoc.net/s/16785149      密码：tAsJXBDq
 > https://api.qfh5.cn
+
+## day8-5
+
+## 知识点
+* 微信云开发
+    * 开通
+    * 环境
+        > 不同的环境，数据库、存储空间都是独立的
+        * 测试
+        * 生产
+    * 资源
+        * 数据库：类似于mongodb
+        * 存储空间
+        * 云函数（后端）
+        * ...
+
+            ```js
+                <image src="cloud://class-test-cvn29.636c-class-test-cvn29-1302466056/db.png">
+            ```
+* 在微信小程序中使用云开发
+    > 如何在小程序中使用云开发资源
+    * 使用步骤：
+        1. 初始化
+            > 在调用云开发各 API 前，需先调用初始化方法 init（只需要执行一次）
+            ```js
+                //  wx.cloud
+                wx.cloud.init({
+                    env:'class-test-cvn29'
+                })
+            ```
+        2. 操作云开发资源
+            * 数据库
+                * 在小程序端操作
+                    > 有权限问题
+                    * 获取数据库对象
+                        ```js
+                            const db = wx.cloud.database();
+                        ```
+                    * 获取集合
+                        ```js
+                            const user = db.collection('user')
+                        ```
+                * 在云函数中操作
+                    > 相当于后端操作数据库，没有权限问题
+                
+
