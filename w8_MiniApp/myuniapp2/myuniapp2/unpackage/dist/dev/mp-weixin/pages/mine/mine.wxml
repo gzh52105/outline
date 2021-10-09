@@ -1,0 +1,1 @@
+<view class="_div">Mine<view title="{{title}}" class="_p">{{title}}</view><view class="_h1">span</view><label class="_span">span</label><button data-event-opts="{{[['tap',[['changeCount',['$event']]]]]}}" bindtap="__e">{{"count:"+count}}</button></view>
