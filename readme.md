@@ -3059,7 +3059,24 @@
     * wePY
         > 是微信 小程序框架（不是跨平台框架），主要用户微信小程序开发，参考了Vue的语法，
     * uni-app
+        > 基于Vue的跨平台框架
         * 实现了自己的编译器
         * 文档
-            > 必须使用框架通用写法
+            > 必须使用框架通用写法，如
+            * 跳转: uni.navigateTo()
+            * 请求：uni.request()
+        * 使用
+            * HbuilderX可视化工具
+            * VueCli
+                
     * Taro
+        * 全局安装`@tarojs/cli`
+            ```bash
+                npm install -g @tarojs/cli
+            ```
+        * 初始化项目
+            ```bash
+                taro init mytaro
+            ```
+        * 注意事项
+            * 在Taro中不能使用html标签，只能使用官方提供的组件
