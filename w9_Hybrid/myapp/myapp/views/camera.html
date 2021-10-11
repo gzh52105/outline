@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄像头</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <style>
+        .preview{
+			padding:20px;
+		}
+		.preview video,
+		.preview img{margin:10px 0;width:100%;}
+    </style>
+</head>
+<body>
+    <div id="app" class="container py-3">
+        <header class="mb-3">
+            <button class="btn btn-outline-secondary btn-sm" @click="goBack">&lt;返回</button>
+        </header>
+        <button class="btn btn-success" @click="paizhao">拍照</button>
+        <button class="btn btn-danger" @click="luxiang">录像</button>
+        <div class="preview">
+            <img v-for="item in pictures" :key="item" :src="item" />
+            <video v-for="item in videos" :key="item" :src="item"></video>
+        </div>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+                el:'#app',
+                data:{
+                    cmr:null,
+                    pictures:[],
+                    videos:[]
+                },
+                mounted(){
+                    document.addEventListener('plusready',()=>{
+                        this.cmr = plus.camera.getCamera()
+                    })
+                },
+                methods:{
+                    paizhao(){
+                        if(!this.cmr){
+                            console.log('请在模拟器或真机设备中访问');
+                            return;
+                        }
+
+                        this.cmr.captureImage((capturedFile)=>{
+                        
+                            const path = plus.io.convertLocalFileSystemURL(capturedFile)
+                            
+                            // 写入页面
+                            this.pictures.push(path);
+                            
+                            // 保存到相差
+                            plus.gallery.save( capturedFile, ()=>{
+                                plus.nativeUI.toast('保存图片到相册成功', {background:'#58bc58'});
+                            } )
+                        }, (err)=>{
+                            console.log(err)
+                        });
+                    },
+                    luxiang(){
+                        if(!this.cmr){
+                            console.log('请在模拟器或真机设备中访问');
+                            return;
+                        }
+
+                        this.cmr.startVideoCapture((capturedFile)=>{
+                            const path = plus.io.convertLocalFileSystemURL(capturedFile)
+                            
+                            // 写入页面
+                            this.videos.push(path)
+                            
+                            // 保存到相差
+                            plus.gallery.save( capturedFile, ()=>{
+                                plus.nativeUI.toast('保存视频到相册成功', {background:'#58bc58'});
+                            } )
+                        })
+                    },
+                    goBack(){
+                        // 返回：关闭当前webview
+                        const currentWebview = plus.webview.currentWebview();
+
+                        plus.webview.close( currentWebview);
+                    }
+                }
+            })
+    </script>
+</body>
+</html>

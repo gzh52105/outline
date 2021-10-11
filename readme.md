@@ -3122,4 +3122,20 @@
                 * 需要把代码上传到别人的服务器
             * DCloud
 
+* 混合开发->h5主导开发->DCloud
+    * H5+ runtime 接口
+        > 所有接口附在`window.plus`对象中
+    * 调试（测试）
+        * 模拟器
+        * 真机调试
+            * 设备开启开发者模式
+                * 允许usb调式
+    * 调用接口
+        * camera
+        * io
+        * gallary
+        * nativeUI
+        * webview
+            * 通过webview进行多页面跳转
+            * 单页面应用不需要使用webview
     

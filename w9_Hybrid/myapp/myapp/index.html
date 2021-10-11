@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>首页</title>
+        <link rel="stylesheet" href="./css/bootstrap.css">
+	</head>
+	<body>
+        <div id="app" class="container py-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" v-for="item in menus" :key="item.name" @click="goto(item)">{{item.text}}</li>
+              </ul>
+        </div>
+        <script src="./js/vue.js"></script>
+        <script>
+            new Vue({
+                el:'#app',
+                data:{
+                    menus:[
+                        {
+                            text:'摄像头11',
+                            name:'camera',
+                            path:'camera.html',
+                            icon:''
+                        },
+                        {
+                            text:'语音',
+                            name:'speach',
+                            path:'speach.html',
+                            icon:''
+                        },
+                        {
+                            text:'定位',
+                            name:'position',
+                            path:'position.html',
+                            icon:''
+                        },
+                        
+                    ]
+                },
+                mounted(){
+                    
+                },
+                methods:{
+                    goto(item){
+                        // 创建webview窗口
+                        const wvo = plus.webview.create(`views/${item.path}`, item.name);
+
+                        // 显示Webview窗口
+                        plus.webview.show(wvo,"slide-in-left")
+                    }
+                }
+            })
+        </script>
+	</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <script type="text/javascript">
+    	
+   		
+   		
+    </script>
+	<style type="text/css">
+		.preview{
+			padding:20px;
+		}
+		.preview video,
+		.preview img{margin:10px 0;width:100%;}
+	</style>
+</head>
+<body>
+	<button id="btnCamera">拍照66</button>
+	<button id="btnVideo">录像</button>
+	<div class="preview">
+		
+	</div>
+    <script>
+        const btnCamera = document.querySelector('#btnCamera')
+        const btnVideo = document.querySelector('#btnVideo')
+        const preview = document.querySelector('.preview')
+		
+		document.addEventListener('plusready', function(){console.log('plusready')
+			// plusready: plus可用时执行这里的代码
+			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。")
+			
+			// 获取摄像头管理对象
+			const cmr = plus.camera.getCamera()
+			
+			// 拍照
+			btnCamera.onclick = function(){
+				// 调用h5+接口
+
+
+				cmr.captureImage((capturedFile)=>{
+					// capturedFile: 临时路径
+					
+					// 临时地址->平台地址：plus.io.convertLocalFileSystemURL()
+					const path = plus.io.convertLocalFileSystemURL(capturedFile)
+					console.log('capturedFile',capturedFile)
+					console.log('path',path)
+					
+					// 写入页面
+					const img = document.createElement('img')
+					img.src = path
+					preview.appendChild(img)
+					
+					// 保存到相差
+					plus.gallery.save( capturedFile, ()=>{
+						plus.nativeUI.toast('保存图片到相册成功', {background:'#58bc58'});
+					} )
+				}, (err)=>{
+					console.log(err)
+				});
+				
+			}
+			
+			// 录像
+			btnVideo.onclick = function(){
+				cmr.startVideoCapture((capturedFile)=>{
+					const path = plus.io.convertLocalFileSystemURL(capturedFile)
+					
+					// 写入页面
+					const video = document.createElement('video')
+					video.src = path
+					video.autoplay = true;
+					video.controls = true;
+					preview.appendChild(video)
+					
+					// 保存到相差
+					plus.gallery.save( capturedFile, ()=>{
+						plus.nativeUI.toast('保存视频到相册成功', {background:'#58bc58'});
+					} )
+				})
+			}
+			
+		});
+		
+    </script>
+</body>
+</html>
