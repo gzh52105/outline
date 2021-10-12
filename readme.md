@@ -3141,4 +3141,13 @@
 
     * 扫码
         > 识别条码/二维码中的信息
-    
+    * 语音识别
+
+* NativeApp
+    * react
+        > 一次学习，到处使用
+    * react-dom         webApp
+* 使用web技术实现nativeApp
+    * react-native      nativeApp
+    * flutter
+    * weex
