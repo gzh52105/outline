@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄像头</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <style>
+        .preview{
+			padding:20px;
+            word-break: break-all;
+		}
+		.preview video,
+		.preview img{margin:10px 0;width:100%;}
+    </style>
+</head>
+<body>
+    <div id="app" class="container py-3">
+        <header class="mb-3">
+            <button class="btn btn-outline-secondary btn-sm" @click="goBack">&lt;返回</button>
+        </header>
+        <button class="btn btn-success" @click="saoma">扫码</button>
+        <button class="btn btn-danger" @click="shibie">识别图片条码</button>
+        <div class="preview">
+            <p v-for="item in results">{{item.type}}: {{item.result}}</p>
+        </div>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script src="../js/common.js"></script>
+    <script>
+        new Vue({
+                el:'#app',
+                mixins:[globalMixin],
+                data:{
+                    results:[],
+                    barcode:null
+                },
+                mounted(){
+                },
+                methods:{
+                    saoma(){
+                        if(!this.barcode){
+                            const {QR,EAN13,EAN8} = plus.barcode;
+                            // 创建扫码控件（创建webview）
+                            // plus.barcode.create(id, filters, styles, autoDecodeCharset);
+                            this.barcode = plus.barcode.create('barcode', [QR,EAN13,EAN8], {
+                                top:'0',
+                                left:'0px',
+                                width: '100%',
+                                height: '100%',
+                                position: 'static'
+                            });
+                            this.barcode.onmarked = (type, result)=>{
+                                this.results.push({
+                                    type,
+                                    result
+                                })
+
+                                // 关闭扫码控件
+                                this.barcode.close();
+                                this.barcode = null;
+                            }
+                            this.barcode.onerror = ()=>{
+                                this.barcode.close();
+                            }
+    
+                            // 把barcode控件写入当前webview
+                            plus.webview.currentWebview().append(this.barcode);
+                        }
+
+                        // 开始扫码
+                        this.barcode.start();
+                    },
+
+                    shibie(){
+                        // 从相册中选取图片
+                        // plus.gallery.pick(successCB, errorCB, options);
+                        plus.gallery.pick((path)=>{
+                            console.log('path',path);
+                            
+                            // 识别图片条码
+                            // plus.barcode.scan(path, successCB, errorCB, filters, autoDecodeCharset);
+                            plus.barcode.scan(path, (type, code, file, charset)=>{
+                                console.log(type, code, file, charset)
+
+                                // 蜂鸣声
+                                plus.device.beep(3);
+                                this.results.push({
+                                    type,
+                                    result:code
+                                })
+                            });
+
+                        });
+                    }
+                }
+            })
+    </script>
+</body>
+</html>

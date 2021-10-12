@@ -27,9 +27,11 @@
         </div>
     </div>
     <script src="../js/vue.js"></script>
+    <script src="../js/common.js"></script>
     <script>
         new Vue({
                 el:'#app',
+                mixins:[globalMixin],
                 data:{
                     cmr:null,
                     pictures:[],
@@ -79,12 +81,6 @@
                                 plus.nativeUI.toast('保存视频到相册成功', {background:'#58bc58'});
                             } )
                         })
-                    },
-                    goBack(){
-                        // 返回：关闭当前webview
-                        const currentWebview = plus.webview.currentWebview();
-
-                        plus.webview.close( currentWebview);
                     }
                 }
             })

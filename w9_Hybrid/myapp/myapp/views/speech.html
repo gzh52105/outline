@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄像头</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <style>
+        .preview{
+			padding:20px;
+            word-break: break-all;
+		}
+		.preview video,
+		.preview img{margin:10px 0;width:100%;}
+    </style>
+</head>
+<body>
+    <div id="app" class="container py-3">
+        <header class="mb-3">
+            <button class="btn btn-outline-secondary btn-sm" @click="goBack">&lt;返回</button>
+        </header>
+        <div class="input-group">
+            <input type="search" class="from-control" v-model="keyword" />
+            <button class="btn btn-danger" @click="shibie">语音识别</button>
+        </div>
+        <div class="preview">
+            <p v-for="item in results">{{item.type}}: {{item.result}}</p>
+        </div>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script src="../js/common.js"></script>
+    <script>
+        new Vue({
+                el:'#app',
+                mixins:[globalMixin],
+                data:{
+                    keyword:'',
+                },
+                mounted(){
+                },
+                methods:{
+                    shibie(){
+                        plus.speech.startRecognize( {
+                            engine:'baidu', //  "baidu"-百度语音识别； "iFly"-讯飞语音识别。
+                            lang:'zh-cantonese',//"zh-cn"-中文，普通话； "en-us"-英语； "zh-cantonese"-中文，粤语； "zh-henanese"-中文，河南话（百度语音识别不支持此语言）
+
+                        }, (result)=>{
+                            console.log('result',result)
+                            this.keyword = result;
+                        },(err)=>{
+                            console.log('error',err)
+                        });
+                    }
+                }
+            })
+    </script>
+</body>
+</html>
