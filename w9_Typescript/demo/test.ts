@@ -64,10 +64,22 @@ function fail():never{
     console.log('end')
 }
 
-const getData = function(url:string,type:string):void{
+const getData:(url:string,type:string)=>void = function(url:string,type:string):void{
 
 }
 
 // 7. 字面量类型
 let myAge:18 = 18; // 等效于const myAge=18
 // myAge = 19;
+
+
+// 8. 断言
+// * 变量 as 类型
+// * <类型>变量
+let arr:number[] = [10,20,30]
+// let num = arr.find(item=>item>10);//20,undefined
+function sum(a:number,b:number|string){
+    // return a + (b as number);
+    return a + <number>b;
+}
+sum(10,20);

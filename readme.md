@@ -3217,7 +3217,7 @@
         add(10)
     ```
 * Typescript
-    * Typescript = javascript + 类型系统 + ES6+
+    * Typescript = javascript + 类型系统 + ES6+(新特性)
     * 代码提示
         * 开发阶段
         * 编译阶段
@@ -3228,3 +3228,18 @@
             * number
             * string
             * boolean
+        * 特殊类型
+            * null
+            * undefined
+            * any
+            * nerver
+        * 复杂类型
+            * 数组
+            * 元组
+            * 对象
+            * 枚举
+    * 新特性
+        * 接口interface
+        * 断言
+        * 枚举
+        * 函数重载
