@@ -3151,3 +3151,80 @@
     * react-native      nativeApp
     * flutter
     * weex
+
+
+## day9-3
+
+### 知识点：Typescript
+* javascript
+    * 变量可以随意修改类型
+    * 错误只有到运行阶段才能发现
+    * 编写代码时没有提示
+    ```js
+        var num = 10
+        let price = 100;
+
+        // 次此省略100行代码
+
+        price = '200';
+
+        // foFixed is not a function
+        price.toFixed(2)
+
+        const box = document.querySelector('.box');
+        // cannot set the property onclick of null
+        box.onclick = function(){
+
+        }
+
+        /**
+         * 计算两个数字的和
+            * a: Number
+            * b: Number
+         */
+        function add(a,b){
+            return a+b;
+        }
+
+        add(10,20)
+
+        // 隐式转换
+        var num1 = 10
+        var num2 = '20'
+
+        num1*num2 ; // num2 - num1
+
+        localStorage.setItem('userInfo',{}); // [Object Object]
+    ```
+
+* typescript代码
+    * 变量静态类型
+    * 丰富的提示信息
+    * IDE提供支持
+    ```ts
+        let price:number = 100;
+
+        // 
+        price = '200'
+
+
+        price.toFixed(2)
+
+        function add(a,b){
+            return a+b;
+        }
+
+        add(10)
+    ```
+* Typescript
+    * Typescript = javascript + 类型系统 + ES6+
+    * 代码提示
+        * 开发阶段
+        * 编译阶段
+        * 运行阶段
+    * 变量类型
+        > 类型系统能根据变量的类型检测数据是否合法
+        * 基本类型
+            * number
+            * string
+            * boolean
